@@ -2,10 +2,28 @@ import pytest
 import pathlib
 from mktestdocs import check_docstring, grab_code_blocks
 
-from doubtlab.reason import ProbaReason
+from doubtlab.reason import (
+    ProbaReason,
+    RandomReason,
+    OutlierReason,
+    DisagreeReason,
+    LongConfidenceReason,
+    ShortConfidenceReason,
+    WrongPredictionReason,
+)
+
+all_reasons = [
+    ProbaReason,
+    RandomReason,
+    OutlierReason,
+    DisagreeReason,
+    LongConfidenceReason,
+    ShortConfidenceReason,
+    WrongPredictionReason,
+]
 
 
-@pytest.mark.parametrize("func", [ProbaReason], ids=lambda d: d.__name__)
+@pytest.mark.parametrize("func", all_reasons, ids=lambda d: d.__name__)
 def test_function_docstrings(func):
     """Test the docstring code of some functions."""
     check_docstring(obj=func)

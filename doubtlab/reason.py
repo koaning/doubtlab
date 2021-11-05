@@ -236,7 +236,7 @@ class DisagreeReason:
         self.model2 = model2
 
     def __call__(self, X, y):
-        return self.model1.predict(X) != self.model2.predic(X)
+        return self.model1.predict(X) != self.model2.predict(X)
 
 
 class OutlierReason:
@@ -253,7 +253,7 @@ class OutlierReason:
     from sklearn.ensemble import IsolationForest
 
     from doubtlab import DoubtLab
-    from doubtlab.reason import ProbaReason
+    from doubtlab.reason import OutlierReason
 
     X, y = load_iris(return_X_y=True)
     model = IsolationForest()
