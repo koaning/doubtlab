@@ -1,4 +1,7 @@
-from importlib import metadata
+try:
+    from importlib import metadata
+except ImportError:  # for Python<3.8
+    import importlib_metadata as metadata
 
 import numpy as np
 import pandas as pd
