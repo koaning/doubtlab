@@ -39,11 +39,11 @@ reasons = {
 doubt = DoubtLab(**reasons)
 
 # Get the predicates, or reasoning, behind the order
-predicates       = doubt.get_predicates(X, y)
+predicates = doubt.get_predicates(X, y)
 # Get the ordered indices of examples worth checking again
-indices          = doubt.get_indices(X, y)
+indices = doubt.get_indices(X, y)
 # Get the (X, y) candidates worth checking again
-X_check, y_check = doubt.candidates(X, y)
+X_check, y_check = doubt.get_candidates(X, y)
 ```
 
 ## Features
