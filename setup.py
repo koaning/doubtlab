@@ -1,8 +1,6 @@
 import pathlib
 from setuptools import setup, find_packages
 
-from doubtlab import __version__
-
 
 base_packages = [
     "scikit-learn>=1.0.0",
@@ -32,7 +30,7 @@ dev_packages = all_packages + docs_packages + test_packages
 
 setup(
     name="doubtlab",
-    version=__version__,
+    version="0.0.1",
     author="Vincent D. Warmerdam",
     packages=find_packages(exclude=["notebooks", "docs"]),
     description="Don't Blindly Trust Your Labels",

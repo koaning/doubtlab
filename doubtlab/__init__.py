@@ -1,7 +1,11 @@
+from importlib import metadata
+
 import numpy as np
 import pandas as pd
 
-__version__ = "0.0.1"
+
+__title__ = __name__
+__version__ = metadata.version(__title__)
 
 
 class DoubtLab:

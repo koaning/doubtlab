@@ -1,0 +1,32 @@
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.4.0
+    hooks:
+    -   id: trailing-whitespace
+    -   id: end-of-file-fixer
+    -   id: check-yaml
+    -   id: check-added-large-files
+-   repo: https://gitlab.com/pycqa/flake8
+    rev: 3.8.4
+    hooks:
+    -   id: flake8
+-   repo: https://github.com/psf/black
+    rev: 20.8b1
+    hooks:
+      - id: black
+        language_version: python3.7
+-   repo: https://github.com/Lucas-C/pre-commit-hooks-bandit
+    rev: v1.0.5
+    hooks:
+    -   id: python-bandit-vulnerability-check
+        args: [--skip, "B101", --recursive, doubtlab]
+-   repo: https://github.com/econchick/interrogate
+    rev: 1.4.0
+    hooks:
+      - id: interrogate
+        args: [--quiet, --ignore-nested-functions, --ignore-nested-classes, --ignore-semiprivate, --ignore-private, --ignore-magic, --ignore-module, --ignore-init-method, --fail-under=100, doubtlab]
+-   repo: https://github.com/econchick/interrogate
+    rev: 1.4.0
+    hooks:
+      - id: interrogate
+        args: [--quiet, --ignore-nested-functions, --ignore-nested-classes, --ignore-semiprivate, --ignore-private, --ignore-magic, --ignore-module, --ignore-init-method, --fail-under=100, tests]
