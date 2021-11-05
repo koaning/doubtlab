@@ -1,4 +1,4 @@
-<img src="doubt.png" width=125 height=125 align="right">
+<img src="docs/doubt.png" width=125 height=125 align="right">
 
 # doubtlab
 
