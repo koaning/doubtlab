@@ -11,7 +11,7 @@ __title__ = __name__
 __version__ = metadata.version(__title__)
 
 
-class DoubtLab:
+class DoubtEnsemble:
     """
     A pipeline to find bad labels.
     """
