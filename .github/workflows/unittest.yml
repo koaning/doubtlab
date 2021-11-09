@@ -21,11 +21,11 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: ${{ matrix.python-version }}
-    - name: get pip cache dir
+    - name: Get pip-cache
       id: pip-cache
       run: |
         echo "::set-output name=dir::$(pip cache dir)"
-    - name: pip cache
+    - name: Run pip-cache
       uses: actions/cache@v2
       with:
         path: ${{ steps.pip-cache.outputs.dir }}
