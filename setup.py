@@ -4,8 +4,7 @@ from setuptools import setup, find_packages
 
 base_packages = [
     "scikit-learn>=1.0.0",
-    "pynndescent>=0.5",
-    "numba>=0.54.1",
+    "cleanlab>=1.0",
     "pandas>=1.3.3",
 ]
 
@@ -22,6 +21,7 @@ test_packages = [
     "pytest>=4.0.2",
     "black>=19.3b0",
     "pre-commit>=2.2.0",
+    "whatlies==0.6.4",
 ]
 
 all_packages = base_packages
@@ -30,7 +30,7 @@ dev_packages = all_packages + docs_packages + test_packages
 
 setup(
     name="doubtlab",
-    version="0.0.1",
+    version="0.0.2",
     author="Vincent D. Warmerdam",
     packages=find_packages(exclude=["notebooks", "docs"]),
     description="Don't Blindly Trust Your Labels",

@@ -1,0 +1,36 @@
+site_name: doubtlab
+repo_url: https://github.com/koaning/doubtlab
+site_url: https://koaning.github.io/doubtlab/
+site_description: DoubtLab - Find Bad Labels
+site_author: Vincent D. Warmerdam
+
+nav:
+  - Home: index.md
+  - Getting Started:
+    - Quickstart: quickstart/index.md
+  - Examples:
+    - Google Emotions: examples/google-emotions.md
+  - API:
+    - ensemble: api/doubtlab.md
+    - reasons: api/reasons.md
+plugins:
+  - mkdocstrings
+  - search
+copyright: Maintained by <a href="https://twitter.com/fishnets88">Vincent</a>.
+theme:
+  name: material
+  favicon: icon.png
+  logo: icon.png
+  feature:
+    tabs: true
+  palette:
+    primary: white
+    accent: blue
+markdown_extensions:
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex:
+      generic: true
+extra_javascript:
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js

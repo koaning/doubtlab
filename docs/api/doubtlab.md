@@ -1,0 +1,3 @@
+# `DoubtEnsemble`
+
+::: doubtlab.ensemble.DoubtEnsemble
