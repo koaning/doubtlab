@@ -1,6 +1,3 @@
-# TODO: many of these methods appreciate a refit parameter, which will
-# control if we get to retrain a model on this dataset
-
 import numpy as np
 
 
@@ -18,14 +15,14 @@ class ProbaReason:
     from sklearn.datasets import load_iris
     from sklearn.linear_model import LogisticRegression
 
-    from doubtlab import DoubtLab
+    from doubtlab.ensemble import DoubtEnsemble
     from doubtlab.reason import ProbaReason
 
     X, y = load_iris(return_X_y=True)
     model = LogisticRegression(max_iter=1_000)
     model.fit(X, y)
 
-    doubt = DoubtLab(reason = ProbaReason(model, max_proba=0.55))
+    doubt = DoubtEnsemble(reason = ProbaReason(model, max_proba=0.55))
 
     indices = doubt.get_indices(X, y)
     ```
@@ -53,12 +50,12 @@ class RandomReason:
     ```python
     from sklearn.datasets import load_iris
 
-    from doubtlab import DoubtLab
+    from doubtlab.ensemble import DoubtEnsemble
     from doubtlab.reason import RandomReason
 
     X, y = load_iris(return_X_y=True)
 
-    doubt = DoubtLab(reason = RandomReason(probability=0.05, random_seed=42))
+    doubt = DoubtEnsemble(reason = RandomReason(probability=0.05, random_seed=42))
 
     indices = doubt.get_indices(X, y)
     ```
@@ -87,14 +84,14 @@ class WrongPredictionReason:
     from sklearn.datasets import load_iris
     from sklearn.linear_model import LogisticRegression
 
-    from doubtlab import DoubtLab
+    from doubtlab.ensemble import DoubtEnsemble
     from doubtlab.reason import WrongPredictionReason
 
     X, y = load_iris(return_X_y=True)
     model = LogisticRegression(max_iter=1_000)
     model.fit(X, y)
 
-    doubt = DoubtLab(reason = WrongPredictionReason(model=model))
+    doubt = DoubtEnsemble(reason = WrongPredictionReason(model=model))
 
     indices = doubt.get_indices(X, y)
     ```
@@ -121,14 +118,14 @@ class LongConfidenceReason:
     from sklearn.datasets import load_iris
     from sklearn.linear_model import LogisticRegression
 
-    from doubtlab import DoubtLab
+    from doubtlab.ensemble import DoubtEnsemble
     from doubtlab.reason import LongConfidenceReason
 
     X, y = load_iris(return_X_y=True)
     model = LogisticRegression(max_iter=1_000)
     model.fit(X, y)
 
-    doubt = DoubtLab(reason = LongConfidenceReason(model=model))
+    doubt = DoubtEnsemble(reason = LongConfidenceReason(model=model))
 
     indices = doubt.get_indices(X, y)
     ```
@@ -167,14 +164,14 @@ class ShortConfidenceReason:
     from sklearn.datasets import load_iris
     from sklearn.linear_model import LogisticRegression
 
-    from doubtlab import DoubtLab
+    from doubtlab.ensemble import DoubtEnsemble
     from doubtlab.reason import ShortConfidenceReason
 
     X, y = load_iris(return_X_y=True)
     model = LogisticRegression(max_iter=1_000)
     model.fit(X, y)
 
-    doubt = DoubtLab(reason = ShortConfidenceReason(model=model))
+    doubt = DoubtEnsemble(reason = ShortConfidenceReason(model=model))
 
     indices = doubt.get_indices(X, y)
     ```
@@ -216,7 +213,7 @@ class DisagreeReason:
     from sklearn.linear_model import LogisticRegression
     from sklearn.neighbors import KNeighborsClassifier
 
-    from doubtlab import DoubtLab
+    from doubtlab.ensemble import DoubtEnsemble
     from doubtlab.reason import DisagreeReason
 
     X, y = load_iris(return_X_y=True)
@@ -225,7 +222,7 @@ class DisagreeReason:
     model1.fit(X, y)
     model2.fit(X, y)
 
-    doubt = DoubtLab(reason = DisagreeReason(model1, model2))
+    doubt = DoubtEnsemble(reason = DisagreeReason(model1, model2))
 
     indices = doubt.get_indices(X, y)
     ```
@@ -236,12 +233,13 @@ class DisagreeReason:
         self.model2 = model2
 
     def __call__(self, X, y):
-        return self.model1.predict(X) != self.model2.predict(X)
+        result = self.model1.predict(X) != self.model2.predict(X)
+        return result.astype(np.float16)
 
 
 class OutlierReason:
     """
-    Assign doubt a scikit-learn outlier model detects an outlier.
+    Assign doubt when a scikit-learn outlier model detects an outlier.
 
     Arguments:
         model: scikit-learn outlier model
@@ -252,14 +250,47 @@ class OutlierReason:
     from sklearn.datasets import load_iris
     from sklearn.ensemble import IsolationForest
 
-    from doubtlab import DoubtLab
+    from doubtlab.ensemble import DoubtEnsemble
     from doubtlab.reason import OutlierReason
 
     X, y = load_iris(return_X_y=True)
     model = IsolationForest()
     model.fit(X)
 
-    doubt = DoubtLab(reason = OutlierReason(model))
+    doubt = DoubtEnsemble(reason = OutlierReason(model))
+
+    indices = doubt.get_indices(X, y)
+    ```
+    """
+
+    def __init__(self, model):
+        self.model = model
+
+    def __call__(self, X, y):
+        return (self.model.predict(X) == -1).astype(np.float16)
+
+
+class RegressionGapReason:
+    """
+    Assign doubt when a label differs too much from a scikit-learn regression model.
+
+    Arguments:
+        model: scikit-learn outlier model
+
+    Usage:
+
+    ```python
+    from sklearn.datasets import load_iris
+    from sklearn.ensemble import IsolationForest
+
+    from doubtlab.ensemble import DoubtEnsemble
+    from doubtlab.reason import RegressionGapReason
+
+    X, y = load_iris(return_X_y=True)
+    model = IsolationForest()
+    model.fit(X)
+
+    doubt = DoubtEnsemble(reason = RegressionGapReason(model))
 
     indices = doubt.get_indices(X, y)
     ```

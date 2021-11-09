@@ -21,7 +21,7 @@ python -m pip install doubtlab
 Doubtlab allows you to define "reasons" for a row of data to deserve another look. These reasons can form a pipeline which can be used to retreive a sorted list of examples worth checking again.
 
 ```python
-from doubtlab import DoubtLab
+from doubtlab import DoubtEnsemble
 from doubtlab.reasons import ProbaReason, WrongPredictionReason
 
 # Let's say we have some model already
@@ -36,14 +36,12 @@ reasons = {
 }
 
 # Pass these reasons to a doubtlab instance.
-doubt = DoubtLab(**reasons)
+doubt = DoubtEnsemble(**reasons)
 
-# Get the predicates, or reasoning, behind the order
-predicates = doubt.get_predicates(X, y)
 # Get the ordered indices of examples worth checking again
 indices = doubt.get_indices(X, y)
-# Get the (X, y) candidates worth checking again
-X_check, y_check = doubt.get_candidates(X, y)
+# Get dataframe with "reason"-ing behind the sorting
+predicates = doubt.get_predicates(X, y)
 ```
 
 ## Features

@@ -1,7 +1,7 @@
 from sklearn.datasets import load_iris
 from sklearn.linear_model import LogisticRegression
 
-from doubtlab import DoubtLab
+from doubtlab.ensemble import DoubtEnsemble
 from doubtlab.reason import ProbaReason, WrongPredictionReason
 
 
@@ -16,12 +16,9 @@ def test_smoke():
         "wrong_pred": WrongPredictionReason(model=model),
     }
 
-    doubt = DoubtLab(**reasons)
+    doubt = DoubtEnsemble(**reasons)
 
     predicates = doubt.get_predicates(X, y)
     assert predicates.shape[0] > 0
     indices = doubt.get_indices(X, y)
     assert indices.shape[0] > 0
-    X_check, y_check = doubt.get_candidates(X, y)
-    assert X_check.shape[0] > 0
-    assert y_check.shape[0] > 0
