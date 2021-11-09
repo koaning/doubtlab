@@ -1,6 +1,5 @@
 import pytest
-import pathlib
-from mktestdocs import check_docstring, grab_code_blocks
+from mktestdocs import check_docstring, check_md_file
 
 from doubtlab.reason import (
     ProbaReason,
@@ -14,6 +13,7 @@ from doubtlab.reason import (
     RelativeDifferenceReason,
     CleanlabReason,
 )
+from doubtlab.ensemble import DoubtEnsemble
 
 all_reasons = [
     ProbaReason,
@@ -29,7 +29,9 @@ all_reasons = [
 ]
 
 
-@pytest.mark.parametrize("func", all_reasons, ids=lambda d: d.__name__)
+@pytest.mark.parametrize(
+    "func", all_reasons + [DoubtEnsemble], ids=lambda d: d.__name__
+)
 def test_function_docstrings(func):
     """Test the docstring code of some functions."""
     check_docstring(obj=func)
@@ -38,4 +40,4 @@ def test_function_docstrings(func):
 @pytest.mark.parametrize("fpath", ["README.md"])
 def test_quickstart_docs_file(fpath):
     """Test the quickstart files."""
-    grab_code_blocks(pathlib.Path(fpath).read_text())
+    check_md_file(fpath)

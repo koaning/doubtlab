@@ -9,7 +9,7 @@ nav:
   - Getting Started:
     - Quickstart: quickstart/index.md
   - API:
-    - doubtlab: api/doubtlab.md
+    - ensemble: api/doubtlab.md
     - reasons: api/reasons.md
 plugins:
   - mkdocstrings

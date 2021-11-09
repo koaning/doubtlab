@@ -21,10 +21,15 @@ python -m pip install doubtlab
 Doubtlab allows you to define "reasons" for a row of data to deserve another look. These reasons can form a pipeline which can be used to retreive a sorted list of examples worth checking again.
 
 ```python
-from doubtlab import DoubtEnsemble
-from doubtlab.reasons import ProbaReason, WrongPredictionReason
+from sklearn.datasets import load_iris
+from sklearn.linear_model import LogisticRegression
 
-# Let's say we have some model already
+from doubtlab.ensemble import DoubtEnsemble
+from doubtlab.reason import ProbaReason, WrongPredictionReason
+
+# Let's say we have some dataset/model already
+X, y = load_iris(return_X_y=True)
+model = LogisticRegression(max_iter=1_000)
 model.fit(X, y)
 
 # Next we can the reasons for doubt. In this case we're saying

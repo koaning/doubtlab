@@ -1,3 +1,3 @@
-# `from doubtlab import DoubtLab`
+# `DoubtEnsemble`
 
-::: doubtlab.DoubtLab
+::: doubtlab.ensemble.DoubtEnsemble

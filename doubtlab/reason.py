@@ -349,7 +349,8 @@ class CleanlabReason:
 
     Arguments:
         model: scikit-learn outlier model
-        threshold: cutoff for doubt assignment
+        sorted_index_method: method used by cleanlab for sorting indices
+        min_doubt: the minimum doubt output value used for sorting by the ensemble
 
     Usage:
 

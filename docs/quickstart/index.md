@@ -1,7 +1,11 @@
 The goal of this document is to explain how the library works on a high-level.
-Another tutorial will show a better example.
 
-## Simple Model
+## Datasets and Models
+
+You can use doubtlab to check your own datasets for bad labels. Many of the
+methods that we provide are based on the interaction between a dataset and a
+model trained on that dataset. For example;
+
 
 ```python
 from sklearn.datasets import load_iris
@@ -12,21 +16,36 @@ model = LogisticRegression(max_iter=1_000)
 model.fit(X, y)
 ```
 
+This examples shows a logistic regression model trained on the `load_iris` dataset.
+The `model` is able to make predictions on the dataset and it's also able to
+output a confidence score via `model.predict_proba(X)`.
+
+You could wonder. What might it mean if the confidence values are low? What might
+it mean if our model cannot make an accurate prediction on a datapoint that it's trained on?
+In both of these cases, it could be that nothing is wrong. But you could argue that
+these datapoints may be worth double-checking.
+
 ## Pipeline of Doubt Reasons
 
+The doubtlab library allows you to define "reasons" to doubt the validity of a datapoint.
+The code below shows you how to build an ensemble of the two aforementioned reasons.
+
 ```python
-from doubtlab import DoubtLab
+from doubtlab.ensemble import DoubtEnsemble
 from doubtlab.reason import ProbaReason, WrongPredictionReason
 
+# Define the reasons with a name.
 reasons = {
-    "proba": ProbaReason(model=model),
+    "proba": ProbaReason(model=model, threshold=0.4),
     "wrong_pred": WrongPredictionReason(model=model),
 }
 
-doubt = DoubtLab(**reasons)
+# Put all the reasons into an ensemble
+doubt = DoubtEnsemble(**reasons)
 ```
 
-## What does this Pipeline do?
+## What does this Ensemble do?
+
 
 ### Internal Details
 
@@ -38,20 +57,15 @@ from the doubt pipeline.
 ### Get Indices
 
 ```python
-# Get the predicates, or reasoning, behind the order
-predicates = doubt.get_predicates(X, y)
+# Get the ordered indices of examples worth checking again
+indices = doubt.get_indices(X, y)
 ```
 
 ### Get Predicates
 
 ```python
-# Get the ordered indices of examples worth checking again
-indices = doubt.get_indices(X, y)
+# Get the predicates, or reasoning, behind the order
+predicates = doubt.get_predicates(X, y)
 ```
 
-### Get Candidates
-
-```python
-# Get the (X, y) candidates worth checking again
-X_check, y_check = doubt.get_candidates(X, y)
-```
+## Why this matters
