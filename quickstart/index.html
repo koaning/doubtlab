@@ -1,0 +1,937 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="DoubtLab - Find Bad Labels">
+      
+      
+        <link rel="canonical" href="https://koaning.github.io/doubtlab/quickstart/">
+      
+      
+        <meta name="author" content="Vincent D. Warmerdam">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../icon.png">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-4.6.3">
+    
+    
+      
+        <title>Quickstart - doubtlab</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application.adb8469c.css">
+      
+        <link rel="stylesheet" href="../assets/stylesheets/application-palette.a8b3c06d.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="">
+      
+    
+    
+      <script src="../assets/javascripts/modernizr.86422ebf.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../assets/fonts/material-icons.css">
+    
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="white" data-md-color-accent="blue">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#datasets-and-models" tabindex="0" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://koaning.github.io/doubtlab/" title="doubtlab" aria-label="doubtlab" class="md-header-nav__button md-logo">
+          
+            <img alt="logo" src="../icon.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              doubtlab
+            </span>
+            <span class="md-header-nav__topic">
+              
+                Quickstart
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" aria-label="search" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/koaning/doubtlab/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+        
+
+  
+
+<nav class="md-tabs md-tabs--active" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href=".." class="md-tabs__link">
+        Home
+      </a>
+    
+  </li>
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="./" class="md-tabs__link md-tabs__link--active">
+          Getting Started
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../examples/google-emotions/" class="md-tabs__link">
+          Examples
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../api/doubtlab/" class="md-tabs__link">
+          API
+        </a>
+      
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://koaning.github.io/doubtlab/" title="doubtlab" class="md-nav__button md-logo">
+      
+        <img alt="logo" src="../icon.png" width="48" height="48">
+      
+    </a>
+    doubtlab
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/koaning/doubtlab/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      Getting Started
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Getting Started
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Quickstart
+      </label>
+    
+    <a href="./" title="Quickstart" class="md-nav__link md-nav__link--active">
+      Quickstart
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#datasets-and-models" class="md-nav__link">
+    Datasets and Models
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pipeline-of-doubt-reasons" class="md-nav__link">
+    Pipeline of Doubt Reasons
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#internal-details" class="md-nav__link">
+    Internal Details
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#retreiving-examples-to-check" class="md-nav__link">
+    Retreiving Examples to Check
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-indices" class="md-nav__link">
+    Get Indices
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-predicates" class="md-nav__link">
+    Get Predicates
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-do-this-exercise" class="md-nav__link">
+    Why do this exercise?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    Next Steps
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#general-reasons" class="md-nav__link">
+    General Reasons
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#classification-reasons" class="md-nav__link">
+    Classification Reasons
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regression-reasons" class="md-nav__link">
+    Regression Reasons
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Examples
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Examples
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../examples/google-emotions/" title="Google Emotions" class="md-nav__link">
+      Google Emotions
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      API
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        API
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../api/doubtlab/" title="ensemble" class="md-nav__link">
+      ensemble
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../api/reasons/" title="reasons" class="md-nav__link">
+      reasons
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#datasets-and-models" class="md-nav__link">
+    Datasets and Models
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pipeline-of-doubt-reasons" class="md-nav__link">
+    Pipeline of Doubt Reasons
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#internal-details" class="md-nav__link">
+    Internal Details
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#retreiving-examples-to-check" class="md-nav__link">
+    Retreiving Examples to Check
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-indices" class="md-nav__link">
+    Get Indices
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-predicates" class="md-nav__link">
+    Get Predicates
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-do-this-exercise" class="md-nav__link">
+    Why do this exercise?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    Next Steps
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#general-reasons" class="md-nav__link">
+    General Reasons
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#classification-reasons" class="md-nav__link">
+    Classification Reasons
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regression-reasons" class="md-nav__link">
+    Regression Reasons
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/koaning/doubtlab/edit/master/docs/quickstart/index.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                  <h1>Quickstart</h1>
+                
+                <p>The goal of this document is to explain how the library works on a high-level.</p>
+<h2 id="datasets-and-models">Datasets and Models<a class="headerlink" href="#datasets-and-models" title="Permanent link">&para;</a></h2>
+<p>You can use doubtlab to check your own datasets for bad labels. Many of the
+methods that we provide are based on the interaction between a dataset and a
+model trained on that dataset. For example;</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">(</span><span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">1_000</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</code></pre></div>
+<p>This examples shows a logistic regression model trained on the <code>load_iris</code> dataset.
+The <code>model</code> is able to make predictions on the dataset and it's also able to
+output a confidence score via <code>model.predict_proba(X)</code>.</p>
+<p>You could wonder. What might it mean if the confidence values are low? What might
+it mean if our model cannot make an accurate prediction on a datapoint that it's trained on?
+In both of these cases, it could be that nothing is wrong. But you could argue that
+these datapoints may be worth double-checking.</p>
+<h2 id="pipeline-of-doubt-reasons">Pipeline of Doubt Reasons<a class="headerlink" href="#pipeline-of-doubt-reasons" title="Permanent link">&para;</a></h2>
+<p>The doubtlab library allows you to define "reasons" to doubt the validity of a datapoint.
+The code below shows you how to build an ensemble of the two aforementioned reasons.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">doubtlab.ensemble</span> <span class="kn">import</span> <span class="n">DoubtEnsemble</span>
+<span class="kn">from</span> <span class="nn">doubtlab.reason</span> <span class="kn">import</span> <span class="n">ProbaReason</span><span class="p">,</span> <span class="n">WrongPredictionReason</span>
+
+<span class="c1"># Define the reasons with a name.</span>
+<span class="n">reasons</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;proba&quot;</span><span class="p">:</span> <span class="n">ProbaReason</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">max_proba</span><span class="o">=</span><span class="mf">0.55</span><span class="p">),</span>
+    <span class="s2">&quot;wrong_pred&quot;</span><span class="p">:</span> <span class="n">WrongPredictionReason</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">),</span>
+<span class="p">}</span>
+
+<span class="c1"># Put all the reasons into an ensemble</span>
+<span class="n">doubt</span> <span class="o">=</span> <span class="n">DoubtEnsemble</span><span class="p">(</span><span class="o">**</span><span class="n">reasons</span><span class="p">)</span>
+</code></pre></div>
+<p>This ensemble represents a pipeline of reasons to doubt the validity of a label.</p>
+<h3 id="internal-details">Internal Details<a class="headerlink" href="#internal-details" title="Permanent link">&para;</a></h3>
+<p>A <code>DoubtEnsemble</code>, technically, is just an ensemble of callables. You could
+also choose to use lambda functions to define a reason for doubt. The example
+below shows an example of a lambda function that's equivalent to what <code>WrongPredictionReason</code>
+would do.</p>
+<div class="highlight"><pre><span></span><code><span class="n">DoubtEnsemble</span><span class="p">(</span>
+    <span class="n">wrong_pred</span><span class="o">=</span><span class="k">lambda</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">!=</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">float16</span><span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>When it's time to infer doubt, the <code>DoubtEnsemble</code> will call each callable reason in order,
+passing <code>X</code>, <code>y</code> and listening for an array that contains "doubt-scores". These scores are just
+numbers, but they follow a few rules.</p>
+<ul>
+<li>when there is no doubt, the score should be zero</li>
+<li>the maximum doubt that a reason can emit is one</li>
+<li>the higher the doubt-score, the more likely doubt should be</li>
+</ul>
+<h2 id="retreiving-examples-to-check">Retreiving Examples to Check<a class="headerlink" href="#retreiving-examples-to-check" title="Permanent link">&para;</a></h2>
+<p>There are multiple ways of retreiving the examples to check
+from the doubt pipeline.</p>
+<h3 id="get-indices">Get Indices<a class="headerlink" href="#get-indices" title="Permanent link">&para;</a></h3>
+<p>You could simply use the <code>DoubtEnsemble.get_indices</code> method to get the indices of
+the original data that are in doubt.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Get the ordered indices of examples worth checking again</span>
+<span class="n">indices</span> <span class="o">=</span> <span class="n">doubt</span><span class="o">.</span><span class="n">get_indices</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</code></pre></div>
+<p>In this case, you'd get an array with 6 elements.</p>
+<div class="highlight"><pre><span></span><code>array([ 77, 106, 126, 133,  83, 119,  70])
+</code></pre></div>
+<p>You can inspect the associated rows/labels of the examples via:</p>
+<div class="highlight"><pre><span></span><code><span class="n">X</span><span class="p">[</span><span class="n">indices</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span>
+</code></pre></div>
+<h3 id="get-predicates">Get Predicates<a class="headerlink" href="#get-predicates" title="Permanent link">&para;</a></h3>
+<p>While the indices are useful they don't tell you much about how the
+ordering took place. If you'd like to see more details, you can also
+retreive a dataframe with predicates that explain which rows triggered
+which reasons.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Get the predicates, or reasoning, behind the order</span>
+<span class="n">predicates</span> <span class="o">=</span> <span class="n">doubt</span><span class="o">.</span><span class="n">get_predicates</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</code></pre></div>
+<p>The <code>predicates</code> dataframe contains a column for each reason. The index
+refers to the row number in the original dataset. Let's check the top 10 rows.</p>
+<div class="highlight"><pre><span></span><code><span class="n">predicates</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th align="right"></th>
+<th align="right">predicate_proba</th>
+<th align="right">predicate_wrong_pred</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">77</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="right">106</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="right">126</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">133</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">83</td>
+<td align="right">0</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="right">119</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">70</td>
+<td align="right">0</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="right">105</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">107</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">104</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p>There's a few things to observe here.</p>
+<ul>
+<li>The ensemble assumes that overlap between reasons matter is a reason to give a row priority, moving it up in the dataframe.</li>
+<li>The <code>.get_indices</code> method tells you <em>what</em> deserves checking and only returns candidates worth checking. The <code>.get_predicates</code> method tries to explain <em>why</em> these rows deserve to be checked and therefore returns a dataframe with a row for each row in <code>X</code>.</li>
+<li>The index of the predicates dataframe refers to rows in our original <code>X</code>, <code>y</code> arrays.</li>
+</ul>
+<h2 id="why-do-this-exercise">Why do this exercise?<a class="headerlink" href="#why-do-this-exercise" title="Permanent link">&para;</a></h2>
+<p>It's bad enough to have bad labels in your training data, but if you have bad labels in your validation then
+it's <em>really</em> game over for your machine learning models. There's <a href="https://labelerrors.com/">ample evidence</a>
+that many pre-trained academic models have suffered from this problem. So there's a legitimate concern that
+it may be a problem for your dataset as well.</p>
+<p>The hope is that this library makes it just a bit easier for folks do to check their datasets for bad labels.
+It's an exercise worth doing and the author of this library would love to hear anekdotes.</p>
+<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
+<p>You may get some more inspiration by checking some of the examples of this library.</p>
+<p>Once you're ready to give the library a spin we encourage you to explore the suite
+of reasons that this library supports.</p>
+<h3 id="general-reasons">General Reasons<a class="headerlink" href="#general-reasons" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>RandomReason</code>: assign doubt randomly, just for sure</li>
+<li><code>OutlierReason</code>: assign doubt when the model declares a row an outlier</li>
+</ul>
+<h3 id="classification-reasons">Classification Reasons<a class="headerlink" href="#classification-reasons" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>ProbaReason</code>: assign doubt when a models' confidence-values are low</li>
+<li><code>LongConfidenceReason</code>: assign doubt when a wrong class gains too much confidence</li>
+<li><code>ShortConfidenceReason</code>: assign doubt when the correct class gains too little confidence</li>
+<li><code>DisagreeReason</code>: assign doubt when two models disagree on a prediction</li>
+<li><code>OutlierReason</code>: assign doubt when the model declares a row an outlier</li>
+<li><code>CleanLabReason</code>: assign doubt according to <a href="https://github.com/cleanlab/cleanlab">cleanlab</a></li>
+</ul>
+<h3 id="regression-reasons">Regression Reasons<a class="headerlink" href="#regression-reasons" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>AbsoluteDifferenceReason</code>: assign doubt when the absolute difference is too high</li>
+<li><code>RelativeDifferenceReason</code>: assign doubt when the relative difference is too high</li>
+</ul>
+<p>If you think there's a reason missing, feel free to mention it on <a href="https://github.com/koaning/doubtlab/issues/new">GitHub</a>.</p>
+                
+                  
+                
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href=".." title="Home" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Home
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../examples/google-emotions/" title="Google Emotions" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Google Emotions
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Maintained by <a href="https://twitter.com/fishnets88">Vincent</a>.
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org" target="_blank" rel="noopener">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs</a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application.c33a9706.js"></script>
+      
+      <script>app.initialize({version:"1.1",url:{base:".."}})</script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

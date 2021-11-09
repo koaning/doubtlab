@@ -1,0 +1,1175 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="DoubtLab - Find Bad Labels">
+      
+      
+        <link rel="canonical" href="https://koaning.github.io/doubtlab/examples/google-emotions/">
+      
+      
+        <meta name="author" content="Vincent D. Warmerdam">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../icon.png">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-4.6.3">
+    
+    
+      
+        <title>Google Emotions - doubtlab</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.adb8469c.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.86422ebf.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="white" data-md-color-accent="blue">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#google-emotions" tabindex="0" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://koaning.github.io/doubtlab/" title="doubtlab" aria-label="doubtlab" class="md-header-nav__button md-logo">
+          
+            <img alt="logo" src="../../icon.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              doubtlab
+            </span>
+            <span class="md-header-nav__topic">
+              
+                Google Emotions
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" aria-label="search" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/koaning/doubtlab/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+        
+
+  
+
+<nav class="md-tabs md-tabs--active" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href="../.." class="md-tabs__link">
+        Home
+      </a>
+    
+  </li>
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../quickstart/" class="md-tabs__link">
+          Getting Started
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="./" class="md-tabs__link md-tabs__link--active">
+          Examples
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../api/doubtlab/" class="md-tabs__link">
+          API
+        </a>
+      
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://koaning.github.io/doubtlab/" title="doubtlab" class="md-nav__button md-logo">
+      
+        <img alt="logo" src="../../icon.png" width="48" height="48">
+      
+    </a>
+    doubtlab
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/koaning/doubtlab/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Getting Started
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Getting Started
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quickstart/" title="Quickstart" class="md-nav__link">
+      Quickstart
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+    
+    <label class="md-nav__link" for="nav-3">
+      Examples
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Examples
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Google Emotions
+      </label>
+    
+    <a href="./" title="Google Emotions" class="md-nav__link md-nav__link--active">
+      Google Emotions
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#google-emotions" class="md-nav__link">
+    Google Emotions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-loading" class="md-nav__link">
+    Data Loading
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#models" class="md-nav__link">
+    Models
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#assign-doubt" class="md-nav__link">
+    Assign Doubt
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exploring-examples" class="md-nav__link">
+    Exploring Examples
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exploring-reasons" class="md-nav__link">
+    Exploring Reasons
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#countvectorizer-short-on-confidence" class="md-nav__link">
+    CountVectorizer short on Confidence
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#countvectorizer-with-low-proba" class="md-nav__link">
+    CountVectorizer with Low Proba
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bytepair-embeddings-short-on-confidence" class="md-nav__link">
+    BytePair Embeddings short on Confidence
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    Next Steps
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      API
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        API
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../api/doubtlab/" title="ensemble" class="md-nav__link">
+      ensemble
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../api/reasons/" title="reasons" class="md-nav__link">
+      reasons
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#google-emotions" class="md-nav__link">
+    Google Emotions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-loading" class="md-nav__link">
+    Data Loading
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#models" class="md-nav__link">
+    Models
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#assign-doubt" class="md-nav__link">
+    Assign Doubt
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exploring-examples" class="md-nav__link">
+    Exploring Examples
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exploring-reasons" class="md-nav__link">
+    Exploring Reasons
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#countvectorizer-short-on-confidence" class="md-nav__link">
+    CountVectorizer short on Confidence
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#countvectorizer-with-low-proba" class="md-nav__link">
+    CountVectorizer with Low Proba
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bytepair-embeddings-short-on-confidence" class="md-nav__link">
+    BytePair Embeddings short on Confidence
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    Next Steps
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/koaning/doubtlab/edit/master/docs/examples/google-emotions.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                  <h1>Google Emotions</h1>
+                
+                <p>This example is based on <a href="https://koaning.io/posts/labels/">this blogpost</a>. It is also <em>the</em> example
+that motivated the creation of this project.</p>
+<h2 id="google-emotions">Google Emotions<a class="headerlink" href="#google-emotions" title="Permanent link">&para;</a></h2>
+<p>We're going to check for bad labels in the Google Emotions dataset. This dataset
+contains text from Reddit (so expect profanity) with emotion tags attached. There are
+28 different tags and a single text can belong to more than one emotion. We'll explore
+the "excitement" emotion here, but the exercise can be repeated for many other emotions too.</p>
+<p>The dataset comes with <a href="https://arxiv.org/abs/2005.00547">a paper that lists details</a>. When
+you read the paper, you'll observe that a genuine effort was taken to make a high quality dataset.</p>
+<ul>
+<li>There are 82 raters involved n labelling this dataset. Each example should have been at least 3 people checking it. The paper mentions that all the folks who rated were from India but spoke English natively.</li>
+<li>An effort was made to remove subreddits that were not safe for work or that contained too much vulgar tokens (according to a predefined word-list).</li>
+<li>An effort was made to balance different subreddits such that larger subreddits wouldn’t bias the dataset.</li>
+<li>An effort was made to remove subreddits that didn’t offer a variety of emotions.</li>
+<li>An effort was made to mask names of people as well as references to religions.</li>
+<li>An effort was made to, in hindsight, confirm that there is sufficient interrated correlation.</li>
+</ul>
+<p>Given that this is a dataset <em>from Google</em>, and the fact that there's a paper about it ... how
+hard would it be to find bad labels?</p>
+<h2 id="data-loading">Data Loading<a class="headerlink" href="#data-loading" title="Permanent link">&para;</a></h2>
+<p>Let's load in a portion of the dataset.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;https://github.com/koaning/optimal-on-paper/raw/main/data/goemotions_1.csv&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>Let's sample a few random rows and zoom in on the <code>excitement</code> column.</p>
+<div class="highlight"><pre><span></span><code><span class="n">label_of_interest</span> <span class="o">=</span> <span class="s1">&#39;excitement&#39;</span>
+
+<span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="n">label_of_interest</span><span class="p">]]</span>
+  <span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="n">d</span><span class="p">[</span><span class="n">label_of_interest</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+  <span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+</code></pre></div>
+<p>This is a sample.</p>
+<table>
+<thead>
+<tr>
+<th align="right"></th>
+<th align="left">text</th>
+<th align="right">excitement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">27233</td>
+<td align="left">my favourite singer ([NAME]) helped write one of the songs so i love it</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">1385</td>
+<td align="left">No i didn’t all i know is that i binged 3 seasoms of it.</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">17077</td>
+<td align="left">I liked [NAME]...</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">55699</td>
+<td align="left">A "wise" man once told me: &gt; DO &gt; YOUR &gt; OWN &gt;RESEARCH &gt;!</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p>Again, we should remind folks that this is reddit data. Beware vulgar language.</p>
+<h2 id="models">Models<a class="headerlink" href="#models" title="Permanent link">&para;</a></h2>
+<p>Let's set up two modelling pipelines to detect the emotion. Let's start with a simple CountVectorizer model.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span>
+
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]),</span> <span class="n">df</span><span class="p">[</span><span class="n">label_of_interest</span><span class="p">]</span>
+
+<span class="n">pipe</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
+    <span class="n">CountVectorizer</span><span class="p">(),</span>
+    <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">class_weight</span><span class="o">=</span><span class="s1">&#39;balanced&#39;</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>Next, let's also make a pipeline that uses text embeddings. We'll use the
+<a href="https://github.com/RasaHQ/whatlies">whatlies library</a> to do this.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_union</span>
+<span class="kn">from</span> <span class="nn">whatlies.language</span> <span class="kn">import</span> <span class="n">BytePairLanguage</span>
+
+<span class="n">pipe_emb</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
+    <span class="n">make_union</span><span class="p">(</span>
+        <span class="n">BytePairLanguage</span><span class="p">(</span><span class="s2">&quot;en&quot;</span><span class="p">,</span> <span class="n">vs</span><span class="o">=</span><span class="mi">1_000</span><span class="p">),</span>
+        <span class="n">BytePairLanguage</span><span class="p">(</span><span class="s2">&quot;en&quot;</span><span class="p">,</span> <span class="n">vs</span><span class="o">=</span><span class="mi">100_000</span><span class="p">)</span>
+    <span class="p">),</span>
+    <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">class_weight</span><span class="o">=</span><span class="s1">&#39;balanced&#39;</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>Let's train both pipelines before moving on.</p>
+<div class="highlight"><pre><span></span><code><span class="n">pipe</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">pipe_emb</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="assign-doubt">Assign Doubt<a class="headerlink" href="#assign-doubt" title="Permanent link">&para;</a></h2>
+<p>Let's now create a doubt ensemble using these two pipelines.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">doubtlab.ensemble</span> <span class="kn">import</span> <span class="n">DoubtEnsemble</span>
+<span class="kn">from</span> <span class="nn">doubtlab.reason</span> <span class="kn">import</span> <span class="n">ProbaReason</span><span class="p">,</span> <span class="n">DisagreeReason</span><span class="p">,</span> <span class="n">ShortConfidenceReason</span>
+
+<span class="n">reasons</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;proba&#39;</span><span class="p">:</span> <span class="n">ProbaReason</span><span class="p">(</span><span class="n">pipe</span><span class="p">),</span>
+    <span class="s1">&#39;disagree&#39;</span><span class="p">:</span> <span class="n">DisagreeReason</span><span class="p">(</span><span class="n">pipe</span><span class="p">,</span> <span class="n">pipe_emb</span><span class="p">),</span>
+    <span class="s1">&#39;short_pipe&#39;</span><span class="p">:</span> <span class="n">ShortConfidenceReason</span><span class="p">(</span><span class="n">pipe</span><span class="p">),</span>
+    <span class="s1">&#39;short_pipe_emb&#39;</span><span class="p">:</span> <span class="n">ShortConfidenceReason</span><span class="p">(</span><span class="n">pipe_emb</span><span class="p">),</span>
+<span class="p">}</span>
+
+<span class="n">doubt</span> <span class="o">=</span> <span class="n">DoubtEnsemble</span><span class="p">(</span><span class="o">**</span><span class="n">reasons</span><span class="p">)</span>
+</code></pre></div>
+<p>There are four reasons in this ensemble.</p>
+<ol>
+<li><code>proba</code>: This reason will assign doubt when the <code>pipe</code> pipeline doesn't predict any label with a high confidence.</li>
+<li><code>disagree</code>: This reason will assign doubt when the <code>pipe</code> pipeline doesn't agree with the <code>pipe_emb</code> pipeline.</li>
+<li><code>short_pipe</code>: This reason will assign doubt when the <code>pipe</code> pipeline predicts the correct label with a low confidence.</li>
+<li><code>short_pipe_emb</code>: This reason will assign doubt when the <code>pipe_emb</code> pipeline predicts the correct label with a low confidence.</li>
+</ol>
+<p>All of these reasons have merit to it, but when they overlap we should assign extra attention. The <code>DoubtEnsemble</code> will assign the priority based on overlap on your behalf.</p>
+<h3 id="exploring-examples">Exploring Examples<a class="headerlink" href="#exploring-examples" title="Permanent link">&para;</a></h3>
+<p>Let's explore some of the labels that deserve attention.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Return a dataframe with reasoning behind sorting</span>
+<span class="n">predicates</span> <span class="o">=</span> <span class="n">doubt</span><span class="o">.</span><span class="n">get_predicates</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># Use predicates to sort original dataframe</span>
+<span class="n">df_sorted</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">predicates</span><span class="o">.</span><span class="n">index</span><span class="p">][[</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="n">label_of_interest</span><span class="p">]]</span>
+
+<span class="c1"># Create a dataframe containing predicates and original data</span>
+<span class="n">df_label</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_sorted</span><span class="p">,</span> <span class="n">predicates</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+<p>Let's check the first few rows of this dataframe.</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">df_label</span><span class="p">[[</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="n">label_of_interest</span><span class="p">]]</span>
+  <span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th align="left">text</th>
+<th align="right">excitement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Happy Easter everyone!!</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">Happy Easter everyone!!</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">Happy Easter everyone!!</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">Congratulations mate!!</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">Yes every time</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">New flavour! I love it!</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">Wow! Prayers for everyone there.</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">Wow! Prayers for everyone there.</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">Hey vro!</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">Oh my gooooooooood</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p>There's some examples that certainly contain excitement. However, these are all examples where the label is 0. Let's re-use this dataframe one more time but now to explore examples where the data says there should be excitement.</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">df_label</span><span class="p">[[</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="n">label_of_interest</span><span class="p">]]</span>
+  <span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;excitement&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
+  <span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th align="left">text</th>
+<th align="right">excitement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Hate Hate Hate, feels so good.</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="left">dear... husband</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="left">The old bear</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="left">I'd love to do that one day</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="left">[NAME] damn I love [NAME].</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="left">[NAME] is a really cool name!</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="left">No haha but this is our first day on Reddit!</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="left">Yeah that pass</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="left">True! He probably is just lonely. Thank you for the kind words :)</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="left">a surprise to be sure</td>
+<td align="right">1</td>
+</tr>
+</tbody>
+</table>
+<p>While some of the examples seem fine, I would argue that "dear ... husband" and "The old bear" are examples where the label is should be 0.</p>
+<h2 id="exploring-reasons">Exploring Reasons<a class="headerlink" href="#exploring-reasons" title="Permanent link">&para;</a></h2>
+<p>It's worth doing a minor deep dive in the behavior behind the different reasons. None of the reasons are perfect, but they all favor different examples for reconsideration.</p>
+<h3 id="countvectorizer-short-on-confidence">CountVectorizer short on Confidence<a class="headerlink" href="#countvectorizer-short-on-confidence" title="Permanent link">&para;</a></h3>
+<p>This is a "high"-bias bag-of-words model. It's going to likely overfit on the apperance of a token in the text.</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">df_label</span>
+ <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;predicate_short_pipe&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+ <span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)[[</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="n">label_of_interest</span><span class="p">]]</span>
+ <span class="o">.</span><span class="n">drop_duplicates</span><span class="p">())</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th align="left">text</th>
+<th align="right">excitement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">I am inexplicably excited by [NAME]. I get so excited by how he curls passes</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">Omg this is so amazing ! Keep up the awesome work and have a fantastic New Year !</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">Sounds like a fun game. Our home game around here is .05/.10. Its fun but not very exciting.</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">So no replays for arsenal penalty calls.. Cool cool cool cool cool cool cool cool</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">Wow, your posting history is a real... interesting ride.</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">No different than people making a big deal about their team winning the super bowl. People find it interesting.</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">Hey congrats!! That's amazing, you've done such amazing progress! Hope you have a great day :)</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">I just read your list and now I can't wait, either!! Hurry up with the happy, relieved and peaceful onward and upward!! Congratulations😎</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<h3 id="countvectorizer-with-low-proba">CountVectorizer with Low Proba<a class="headerlink" href="#countvectorizer-with-low-proba" title="Permanent link">&para;</a></h3>
+<p>This is a "high"-bias bag-of-words model when it isn't confident. It's going to likely overfit examples with tokens that appear in both classes.</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">df_label</span>
+ <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;predicate_proba&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+ <span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)[[</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="n">label_of_interest</span><span class="p">]]</span>
+ <span class="o">.</span><span class="n">drop_duplicates</span><span class="p">())</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th align="left">text</th>
+<th align="right">excitement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Happy Easter everyone!!</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">This game is on [NAME]...</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">I swear if it's the Cowboys and the Patriots in the Super Bowl I'm going to burn something down.</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">I'm on red pills :)</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">Wow. I hope that asst manager will be looking for a new job soon.</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">No lie I was just fucking watching the office but I paused it and am know listening to graduation and browsing this subreddit</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">I was imagining her just coming in to work wearing the full [NAME] look.</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">Like this game from a week ago? 26 points 14</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">You should come. You'd enjoy it.</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">I almost pissed myself waiting so long in the tunnel. Not a fun feeling</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<h3 id="bytepair-embeddings-short-on-confidence">BytePair Embeddings short on Confidence<a class="headerlink" href="#bytepair-embeddings-short-on-confidence" title="Permanent link">&para;</a></h3>
+<p>This is model based on just word embeddings. These embeddings are pooled together before being passed to the classifier which is likely why it favors short texts.</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">df_label</span>
+ <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;predicate_short_pipe_emb&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+ <span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">)[[</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="n">label_of_interest</span><span class="p">]]</span>
+ <span class="o">.</span><span class="n">drop_duplicates</span><span class="p">())</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th align="left">text</th>
+<th align="right">excitement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Woot woot!</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">WOW!!!</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">Happy birthday!</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">Happy Birthday!</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">Happy one week anniversary</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">Happy Birthday!!!</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">Pop pop!</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">Enjoy the ride!</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">Very interesting!!!</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">My exact reaction</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">happy birthday dude!</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">Enjoy</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">Oh wow!!!</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">This sounds interesting</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<h2 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">&para;</a></h2>
+<p>This example demonstrates two things.</p>
+<ol>
+<li>By combining reasons into an ensemble, we get a pretty good system to spot examples worth double checking.</li>
+<li>It's fairly easy to find bad labels, even in a dataset by Google, even when there's an article written about it. This does not bode well for any models trained on this dataset.</li>
+</ol>
+<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
+<p>Feel free to repeat this exercise but with a different emotion or with different reasoning in the ensemble.</p>
+                
+                  
+                
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../../quickstart/" title="Quickstart" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Quickstart
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../../api/doubtlab/" title="ensemble" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                ensemble
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Maintained by <a href="https://twitter.com/fishnets88">Vincent</a>.
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org" target="_blank" rel="noopener">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs</a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.c33a9706.js"></script>
+      
+      <script>app.initialize({version:"1.1",url:{base:"../.."}})</script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
