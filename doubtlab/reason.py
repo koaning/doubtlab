@@ -1,4 +1,5 @@
 import numpy as np
+from cleanlab.pruning import get_noise_indices
 
 
 class ProbaReason:
@@ -270,34 +271,116 @@ class OutlierReason:
         return (self.model.predict(X) == -1).astype(np.float16)
 
 
-class RegressionGapReason:
+class AbsoluteDifferenceReason:
     """
-    Assign doubt when a label differs too much from a scikit-learn regression model.
+    Assign doubt when the absolute difference between label and regression is too large.
 
     Arguments:
         model: scikit-learn outlier model
+        threshold: cutoff for doubt assignment
 
     Usage:
 
     ```python
-    from sklearn.datasets import load_iris
-    from sklearn.ensemble import IsolationForest
+    from sklearn.datasets import load_diabetes
+    from sklearn.linear_model import LinearRegression
 
     from doubtlab.ensemble import DoubtEnsemble
-    from doubtlab.reason import RegressionGapReason
+    from doubtlab.reason import AbsoluteDifferenceReason
 
-    X, y = load_iris(return_X_y=True)
-    model = IsolationForest()
-    model.fit(X)
+    X, y = load_diabetes(return_X_y=True)
+    model = LinearRegression()
+    model.fit(X, y)
 
-    doubt = DoubtEnsemble(reason = RegressionGapReason(model))
+    doubt = DoubtEnsemble(reason = AbsoluteDifferenceReason(model, threshold=100))
 
     indices = doubt.get_indices(X, y)
     ```
     """
 
-    def __init__(self, model):
+    def __init__(self, model, threshold):
         self.model = model
+        self.threshold = threshold
 
     def __call__(self, X, y):
-        return (self.model.predict(X) == -1).astype(np.float16)
+        difference = np.abs(self.model.predict(X) - y)
+        return (difference >= self.threshold).astype(np.float16)
+
+
+class RelativeDifferenceReason:
+    """
+    Assign doubt when the relative difference between label and regression is too large.
+
+    Arguments:
+        model: scikit-learn outlier model
+        threshold: cutoff for doubt assignment
+
+    Usage:
+
+    ```python
+    from sklearn.datasets import load_diabetes
+    from sklearn.linear_model import LinearRegression
+
+    from doubtlab.ensemble import DoubtEnsemble
+    from doubtlab.reason import RelativeDifferenceReason
+
+    X, y = load_diabetes(return_X_y=True)
+    model = LinearRegression()
+    model.fit(X, y)
+
+    doubt = DoubtEnsemble(reason = RelativeDifferenceReason(model, threshold=0.5))
+
+    indices = doubt.get_indices(X, y)
+    ```
+    """
+
+    def __init__(self, model, threshold):
+        self.model = model
+        self.threshold = threshold
+
+    def __call__(self, X, y):
+        difference = np.abs(self.model.predict(X) - y) / y
+        return (difference >= self.threshold).astype(np.float16)
+
+
+class CleanlabReason:
+    """
+    Assign doubt when using the cleanlab heuristic.
+
+    Arguments:
+        model: scikit-learn outlier model
+        threshold: cutoff for doubt assignment
+
+    Usage:
+
+    ```python
+    from sklearn.datasets import load_iris
+    from sklearn.linear_model import LogisticRegression
+    from sklearn.neighbors import KNeighborsClassifier
+
+    from doubtlab.ensemble import DoubtEnsemble
+    from doubtlab.reason import CleanlabReason
+
+    X, y = load_iris(return_X_y=True)
+    model = LogisticRegression()
+    model.fit(X, y)
+
+    doubt = DoubtEnsemble(reason = CleanlabReason(model))
+
+    indices = doubt.get_indices(X, y)
+    ```
+    """
+
+    def __init__(self, model, sorted_index_method="normalized_margin", min_doubt=0.5):
+        self.model = model
+        self.sorted_index_method = sorted_index_method
+        self.min_doubt = min_doubt
+
+    def __call__(self, X, y):
+        probas = self.model.predict_proba(X)
+        ordered_label_errors = get_noise_indices(y, probas, self.sorted_index_method)
+        result = np.zeros_like(y)
+        conf_arr = np.linspace(1, self.min_doubt, result.shape[0])
+        for idx, conf in zip(ordered_label_errors, conf_arr):
+            result[idx] = conf
+        return result

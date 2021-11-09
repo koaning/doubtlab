@@ -10,7 +10,9 @@ from doubtlab.reason import (
     LongConfidenceReason,
     ShortConfidenceReason,
     WrongPredictionReason,
-    RegressionGapReason,
+    AbsoluteDifferenceReason,
+    RelativeDifferenceReason,
+    CleanlabReason,
 )
 
 all_reasons = [
@@ -21,7 +23,9 @@ all_reasons = [
     LongConfidenceReason,
     ShortConfidenceReason,
     WrongPredictionReason,
-    RegressionGapReason,
+    AbsoluteDifferenceReason,
+    RelativeDifferenceReason,
+    CleanlabReason,
 ]
 
 

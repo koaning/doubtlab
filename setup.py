@@ -4,8 +4,7 @@ from setuptools import setup, find_packages
 
 base_packages = [
     "scikit-learn>=1.0.0",
-    "pynndescent>=0.5",
-    "numba>=0.54.1",
+    "cleanlab>=1.0",
     "pandas>=1.3.3",
 ]
 
