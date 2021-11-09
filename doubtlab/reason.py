@@ -77,7 +77,7 @@ class WrongPredictionReason:
     Assign doubt when the model prediction doesn't match the label.
 
     Arguments:
-        model: sci-kit learn classifier
+        model: scikit-learn classifier
 
     Usage:
 
@@ -110,7 +110,7 @@ class LongConfidenceReason:
     Assign doubt when a wrong class gains too much confidence.
 
     Arguments:
-        model: sci-kit learn classifier
+        model: scikit-learn classifier
         threshold: confidence threshold for doubt assignment
 
     Usage:
@@ -156,7 +156,7 @@ class ShortConfidenceReason:
     Assign doubt when the correct class gains too little confidence.
 
     Arguments:
-        model: sci-kit learn classifier
+        model: scikit-learn classifier
         threshold: confidence threshold for doubt assignment
 
     Usage:
@@ -204,8 +204,8 @@ class DisagreeReason:
     Assign doubt when two scikit-learn models disagree on a prediction.
 
     Arguments:
-        model1: sci-kit learn classifier
-        model2: a different sci-kit learn classifier
+        model1: scikit-learn classifier
+        model2: a different scikit-learn classifier
 
     Usage:
 

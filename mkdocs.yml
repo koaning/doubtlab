@@ -17,8 +17,8 @@ plugins:
 copyright: Maintained by <a href="https://twitter.com/fishnets88">Vincent</a>.
 theme:
   name: material
-  favicon: venn.png
-  logo: venn.png
+  favicon: icon.png
+  logo: icon.png
   feature:
     tabs: true
   palette:

@@ -15,3 +15,12 @@ You can install the tool via pip.
 ```
 python -m pip install doubtlab
 ```
+
+## Getting Start
+
+If you want to get started, we recommend starting [here](./quickstart/).
+
+## Related Projects
+
+- The [cleanlab](https://github.com/cleanlab/cleanlab) project was an inspiration for this one. They have a great heuristic for bad label detection but I wanted to have a library that implements many. Be sure to check out their work on the [labelerrors.com](https://labelerrors.com) project.
+- My employer, [Rasa](https://rasa.com/), has always had a focus on data quality. Some of that attitude is bound to have seeped in here. Be sure to check the [Conversation Driven Development](https://rasa.com/docs/rasa/conversation-driven-development/) approach and [Rasa X](https://rasa.com/docs/rasa-x/) if you're working on virtual assistants.

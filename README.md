@@ -53,14 +53,26 @@ predicates = doubt.get_predicates(X, y)
 
 The library implemented many "reaons" for doubt.
 
-- `ProbaReason`: assign doubt when a models' confidence-values are low
+### General Reasons
+
 - `RandomReason`: assign doubt randomly, just for sure
+- `OutlierReason`: assign doubt when the model declares a row an outlier
+
+### Classification Reasons
+
+- `ProbaReason`: assign doubt when a models' confidence-values are low
 - `LongConfidenceReason`: assign doubt when a wrong class gains too much confidence
 - `ShortConfidenceReason`: assign doubt when the correct class gains too little confidence
 - `DisagreeReason`: assign doubt when two models disagree on a prediction
+- `OutlierReason`: assign doubt when the model declares a row an outlier
 - `CleanLabReason`: assign doubt according to [cleanlab](https://github.com/cleanlab/cleanlab)
+
+### Regression Reasons
+
+- `AbsoluteDifferenceReason`: assign doubt when the absolute difference is too high
+- `RelativeDifferenceReason`: assign doubt when the relative difference is too high
 
 ## Related Projects
 
 - The [cleanlab](https://github.com/cleanlab/cleanlab) project was an inspiration for this one. They have a great heuristic for bad label detection but I wanted to have a library that implements many. Be sure to check out their work on the [labelerrors.com](https://labelerrors.com) project.
-- My employer, [Rasa](https://rasa.com/), has always had a focus on data quality. Some of that attitude is bound to have seeped in here. Be sure to check out [Rasa X](https://rasa.com/docs/rasa-x/) if you're working on virtual assistants.
+- My employer, [Rasa](https://rasa.com/), has always had a focus on data quality. Some of that attitude is bound to have seeped in here. Be sure to check the [Conversation Driven Development](https://rasa.com/docs/rasa/conversation-driven-development/) approach and [Rasa X](https://rasa.com/docs/rasa-x/) if you're working on virtual assistants.
