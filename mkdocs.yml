@@ -8,6 +8,8 @@ nav:
   - Home: index.md
   - Getting Started:
     - Quickstart: quickstart/index.md
+  - Examples:
+    - Google Emotions: examples/google-emotions.md
   - API:
     - ensemble: api/doubtlab.md
     - reasons: api/reasons.md

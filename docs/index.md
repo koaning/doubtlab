@@ -16,7 +16,7 @@ You can install the tool via pip.
 python -m pip install doubtlab
 ```
 
-## Getting Start
+## Getting Started
 
 If you want to get started, we recommend starting [here](./quickstart/).
 

@@ -37,7 +37,10 @@ def test_function_docstrings(func):
     check_docstring(obj=func)
 
 
-@pytest.mark.parametrize("fpath", ["README.md", "docs/quickstart/index.md"])
+@pytest.mark.parametrize(
+    "fpath",
+    ["README.md", "docs/quickstart/index.md", "docs/examples/google-emotions.md"],
+)
 def test_quickstart_docs_file(fpath):
     """Test the quickstart files."""
-    check_md_file(fpath)
+    check_md_file(fpath, memory=True)

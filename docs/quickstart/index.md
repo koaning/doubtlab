@@ -136,10 +136,38 @@ There's a few things to observe here.
 
 ## Why do this exercise?
 
+It's bad enough to have bad labels in your training data, but if you have bad labels in your validation then
+it's *really* game over for your machine learning models. There's [ample evidence](https://labelerrors.com/)
+that many pre-trained academic models have suffered from this problem. So there's a legitimate concern that
+it may be a problem for your dataset as well.
+
+The hope is that this library makes it just a bit easier for folks do to check their datasets for bad labels.
+It's an exercise worth doing and the author of this library would love to hear anekdotes.
+
 ## Next Steps
 
-This library contains many more "reasons" that you can use.
+You may get some more inspiration by checking some of the examples of this library.
+
+Once you're ready to give the library a spin we encourage you to explore the suite
+of reasons that this library supports.
+
+### General Reasons
+
+- `RandomReason`: assign doubt randomly, just for sure
+- `OutlierReason`: assign doubt when the model declares a row an outlier
 
 ### Classification Reasons
 
+- `ProbaReason`: assign doubt when a models' confidence-values are low
+- `LongConfidenceReason`: assign doubt when a wrong class gains too much confidence
+- `ShortConfidenceReason`: assign doubt when the correct class gains too little confidence
+- `DisagreeReason`: assign doubt when two models disagree on a prediction
+- `OutlierReason`: assign doubt when the model declares a row an outlier
+- `CleanLabReason`: assign doubt according to [cleanlab](https://github.com/cleanlab/cleanlab)
+
 ### Regression Reasons
+
+- `AbsoluteDifferenceReason`: assign doubt when the absolute difference is too high
+- `RelativeDifferenceReason`: assign doubt when the relative difference is too high
+
+If you think there's a reason missing, feel free to mention it on [GitHub](https://github.com/koaning/doubtlab/issues/new).
