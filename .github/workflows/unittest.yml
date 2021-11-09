@@ -27,7 +27,7 @@ jobs:
       with:
         path: ~/.cache/pip
         key: ${{ runner.os }}-pip-${{ matrix.python-version }}-${{ hashFiles('setup.py') }}
-    - name: Install Testing Dependencies
+    - name: Install Testing Dependencies, if no cache
       if: steps.cache.outputs.cache-hit != 'true'
       run: make install
     - name: Unittest
