@@ -30,7 +30,7 @@ X, y = load_iris(return_X_y=True)
 model = LogisticRegression(max_iter=1_000)
 model.fit(X, y)
 
-# Next we can the reasons for doubt. In this case we're saying
+# Next we can add reasons for doubt. In this case we're saying
 # that examples deserve another look if the associated proba values
 # are low or if the model output doesn't match the associated label.
 reasons = {
