@@ -49,7 +49,7 @@ predicates = doubt.get_predicates(X, y)
 
 ## Features
 
-The library implemented many "reaons" for doubt.
+The library implemented many "reasons" for doubt.
 
 ### General Reasons
 
