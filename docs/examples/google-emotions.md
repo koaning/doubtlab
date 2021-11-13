@@ -261,7 +261,13 @@ This is model based on just word embeddings. These embeddings are pooled togethe
 This example demonstrates two things.
 
 1. By combining reasons into an ensemble, we get a pretty good system to spot examples worth double checking.
-2. It's fairly easy to find bad labels, even in a dataset by Google, even when there's an article written about it. This does not bode well for any models trained on this dataset.
+2. It's fairly easy to find bad labels, even in a dataset hosted by Google, even when there's an article written about it. This does not bode well for any models trained on this dataset.
+
+### Required Nuance
+
+While we think this example demonstrates the utility of doubtlab, we want to mention a few points of nuance. The emotions dataset also comes with a column for the `rater_id` and `example_very_unclear`. Some of the examples that we've found also have rates that disagree and a flag for being an unclear example. One can only commend the authors for taking this effort, even if it doesn't cover all dubious labels.
+
+It also deserves mentioning that emotion detection is genuinely an incredibly hard task to label. There's so much context and culture in expression emotion in a natural language that I cannot expect a "pure label" to even exist. Sarcasm detection is an unsolved problem. If sarcasm is unsolved, how on earth can we guarantee emotion detection or sentiment?
 
 ## Next Steps
 
