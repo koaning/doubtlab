@@ -460,6 +460,19 @@
     Conclusion
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#required-nuance" class="md-nav__link">
+    Required Nuance
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -630,6 +643,19 @@
   <a href="#conclusion" class="md-nav__link">
     Conclusion
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#required-nuance" class="md-nav__link">
+    Required Nuance
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1084,7 +1110,13 @@ hard would it be to find bad labels?</p>
 <p>This example demonstrates two things.</p>
 <ol>
 <li>By combining reasons into an ensemble, we get a pretty good system to spot examples worth double checking.</li>
-<li>It's fairly easy to find bad labels, even in a dataset by Google, even when there's an article written about it. This does not bode well for any models trained on this dataset.</li>
+<li>It's fairly easy to find bad labels, even in a dataset hosted by Google, even when there's an article written about it. This does not bode well for any models trained on this dataset.</li>
+</ol>
+<h3 id="required-nuance">Required Nuance<a class="headerlink" href="#required-nuance" title="Permanent link">&para;</a></h3>
+<p>We think this example demonstrates the utility of doubtlab and that it also serves as a useful case-study that warns people of the dangers of label errors. That said, we want to mention a few points of nuance.</p>
+<ol>
+<li>The emotions dataset also comes with a column for the <code>rater_id</code> and <code>example_very_unclear</code>. Some of the examples that we've found using doubtlab also have disagreement between raters. The unclear-example flag is also raised a few times when we spot a bad label. One can only commend the authors for taking this effort because these columns help explain that some of the labels shouldn't be taken at face value.</li>
+<li>It also deserves mentioning that emotion detection is genuinely an incredibly hard task to label. There's so much context and culture involved in expressing emotion in a natural language that I cannot expect a "pure label" to even exist. Sarcasm detection is an unsolved problem. If sarcasm is unsolved, how on earth can we guarantee emotion detection or sentiment?</li>
 </ol>
 <h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
 <p>Feel free to repeat this exercise but with a different emotion or with different reasoning in the ensemble.</p>
