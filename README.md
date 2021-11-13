@@ -59,6 +59,7 @@ The library implemented many "reasons" for doubt.
 ### Classification Reasons
 
 - `ProbaReason`: assign doubt when a models' confidence-values are low for any label
+- `WrongPredictionReason`: assign doubt when a model cannot predict the listed label
 - `LongConfidenceReason`: assign doubt when a wrong label gains too much confidence
 - `ShortConfidenceReason`: assign doubt when the correct label gains too little confidence
 - `DisagreeReason`: assign doubt when two models disagree on a prediction
