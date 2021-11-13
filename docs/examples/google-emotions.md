@@ -265,9 +265,10 @@ This example demonstrates two things.
 
 ### Required Nuance
 
-While we think this example demonstrates the utility of doubtlab, we want to mention a few points of nuance. The emotions dataset also comes with a column for the `rater_id` and `example_very_unclear`. Some of the examples that we've found also have rates that disagree and a flag for being an unclear example. One can only commend the authors for taking this effort, even if it doesn't cover all dubious labels.
+We think this example demonstrates the utility of doubtlab and that it also serves as a useful case-study that warns people of the dangers of label errors. That said, we want to mention a few points of nuance.
 
-It also deserves mentioning that emotion detection is genuinely an incredibly hard task to label. There's so much context and culture in expression emotion in a natural language that I cannot expect a "pure label" to even exist. Sarcasm detection is an unsolved problem. If sarcasm is unsolved, how on earth can we guarantee emotion detection or sentiment?
+1. The emotions dataset also comes with a column for the `rater_id` and `example_very_unclear`. Some of the examples that we've found using doubtlab also have disagreement between raters. The unclear-example flag is also raised a few times when we spot a bad label. One can only commend the authors for taking this effort because these columns help explain that some of the labels shouldn't be taken at face value.
+2. It also deserves mentioning that emotion detection is genuinely an incredibly hard task to label. There's so much context and culture involved in expressing emotion in a natural language that I cannot expect a "pure label" to even exist. Sarcasm detection is an unsolved problem. If sarcasm is unsolved, how on earth can we guarantee emotion detection or sentiment?
 
 ## Next Steps
 
