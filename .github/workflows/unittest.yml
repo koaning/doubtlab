@@ -35,4 +35,4 @@ jobs:
       run: python -m venv ./.venv && . ./.venv/bin/activate && make install
       if: steps.cache-venv.outputs.cache-hit != 'true'
     - name: Unittest
-      run: python -m venv ./.venv && . ./.venv/bin/activate && make install
+      run: python -m venv ./.venv && . ./.venv/bin/activate && make test
