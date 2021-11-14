@@ -70,6 +70,10 @@ The library implemented many "reasons" for doubt.
 - `AbsoluteDifferenceReason`: assign doubt when the absolute difference is too high
 - `RelativeDifferenceReason`: assign doubt when the relative difference is too high
 
+## Status
+
+The project is useful, but it is early days for the project. Feedback is very welcome!
+
 ## Related Projects
 
 - The [cleanlab](https://github.com/cleanlab/cleanlab) project was an inspiration for this one. They have a great heuristic for bad label detection but I wanted to have a library that implements many. Be sure to check out their work on the [labelerrors.com](https://labelerrors.com) project.
