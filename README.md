@@ -70,9 +70,10 @@ The library implemented many "reasons" for doubt.
 - `AbsoluteDifferenceReason`: assign doubt when the absolute difference is too high
 - `RelativeDifferenceReason`: assign doubt when the relative difference is too high
 
-## Status
+## Feedback
 
-The project is useful as-is, but it is early days for the project. Feedback is very welcome!
+It is early days for the project. The project should be plenty useful as-is, but we
+prefer to be honest. Feedback and anekdotes are very welcome!
 
 ## Related Projects
 
