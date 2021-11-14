@@ -32,7 +32,7 @@ jobs:
     - name: Cache Status
       run: echo "${{steps.cache-venv.outputs.cache-hit}}"
     - name: Install
-      run: python -m venv ./.venv && . ./.venv/bin/activate && make install
+      run: python -m venv venv && source venv/bin/activate && make install
       if: steps.cache-venv.outputs.cache-hit != 'true'
     - name: Unittest
-      run: python -m venv ./.venv && . ./.venv/bin/activate && make test
+      run: python -m venv venv && source venv/bin/activate && make test

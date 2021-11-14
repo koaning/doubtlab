@@ -5,7 +5,7 @@ flake:
 	flake8 doubtlab tests setup.py
 
 test:
-	pytest
+	pytest tests
 
 types:
 	python -m pyanalyze doubtlab tests
