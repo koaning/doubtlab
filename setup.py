@@ -30,7 +30,7 @@ dev_packages = all_packages + docs_packages + test_packages
 
 setup(
     name="doubtlab",
-    version="0.1.0",
+    version="0.1.1",
     author="Vincent D. Warmerdam",
     packages=find_packages(exclude=["notebooks", "docs"]),
     description="Don't Blindly Trust Your Labels",
@@ -44,7 +44,7 @@ setup(
     },
     install_requires=base_packages,
     extras_require={"dev": dev_packages},
-    license_files = ('LICENSE',)
+    license_files=("LICENSE",),
     classifiers=[
         "Intended Audience :: Science/Research",
         "Programming Language :: Python :: 3",
