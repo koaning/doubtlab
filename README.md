@@ -72,7 +72,7 @@ The library implemented many "reasons" for doubt.
 
 ## Status
 
-The project is useful, but it is early days for the project. Feedback is very welcome!
+The project is useful as-is, but it is early days for the project. Feedback is very welcome!
 
 ## Related Projects
 
