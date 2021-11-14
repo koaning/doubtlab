@@ -29,6 +29,8 @@ jobs:
         key: ${{ matrix.python-version }}-venv-${{ hashFiles('setup.py') }}
         restore-keys: |
           ${{ matrix.python-version }}-venv-
+    - name: Cache Status
+      run: echo "${{steps.cache-venv.outputs.cache-hit}}"
     - name: Install
       run: python -m venv ./.venv && . ./.venv/bin/activate && make install
       if: steps.cache-venv.outputs.cache-hit != 'true'
