@@ -44,6 +44,7 @@ setup(
     },
     install_requires=base_packages,
     extras_require={"dev": dev_packages},
+    license_files = ('LICENSE',)
     classifiers=[
         "Intended Audience :: Science/Research",
         "Programming Language :: Python :: 3",
