@@ -151,6 +151,49 @@ class LongConfidenceReason:
         return np.where(confidences > self.threshold, confidences, 0)
 
 
+class MarginConfidenceReason:
+    """
+    Assign doubt when a the difference between the top two most confident classes is too large.
+
+    Throws an error when there are only two classes.
+
+    Arguments:
+        model: scikit-learn classifier
+        threshold: confidence threshold for doubt assignment
+
+    Usage:
+
+    ```python
+    from sklearn.datasets import load_iris
+    from sklearn.linear_model import LogisticRegression
+
+    from doubtlab.ensemble import DoubtEnsemble
+    from doubtlab.reason import MarginConfidenceReason
+
+    X, y = load_iris(return_X_y=True)
+    model = LogisticRegression(max_iter=1_000)
+    model.fit(X, y)
+
+    doubt = DoubtEnsemble(reason = MarginConfidenceReason(model=model))
+
+    indices = doubt.get_indices(X, y)
+    ```
+    """
+
+    def __init__(self, model, threshold=0.2):
+        self.model = model
+        self.threshold = threshold
+
+    def _calc_margin(self, probas):
+        sorted = np.sort(probas, axis=1)
+        return sorted[:, -1] - sorted[:, -2]
+
+    def __call__(self, X, y):
+        probas = self.model.predict_proba(X)
+        margin = self._calc_margin(probas)
+        return np.where(margin > self.threshold, margin, 0)
+
+
 class ShortConfidenceReason:
     """
     Assign doubt when the correct class gains too little confidence.
