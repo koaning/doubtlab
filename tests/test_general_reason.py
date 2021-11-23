@@ -10,6 +10,7 @@ from doubtlab.reason import (
     ProbaReason,
     OutlierReason,
     DisagreeReason,
+    MarginConfidenceReason,
     LongConfidenceReason,
     ShortConfidenceReason,
     WrongPredictionReason,
@@ -22,6 +23,7 @@ clf_reasons = [
     ProbaReason,
     LongConfidenceReason,
     ShortConfidenceReason,
+    MarginConfidenceReason,
     WrongPredictionReason,
     CleanlabReason,
 ]
