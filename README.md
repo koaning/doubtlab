@@ -60,8 +60,9 @@ The library implemented many "reasons" for doubt.
 
 - `ProbaReason`: assign doubt when a models' confidence-values are low for any label
 - `WrongPredictionReason`: assign doubt when a model cannot predict the listed label
-- `LongConfidenceReason`: assign doubt when a wrong label gains too much confidence
 - `ShortConfidenceReason`: assign doubt when the correct label gains too little confidence
+- `LongConfidenceReason`: assign doubt when a wrong label gains too much confidence
+- `MarginConfidenceReason`: assign doubt when there's a large difference between the top two classes
 - `DisagreeReason`: assign doubt when two models disagree on a prediction
 - `CleanLabReason`: assign doubt according to [cleanlab](https://github.com/cleanlab/cleanlab)
 
