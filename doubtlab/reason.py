@@ -184,13 +184,13 @@ class MarginConfidenceReason:
         self.model = model
         self.threshold = threshold
 
-    def _calc_margin(self, X, y):
-        probas = self.model.predict_proba(X)
+    def _calc_margin(self, probas):
         sorted = np.sort(probas, axis=1)
         return sorted[:, -1] - sorted[:, -2]
 
     def __call__(self, X, y):
-        margin = self._calc_margin(X, y)
+        probas = self.model.predict_proba(X)
+        margin = self._calc_margin(probas)
         return np.where(margin > self.threshold, margin, 0)
 
 
