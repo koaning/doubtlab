@@ -1,3 +1,15 @@
+[![GitHub - License](https://img.shields.io/github/license/koaning/doubtlab?logo=github&style=flat&color=green)][#github-license]
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/doubtlab?logo=pypi&style=flat&color=blue)][#pypi-doubtlab]
+[![PyPI - Package Version](https://img.shields.io/pypi/v/doubtlab?logo=pypi&style=flat&color=orange)][#pypi-doubtlab]
+[![PyPI - Downloads](https://img.shields.io/pypi/dm/doubtlab?logo=pypi)][#pypi-doubtlab]
+[![Conda - Platform](https://img.shields.io/conda/pn/conda-forge/doubtlab?logo=anaconda&style=flat)][#conda-forge-doubtlab]
+[![Conda (channel only)](https://img.shields.io/conda/vn/conda-forge/doubtlab?logo=anaconda&style=flat&color=orange)][#conda-forge-doubtlab]
+<!--- [![Conda](https://img.shields.io/conda/dn/conda-forge/doubtlab?logo=anaconda)][#conda-forge-doubtlab] --->
+
+[#github-license]: LICENSE
+[#pypi-doubtlab]: https://pypi.org/project/doubtlab/
+[#conda-forge-doubtlab]: https://anaconda.org/conda-forge/doubtlab
+
 <img src="docs/doubt.png" width=125 height=125 align="right">
 
 # doubtlab
@@ -8,10 +20,18 @@ This repository contains general tricks that may help you find bad, or noisy, la
 
 ## Install
 
-You can install the tool via pip.
+You can install the tool via `pip` or `conda`.
+
+**Install with pip**
 
 ```
 python -m pip install doubtlab
+```
+
+**Install with conda**
+
+```
+conda install -c conda-forge doubtlab
 ```
 
 ## Quickstart
