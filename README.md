@@ -2,11 +2,13 @@
 [![GitHub - License](https://img.shields.io/github/license/koaning/doubtlab?logo=github&style=flat&color=green)][#github-license]
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/doubtlab?logo=pypi&style=flat&color=blue)][#pypi-package]
 [![PyPI - Package Version](https://img.shields.io/pypi/v/doubtlab?logo=pypi&style=flat&color=orange)][#pypi-package]
-[![PyPI - Downloads](https://img.shields.io/pypi/dm/doubtlab?logo=pypi&style=flat&color=green)][#pypi-package]
 [![Conda - Platform](https://img.shields.io/conda/pn/conda-forge/doubtlab?logo=anaconda&style=flat)][#conda-forge-package]
 [![Conda (channel only)](https://img.shields.io/conda/vn/conda-forge/doubtlab?logo=anaconda&style=flat&color=orange)][#conda-forge-package]
 [![Docs - GitHub.io](https://img.shields.io/static/v1?logo=github&style=flat&color=pink&label=docs&message=doubtlab)][#docs-package]
-<!--- [![Conda](https://img.shields.io/conda/dn/conda-forge/doubtlab?logo=anaconda)][#conda-forge-package] --->
+<!--- 
+[![PyPI - Downloads](https://img.shields.io/pypi/dm/doubtlab?logo=pypi&style=flat&color=green)][#pypi-package]
+[![Conda](https://img.shields.io/conda/dn/conda-forge/doubtlab?logo=anaconda)][#conda-forge-package] 
+--->
 
 [#github-license]: https://github.com/koaning/doubtlab/blob/main/LICENSE
 [#pypi-package]: https://pypi.org/project/doubtlab/
