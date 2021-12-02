@@ -1,3 +1,4 @@
+<!--- BADGES: START --->
 [![GitHub - License](https://img.shields.io/github/license/koaning/doubtlab?logo=github&style=flat&color=green)][#github-license]
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/doubtlab?logo=pypi&style=flat&color=blue)][#pypi-doubtlab]
 [![PyPI - Package Version](https://img.shields.io/pypi/v/doubtlab?logo=pypi&style=flat&color=orange)][#pypi-doubtlab]
@@ -7,10 +8,11 @@
 [![Docs - GitHub.io](https://img.shields.io/badge/docs-doubtlab-green?logo=github&style=flat&color=pink)][#docs-doubtlab]
 <!--- [![Conda](https://img.shields.io/conda/dn/conda-forge/doubtlab?logo=anaconda)][#conda-forge-doubtlab] --->
 
-[#github-license]: LICENSE
+[#github-license]: https://github.com/koaning/doubtlab/blob/main/LICENSE
 [#pypi-doubtlab]: https://pypi.org/project/doubtlab/
 [#conda-forge-doubtlab]: https://anaconda.org/conda-forge/doubtlab
 [#docs-doubtlab]: https://koaning.github.io/doubtlab/
+<!--- BADGES: END --->
 
 <img src="docs/doubt.png" width=125 height=125 align="right">
 
