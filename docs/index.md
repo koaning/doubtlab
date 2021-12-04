@@ -10,10 +10,19 @@ This repository contains general tricks that may help you find bad, or noisy, la
 
 ## Installation
 
-You can install the tool via pip.
+
+You can install the tool via `pip` or `conda`.
+
+**Install with pip**
 
 ```
 python -m pip install doubtlab
+```
+
+**Install with conda**
+
+```
+conda install -c conda-forge doubtlab
 ```
 
 ## Getting Started
