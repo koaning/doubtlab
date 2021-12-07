@@ -153,7 +153,7 @@ class LongConfidenceReason:
 
 class MarginConfidenceReason:
     """
-    Assign doubt when a the difference between the top two most confident classes is too large.
+    Assign doubt when a the difference between the top two most confident classes is too small.
 
     Throws an error when there are only two classes.
 
@@ -191,7 +191,7 @@ class MarginConfidenceReason:
     def __call__(self, X, y):
         probas = self.model.predict_proba(X)
         margin = self._calc_margin(probas)
-        return np.where(margin > self.threshold, margin, 0)
+        return np.where(margin < self.threshold, margin, 0)
 
 
 class ShortConfidenceReason:
