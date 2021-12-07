@@ -837,11 +837,12 @@ of reasons that this library supports.</p>
 </ul>
 <h3 id="classification-reasons">Classification Reasons<a class="headerlink" href="#classification-reasons" title="Permanent link">&para;</a></h3>
 <ul>
-<li><code>ProbaReason</code>: assign doubt when a models' confidence-values are low</li>
-<li><code>LongConfidenceReason</code>: assign doubt when a wrong class gains too much confidence</li>
-<li><code>ShortConfidenceReason</code>: assign doubt when the correct class gains too little confidence</li>
+<li><code>ProbaReason</code>: assign doubt when a models' confidence-values are low for any label</li>
+<li><code>WrongPredictionReason</code>: assign doubt when a model cannot predict the listed label</li>
+<li><code>ShortConfidenceReason</code>: assign doubt when the correct label gains too little confidence</li>
+<li><code>LongConfidenceReason</code>: assign doubt when a wrong label gains too much confidence</li>
+<li><code>MarginConfidenceReason</code>: assign doubt when there's a large difference between the top two classes</li>
 <li><code>DisagreeReason</code>: assign doubt when two models disagree on a prediction</li>
-<li><code>OutlierReason</code>: assign doubt when the model declares a row an outlier</li>
 <li><code>CleanLabReason</code>: assign doubt according to <a href="https://github.com/cleanlab/cleanlab">cleanlab</a></li>
 </ul>
 <h3 id="regression-reasons">Regression Reasons<a class="headerlink" href="#regression-reasons" title="Permanent link">&para;</a></h3>
