@@ -72,6 +72,44 @@ class RandomReason:
         return np.where(rvals < self.probability, rvals, 0)
 
 
+class ShannonEntropyReason:
+    """
+    Assign doubt when the normalized Shannon entropy is too high.
+
+    Arguments:
+        model: scikit-learn classifier
+        threshold: confidence threshold for doubt assignment
+
+    Usage:
+
+    ```python
+    from sklearn.datasets import load_iris
+    from sklearn.linear_model import LogisticRegression
+
+    from doubtlab.ensemble import DoubtEnsemble
+    from doubtlab.reason import ShannonEntropyReason
+
+    X, y = load_iris(return_X_y=True)
+    model = LogisticRegression(max_iter=1_000)
+    model.fit(X, y)
+
+    doubt = DoubtEnsemble(reason = ShannonEntropyReason(model=model))
+
+    indices = doubt.get_indices(X, y)
+    ```
+    """
+
+    def __init__(self, model, threshold=0.5):
+        self.model = model
+        self.threshold = threshold
+
+    def __call__(self, X, y):
+        probas = self.model.predict_proba(X)
+        log_probas = self.model.predict_log_proba(X) / np.log(len(self.model.classes_))
+        entropies = -(probas * log_probas).sum(axis=1)
+        return np.where(entropies > self.threshold, entropies, 0)
+
+
 class WrongPredictionReason:
     """
     Assign doubt when the model prediction doesn't match the label.
