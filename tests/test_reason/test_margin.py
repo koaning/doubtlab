@@ -11,7 +11,6 @@ def test_margin_confidence_margin():
     model = LogisticRegression(max_iter=1_000)
     model.fit(X, y)
 
-    reason = MarginConfidenceReason(model=model)
     probas = np.eye(3)
-    margin = reason._calc_margin(probas=probas)
-    assert np.all(np.isclose(margin, np.ones(3)))
+    reason = MarginConfidenceReason.from_probas(probas)
+    assert all([r == 0.0 for r in reason])

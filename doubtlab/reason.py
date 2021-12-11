@@ -37,6 +37,11 @@ class ProbaReason:
         result = self.model.predict_proba(X).max(axis=1) <= self.max_proba
         return result.astype(np.float16)
 
+    @staticmethod
+    def from_proba(proba, max_proba=0.55):
+        """Outputs a reason array from a proba array, skipping the need for a model."""
+        return (proba.max(axis=1) <= max_proba).astype(np.float16)
+
 
 class RandomReason:
     """
@@ -69,7 +74,7 @@ class RandomReason:
     def __call__(self, X, y=None):
         np.random.seed(self.random_seed)
         rvals = np.random.random(size=len(X))
-        return np.where(rvals < self.probability, rvals, 0)
+        return np.where(rvals < self.probability, rvals, 0).astype(np.float16)
 
 
 class WrongPredictionReason:
@@ -102,7 +107,13 @@ class WrongPredictionReason:
         self.model = model
 
     def __call__(self, X, y):
-        return (self.model.predict(X) != y).astype(np.float16)
+        preds = self.model.predict(X)
+        return self.from_predict(preds, y)
+
+    @staticmethod
+    def from_predict(preds, y):
+        """Outputs a reason array from a prediction array, skipping the need for a model."""
+        return (preds != y).astype(np.float16)
 
 
 class LongConfidenceReason:
@@ -136,19 +147,18 @@ class LongConfidenceReason:
         self.model = model
         self.threshold = threshold
 
-    def _max_bad_class_confidence(self, X, y):
-        probas = self.model.predict_proba(X)
+    def from_probas(self, probas, y, classes, threshold):
+        """Outputs a reason array from a proba array, skipping the need for a model."""
         values = []
         for i, proba in enumerate(probas):
-            proba_dict = {
-                self.model.classes_[j]: v for j, v in enumerate(proba) if j != y[i]
-            }
+            proba_dict = {classes[j]: v for j, v in enumerate(proba) if j != y[i]}
             values.append(max(proba_dict.values()))
-        return np.array(values)
+        confidences = np.array(values)
+        return np.where(confidences > threshold, 1, 0).astype(np.float16)
 
     def __call__(self, X, y):
-        confidences = self._max_bad_class_confidence(X, y)
-        return np.where(confidences > self.threshold, confidences, 0)
+        probas = self.model.predict_proba(X)
+        return self.from_probas(probas, y, self.model.classes_, self.threshold)
 
 
 class MarginConfidenceReason:
@@ -184,14 +194,16 @@ class MarginConfidenceReason:
         self.model = model
         self.threshold = threshold
 
-    def _calc_margin(self, probas):
+    @staticmethod
+    def from_probas(probas, threshold=0.2):
+        """Outputs a reason array from a proba array, skipping the need for a model."""
         sorted = np.sort(probas, axis=1)
-        return sorted[:, -1] - sorted[:, -2]
+        margin = sorted[:, -1] - sorted[:, -2]
+        return np.where(margin < threshold, 1, 0)
 
     def __call__(self, X, y):
         probas = self.model.predict_proba(X)
-        margin = self._calc_margin(probas)
-        return np.where(margin > self.threshold, margin, 0)
+        return self.from_probas(probas, self.threshold)
 
 
 class ShortConfidenceReason:
@@ -215,7 +227,7 @@ class ShortConfidenceReason:
     model = LogisticRegression(max_iter=1_000)
     model.fit(X, y)
 
-    doubt = DoubtEnsemble(reason = ShortConfidenceReason(model=model))
+    doubt = DoubtEnsemble(reason = ShortConfidenceReason(model=model, threshold=0.4))
 
     indices = doubt.get_indices(X, y)
     ```
@@ -225,21 +237,19 @@ class ShortConfidenceReason:
         self.model = model
         self.threshold = threshold
 
-    def _correct_class_confidence(self, X, y):
-        """
-        Gives the predicted confidence (or proba) associated
-        with the correct label `y` from a given model.
-        """
-        probas = self.model.predict_proba(X)
+    @staticmethod
+    def from_proba(proba, y, classes, threshold=0.2):
+        """Outputs a reason array from a proba array, skipping the need for a model."""
         values = []
-        for i, proba in enumerate(probas):
-            proba_dict = {self.model.classes_[j]: v for j, v in enumerate(proba)}
+        for i, p in enumerate(proba):
+            proba_dict = {classes[j]: v for j, v in enumerate(p)}
             values.append(proba_dict[y[i]])
-        return np.array(values)
+        confidences = np.array(values)
+        return np.where(confidences < threshold, 1, 0).astype(np.float16)
 
     def __call__(self, X, y):
-        confidences = self._correct_class_confidence(X, y)
-        return np.where(confidences < self.threshold, 1 - confidences, 0)
+        probas = self.model.predict_proba(X)
+        return self.from_proba(probas, y, self.model.classes_, self.threshold)
 
 
 class DisagreeReason:
@@ -276,9 +286,15 @@ class DisagreeReason:
         self.model1 = model1
         self.model2 = model2
 
+    @staticmethod
+    def from_pred(preds1, preds2):
+        """Outputs a reason array from two pred arrays, skipping the need for a model."""
+        return (np.where(preds1 != preds2, 1, 0)).astype(np.float16)
+
     def __call__(self, X, y):
-        result = self.model1.predict(X) != self.model2.predict(X)
-        return result.astype(np.float16)
+        pred1 = self.model1.predict(X)
+        pred2 = self.model2.predict(X)
+        return self.from_pred(pred1, pred2)
 
 
 class OutlierReason:
@@ -420,11 +436,16 @@ class CleanlabReason:
         self.sorted_index_method = sorted_index_method
         self.min_doubt = min_doubt
 
+    @staticmethod
+    def from_proba(proba, y, min_doubt=0.5, sorted_index_method="normalized_margin"):
+        """Outputs a reason array from a proba array, skipping the need for a model."""
+        ordered_label_errors = get_noise_indices(y, proba, sorted_index_method)
+        result = np.zeros_like(y)
+        conf_arr = np.linspace(1, min_doubt, result.shape[0])
+        for idx, _ in zip(ordered_label_errors, conf_arr):
+            result[idx] = 1
+        return result.astype(np.float16)
+
     def __call__(self, X, y):
         probas = self.model.predict_proba(X)
-        ordered_label_errors = get_noise_indices(y, probas, self.sorted_index_method)
-        result = np.zeros_like(y)
-        conf_arr = np.linspace(1, self.min_doubt, result.shape[0])
-        for idx, conf in zip(ordered_label_errors, conf_arr):
-            result[idx] = conf
-        return result
+        return self.from_proba(probas, y, self.min_doubt, self.sorted_index_method)
