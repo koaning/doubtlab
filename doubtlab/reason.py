@@ -206,7 +206,6 @@ class MarginConfidenceReason:
         return self.from_probas(probas, self.threshold)
 
 
-
 class ShortConfidenceReason:
     """
     Assign doubt when the correct class gains too little confidence.
