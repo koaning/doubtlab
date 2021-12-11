@@ -153,7 +153,7 @@ class LongConfidenceReason:
 
 class MarginConfidenceReason:
     """
-    Assign doubt when a the difference between the top two most confident classes is too small.
+    Assign doubt when the difference between the top two most confident classes is too small.
 
     Throws an error when there are only two classes.
 
