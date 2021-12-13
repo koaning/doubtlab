@@ -113,6 +113,7 @@ class ShannonEntropyReason:
 
     @staticmethod
     def from_proba(proba, n_classes, threshold=0.5):
+        """Outputs a reason array from a prediction array, skipping the need for a model."""
         entropies = -(proba * np.log(proba) / np.log(n_classes)).sum(axis=1)
         return np.where(entropies > threshold, entropies, 0)
 
