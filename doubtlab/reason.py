@@ -74,7 +74,9 @@ class RandomReason:
 
 class ShannonEntropyReason:
     """
-    Assign doubt when the normalized Shannon entropy is too high.
+    Assign doubt when the normalized Shannon entropy is too high, see
+    https://math.stackexchange.com/questions/395121/how-entropy-scales-with-sample-size
+    for a discussion.
 
     Arguments:
         model: scikit-learn classifier
@@ -108,6 +110,11 @@ class ShannonEntropyReason:
         log_probas = self.model.predict_log_proba(X) / np.log(len(self.model.classes_))
         entropies = -(probas * log_probas).sum(axis=1)
         return np.where(entropies > self.threshold, entropies, 0)
+
+    @staticmethod
+    def from_proba(proba, n_classes, threshold=0.5):
+        entropies = -(proba * np.log(proba) / np.log(n_classes)).sum(axis=1)
+        return np.where(entropies > threshold, entropies, 0)
 
 
 class WrongPredictionReason:
