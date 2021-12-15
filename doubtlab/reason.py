@@ -90,6 +90,52 @@ class RandomReason:
         return (rvals < self.probability).astype(np.float16)
 
 
+class ShannonEntropyReason:
+    """
+    Assign doubt when the normalized Shannon entropy is too high, see
+    https://math.stackexchange.com/questions/395121/how-entropy-scales-with-sample-size
+    for a discussion.
+
+    Arguments:
+        model: scikit-learn classifier
+        threshold: confidence threshold for doubt assignment
+
+    Usage:
+
+    ```python
+    from sklearn.datasets import load_iris
+    from sklearn.linear_model import LogisticRegression
+
+    from doubtlab.ensemble import DoubtEnsemble
+    from doubtlab.reason import ShannonEntropyReason
+
+    X, y = load_iris(return_X_y=True)
+    model = LogisticRegression(max_iter=1_000)
+    model.fit(X, y)
+
+    doubt = DoubtEnsemble(reason = ShannonEntropyReason(model=model))
+
+    indices = doubt.get_indices(X, y)
+    ```
+    """
+
+    def __init__(self, model, threshold=0.5):
+        self.model = model
+        self.threshold = threshold
+
+    def __call__(self, X, y):
+        probas = self.model.predict_proba(X)
+        log_probas = self.model.predict_log_proba(X) / np.log(len(self.model.classes_))
+        entropies = -(probas * log_probas).sum(axis=1)
+        return np.where(entropies > self.threshold, entropies, 0)
+
+    @staticmethod
+    def from_proba(proba, n_classes, threshold=0.5):
+        """Outputs a reason array from a prediction array, skipping the need for a model."""
+        entropies = -(proba * np.log(proba) / np.log(n_classes)).sum(axis=1)
+        return np.where(entropies > threshold, entropies, 0)
+
+
 class WrongPredictionReason:
     """
     Assign doubt when the model prediction doesn't match the label.
@@ -207,7 +253,7 @@ class LongConfidenceReason:
 
 class MarginConfidenceReason:
     """
-    Assign doubt when a the difference between the top two most confident classes is too small.
+    Assign doubt when the difference between the top two most confident classes is too small.
 
     Throws an error when there are only two classes.
 
