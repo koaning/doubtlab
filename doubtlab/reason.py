@@ -99,6 +99,7 @@ class ShannonEntropyReason:
     Arguments:
         model: scikit-learn classifier
         threshold: confidence threshold for doubt assignment
+        smoothing: constant value added to probas to prevent division by zeor
 
     Usage:
 
@@ -119,21 +120,36 @@ class ShannonEntropyReason:
     ```
     """
 
-    def __init__(self, model, threshold=0.5):
+    def __init__(self, model, threshold=0.5, smoothing=1e-5):
         self.model = model
         self.threshold = threshold
+        self.smoothing = smoothing
 
     def __call__(self, X, y):
         probas = self.model.predict_proba(X)
-        log_probas = self.model.predict_log_proba(X) / np.log(len(self.model.classes_))
-        entropies = -(probas * log_probas).sum(axis=1)
-        return np.where(entropies > self.threshold, entropies, 0)
+        return self.from_proba(
+            probas, threshold=self.threshold, smoothing=self.smoothing
+        )
 
     @staticmethod
-    def from_proba(proba, n_classes, threshold=0.5):
-        """Outputs a reason array from a prediction array, skipping the need for a model."""
-        entropies = -(proba * np.log(proba) / np.log(n_classes)).sum(axis=1)
-        return np.where(entropies > threshold, entropies, 0)
+    def from_proba(proba, threshold=0.5, smoothing=1e-5):
+        """
+        Outputs a reason array from a prediction array, skipping the need for a model.
+
+        Usage:
+
+        ```python
+        import numpy as np
+        from doubtlab.reason import ShannonEntropyReason
+
+        probas = np.array([[0.9, 0.1, 0.0], [0.5, 0.4, 0.1]])
+        predicate = ShannonEntropyReason.from_proba(probas, threshold=0.8)
+        assert np.all(predicate == np.array([0.0, 1.0]))
+        ```
+        """
+        probas = proba + smoothing
+        entropies = -(probas * np.log(probas) / np.log(probas.shape[1])).sum(axis=1)
+        return (entropies > threshold).astype(np.float16)
 
 
 class WrongPredictionReason:
