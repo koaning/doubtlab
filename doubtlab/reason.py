@@ -231,12 +231,12 @@ class LongConfidenceReason:
         import numpy as np
         from doubtlab.reason import LongConfidenceReason
 
-        probas = np.array([[0.9, 0.1], [0.5, 0.5]])
-        y = np.array([1, 0])
+        probas = np.array([[0.9, 0.1], [0.5, 0.5], [0.2, 0.8]])
+        y = np.array([0, 1, 0])
         classes = np.array([0, 1])
         threshold = 0.4
-        predicate = LongConfidenceReason.from_probas(preds, y, classes, threshold)
-        assert np.all(predicate == np.array([0.0, 1.0]))
+        predicate = LongConfidenceReason.from_proba(probas, y, classes, threshold)
+        assert np.all(predicate == np.array([0.0, 1.0, 1.0]))
         ```
         """
         values = []
@@ -296,7 +296,7 @@ class MarginConfidenceReason:
         from doubtlab.reason import MarginConfidenceReason
 
         probas = np.array([[0.9, 0.1, 0.0], [0.5, 0.4, 0.1]])
-        predicate = MarginConfidenceReason.from_probas(probas, threshold=0.3)
+        predicate = MarginConfidenceReason.from_proba(probas, threshold=0.3)
         assert np.all(predicate == np.array([0.0, 1.0]))
         ```
         """
@@ -351,12 +351,12 @@ class ShortConfidenceReason:
         import numpy as np
         from doubtlab.reason import ShortConfidenceReason
 
-        probas = np.array([[0.9, 0.1], [0.5, 0.5]])
-        y = np.array([0, 1])
+        probas = np.array([[0.9, 0.1], [0.5, 0.5], [0.3, 0.7]])
+        y = np.array([0, 1, 0])
         classes = np.array([0, 1])
-        threshold = 0.6
-        predicate = ShortConfidenceReason.from_probas(probas, y, classes, threshold)
-        assert np.all(predicate == np.array([0.0, 1.0]))
+        threshold = 0.4
+        predicate = ShortConfidenceReason.from_proba(probas, y, classes, threshold)
+        assert np.all(predicate == np.array([0.0, 0.0, 1.0]))
         ```
         """
         values = []
@@ -413,6 +413,7 @@ class DisagreeReason:
         Usage:
 
         ```python
+        import numpy as np
         from doubtlab.reason import DisagreeReason
 
         pred1 = [0, 1, 2]
@@ -581,7 +582,7 @@ class CleanlabReason:
 
         probas = np.array([[0.9, 0.1], [0.5, 0.5]])
         y = np.array([0, 1])
-        predicate = CleanlabReason.from_probas(probas, y)
+        predicate = CleanlabReason.from_proba(probas, y)
         ```
         """
         ordered_label_errors = get_noise_indices(y, proba, sorted_index_method)
