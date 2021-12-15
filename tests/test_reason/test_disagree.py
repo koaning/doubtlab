@@ -8,5 +8,5 @@ def test_short_conf_probas():
     """
     pred1 = [0, 1, 2]
     pred2 = [0, 1, 1]
-    predicate = DisagreeReason.from_pred(pred1, pred2)
+    predicate = DisagreeReason.from_pred(pred1=pred1, pred2=pred2)
     assert np.all(predicate == np.array([0.0, 0.0, 1.0]))

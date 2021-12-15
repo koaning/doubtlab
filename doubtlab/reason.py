@@ -170,7 +170,7 @@ class WrongPredictionReason:
         return self.from_predict(preds, y)
 
     @staticmethod
-    def from_predict(preds, y):
+    def from_predict(pred, y):
         """
         Outputs a reason array from a prediction array, skipping the need for a model.
 
@@ -186,7 +186,7 @@ class WrongPredictionReason:
         assert np.all(predicate == np.array([0.0, 1.0]))
         ```
         """
-        return (preds != y).astype(np.float16)
+        return (pred != y).astype(np.float16)
 
 
 class LongConfidenceReason:
@@ -406,7 +406,7 @@ class DisagreeReason:
         self.model2 = model2
 
     @staticmethod
-    def from_pred(preds1, preds2):
+    def from_pred(pred1, pred2):
         """
         Outputs a reason array from two pred arrays, skipping the need for a model.
 
@@ -421,7 +421,7 @@ class DisagreeReason:
         assert np.all(predicate == np.array([0.0, 0.0, 1.0]))
         ```
         """
-        return (np.array(preds1) != np.array(preds2)).astype(np.float16)
+        return (np.array(pred1) != np.array(pred2)).astype(np.float16)
 
     def __call__(self, X, y):
         pred1 = self.model1.predict(X)
@@ -581,9 +581,7 @@ class CleanlabReason:
 
         probas = np.array([[0.9, 0.1], [0.5, 0.5]])
         y = np.array([0, 1])
-        classes = np.array([0, 1])
-        threshold = 0.4
-        predicate = CleanlabReason.from_probas(probas, y, classes, threshold)
+        predicate = CleanlabReason.from_probas(probas, y)
         ```
         """
         ordered_label_errors = get_noise_indices(y, proba, sorted_index_method)
