@@ -164,7 +164,7 @@ of reasons that this library supports.
 - `LongConfidenceReason`: assign doubt when a wrong label gains too much confidence
 - `MarginConfidenceReason`: assign doubt when there's a large difference between the top two classes
 - `DisagreeReason`: assign doubt when two models disagree on a prediction
-- `CleanLabReason`: assign doubt according to [cleanlab](https://github.com/cleanlab/cleanlab)
+- `CleanlabReason`: assign doubt according to [cleanlab](https://github.com/cleanlab/cleanlab)
 
 ### Regression Reasons
 

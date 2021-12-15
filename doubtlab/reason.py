@@ -39,7 +39,20 @@ class ProbaReason:
 
     @staticmethod
     def from_proba(proba, max_proba=0.55):
-        """Outputs a reason array from a proba array, skipping the need for a model."""
+        """
+        Outputs a reason array from a proba array, skipping the need for a model.
+
+        Usage:
+
+        ```python
+        import numpy as np
+        from doubtlab.reason import ProbaReason
+
+        probas = np.array([[0.9, 0.1], [0.5, 0.5]])
+        predicate = ProbaReason.from_proba(probas)
+        assert np.all(predicate == np.array([0.0, 1.0]))
+        ```
+        """
         return (proba.max(axis=1) <= max_proba).astype(np.float16)
 
 
@@ -112,7 +125,21 @@ class WrongPredictionReason:
 
     @staticmethod
     def from_predict(preds, y):
-        """Outputs a reason array from a prediction array, skipping the need for a model."""
+        """
+        Outputs a reason array from a prediction array, skipping the need for a model.
+
+        Usage:
+
+        ```python
+        import numpy as np
+        from doubtlab.reason import WrongPredictionReason
+
+        preds = np.array(["positive", "negative"])
+        y = np.array(["positive", "neutral"])
+        predicate = WrongPredictionReason.from_predict(preds, y)
+        assert np.all(predicate == np.array([0.0, 1.0]))
+        ```
+        """
         return (preds != y).astype(np.float16)
 
 
@@ -147,8 +174,25 @@ class LongConfidenceReason:
         self.model = model
         self.threshold = threshold
 
-    def from_probas(self, probas, y, classes, threshold):
-        """Outputs a reason array from a proba array, skipping the need for a model."""
+    @staticmethod
+    def from_probas(probas, y, classes, threshold):
+        """
+        Outputs a reason array from a proba array, skipping the need for a model.
+
+        Usage:
+
+        ```python
+        import numpy as np
+        from doubtlab.reason import LongConfidenceReason
+
+        probas = np.array([[0.9, 0.1], [0.5, 0.5]])
+        y = np.array([1, 0])
+        classes = np.array([0, 1])
+        threshold = 0.4
+        predicate = LongConfidenceReason.from_probas(preds, y, classes, threshold)
+        assert np.all(predicate == np.array([0.0, 1.0]))
+        ```
+        """
         values = []
         for i, proba in enumerate(probas):
             proba_dict = {classes[j]: v for j, v in enumerate(proba) if j != y[i]}
