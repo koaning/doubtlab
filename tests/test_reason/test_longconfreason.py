@@ -8,5 +8,5 @@ def test_longconf_proba():
     y = np.array([0, 1])
     classes = np.array([0, 1])
     threshold = 0.4
-    predicate = LongConfidenceReason.from_probas(probas, y, classes, threshold)
+    predicate = LongConfidenceReason.from_proba(probas, y, classes, threshold)
     assert np.all(predicate == np.array([0.0, 1.0]))

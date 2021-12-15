@@ -221,7 +221,7 @@ class LongConfidenceReason:
         self.threshold = threshold
 
     @staticmethod
-    def from_probas(probas, y, classes, threshold):
+    def from_proba(proba, y, classes, threshold):
         """
         Outputs a reason array from a proba array, skipping the need for a model.
 
@@ -240,7 +240,7 @@ class LongConfidenceReason:
         ```
         """
         values = []
-        for i, proba in enumerate(probas):
+        for i, proba in enumerate(proba):
             proba_dict = {classes[j]: v for j, v in enumerate(proba) if j != y[i]}
             values.append(max(proba_dict.values()))
         confidences = np.array(values)
@@ -248,7 +248,7 @@ class LongConfidenceReason:
 
     def __call__(self, X, y):
         probas = self.model.predict_proba(X)
-        return self.from_probas(probas, y, self.model.classes_, self.threshold)
+        return self.from_proba(probas, y, self.model.classes_, self.threshold)
 
 
 class MarginConfidenceReason:
@@ -285,7 +285,7 @@ class MarginConfidenceReason:
         self.threshold = threshold
 
     @staticmethod
-    def from_probas(probas, threshold=0.2):
+    def from_proba(proba, threshold=0.2):
         """
         Outputs a reason array from a proba array, skipping the need for a model.
 
@@ -300,13 +300,13 @@ class MarginConfidenceReason:
         assert np.all(predicate == np.array([0.0, 1.0]))
         ```
         """
-        sorted = np.sort(probas, axis=1)
+        sorted = np.sort(proba, axis=1)
         margin = sorted[:, -1] - sorted[:, -2]
         return (margin < threshold).astype(np.float16)
 
     def __call__(self, X, y):
         probas = self.model.predict_proba(X)
-        return self.from_probas(probas, self.threshold)
+        return self.from_proba(probas, self.threshold)
 
 
 class ShortConfidenceReason:
@@ -341,7 +341,7 @@ class ShortConfidenceReason:
         self.threshold = threshold
 
     @staticmethod
-    def from_probas(probas, y, classes, threshold=0.2):
+    def from_proba(proba, y, classes, threshold=0.2):
         """
         Outputs a reason array from a proba array, skipping the need for a model.
 
@@ -360,7 +360,7 @@ class ShortConfidenceReason:
         ```
         """
         values = []
-        for i, p in enumerate(probas):
+        for i, p in enumerate(proba):
             proba_dict = {classes[j]: v for j, v in enumerate(p)}
             values.append(proba_dict[y[i]])
         confidences = np.array(values)
@@ -368,7 +368,7 @@ class ShortConfidenceReason:
 
     def __call__(self, X, y):
         probas = self.model.predict_proba(X)
-        return self.from_probas(probas, y, self.model.classes_, self.threshold)
+        return self.from_proba(probas, y, self.model.classes_, self.threshold)
 
 
 class DisagreeReason:
@@ -569,7 +569,7 @@ class CleanlabReason:
         self.min_doubt = min_doubt
 
     @staticmethod
-    def from_probas(probas, y, min_doubt=0.5, sorted_index_method="normalized_margin"):
+    def from_proba(proba, y, min_doubt=0.5, sorted_index_method="normalized_margin"):
         """
         Outputs a reason array from a proba array, skipping the need for a model.
 
@@ -586,7 +586,7 @@ class CleanlabReason:
         predicate = CleanlabReason.from_probas(probas, y, classes, threshold)
         ```
         """
-        ordered_label_errors = get_noise_indices(y, probas, sorted_index_method)
+        ordered_label_errors = get_noise_indices(y, proba, sorted_index_method)
         result = np.zeros_like(y)
         conf_arr = np.linspace(1, min_doubt, result.shape[0])
         for idx, _ in zip(ordered_label_errors, conf_arr):
@@ -595,4 +595,4 @@ class CleanlabReason:
 
     def __call__(self, X, y):
         probas = self.model.predict_proba(X)
-        return self.from_probas(probas, y, self.min_doubt, self.sorted_index_method)
+        return self.from_proba(probas, y, self.min_doubt, self.sorted_index_method)

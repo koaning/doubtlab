@@ -8,5 +8,5 @@ def test_longconf_proba():
     y = np.array([0, 1])
     classes = np.array([0, 1])
     threshold = 0.4
-    predicate = CleanlabReason.from_probas(probas, y, classes, threshold)
+    predicate = CleanlabReason.from_proba(probas, y, classes, threshold)
     assert predicate.dtype == np.float16
