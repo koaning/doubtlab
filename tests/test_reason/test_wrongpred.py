@@ -6,5 +6,5 @@ def test_from_predict():
     """Test `from_predict` on an obvious example"""
     preds = np.array(["positive", "negative"])
     y = np.array(["positive", "neutral"])
-    predicate = WrongPredictionReason.from_predict(preds, y)
+    predicate = WrongPredictionReason.from_predict(pred=preds, y=y)
     assert np.all(predicate == np.array([0.0, 1.0]))

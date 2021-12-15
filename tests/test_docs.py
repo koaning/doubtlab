@@ -1,5 +1,5 @@
 import pytest
-from mktestdocs import check_docstring, check_md_file
+from mktestdocs import check_docstring, check_md_file, get_codeblock_members
 
 from doubtlab.reason import (
     ProbaReason,
@@ -13,10 +13,11 @@ from doubtlab.reason import (
     AbsoluteDifferenceReason,
     RelativeDifferenceReason,
     CleanlabReason,
+    ShannonEntropyReason,
 )
 from doubtlab.ensemble import DoubtEnsemble
 
-all_reasons = [
+all_objects = [
     ProbaReason,
     RandomReason,
     OutlierReason,
@@ -28,14 +29,24 @@ all_reasons = [
     AbsoluteDifferenceReason,
     RelativeDifferenceReason,
     CleanlabReason,
+    ShannonEntropyReason,
+    DoubtEnsemble,
 ]
 
 
-@pytest.mark.parametrize(
-    "func", all_reasons + [DoubtEnsemble], ids=lambda d: d.__name__
-)
+def flatten(items):
+    """Flattens a list"""
+    return [item for sublist in items for item in sublist]
+
+
+# This way we ensure that each item in `all_members` points to a method
+# that could have a docstring.
+all_members = flatten([get_codeblock_members(o) for o in all_objects])
+
+
+@pytest.mark.parametrize("func", all_members, ids=lambda d: d.__qualname__)
 def test_function_docstrings(func):
-    """Test the docstring code of some functions."""
+    """Test the python example in each method in each object."""
     check_docstring(obj=func)
 
 

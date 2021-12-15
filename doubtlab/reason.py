@@ -93,12 +93,13 @@ class RandomReason:
 class ShannonEntropyReason:
     """
     Assign doubt when the normalized Shannon entropy is too high, see
-    https://math.stackexchange.com/questions/395121/how-entropy-scales-with-sample-size
+    [here](https://math.stackexchange.com/questions/395121/how-entropy-scales-with-sample-size)
     for a discussion.
 
     Arguments:
         model: scikit-learn classifier
         threshold: confidence threshold for doubt assignment
+        smoothing: constant value added to probas to prevent division by zeor
 
     Usage:
 
@@ -119,21 +120,36 @@ class ShannonEntropyReason:
     ```
     """
 
-    def __init__(self, model, threshold=0.5):
+    def __init__(self, model, threshold=0.5, smoothing=1e-5):
         self.model = model
         self.threshold = threshold
+        self.smoothing = smoothing
 
     def __call__(self, X, y):
         probas = self.model.predict_proba(X)
-        log_probas = self.model.predict_log_proba(X) / np.log(len(self.model.classes_))
-        entropies = -(probas * log_probas).sum(axis=1)
-        return np.where(entropies > self.threshold, entropies, 0)
+        return self.from_proba(
+            probas, threshold=self.threshold, smoothing=self.smoothing
+        )
 
     @staticmethod
-    def from_proba(proba, n_classes, threshold=0.5):
-        """Outputs a reason array from a prediction array, skipping the need for a model."""
-        entropies = -(proba * np.log(proba) / np.log(n_classes)).sum(axis=1)
-        return np.where(entropies > threshold, entropies, 0)
+    def from_proba(proba, threshold=0.5, smoothing=1e-5):
+        """
+        Outputs a reason array from a prediction array, skipping the need for a model.
+
+        Usage:
+
+        ```python
+        import numpy as np
+        from doubtlab.reason import ShannonEntropyReason
+
+        probas = np.array([[0.9, 0.1, 0.0], [0.5, 0.4, 0.1]])
+        predicate = ShannonEntropyReason.from_proba(probas, threshold=0.8)
+        assert np.all(predicate == np.array([0.0, 1.0]))
+        ```
+        """
+        probas = proba + smoothing
+        entropies = -(probas * np.log(probas) / np.log(probas.shape[1])).sum(axis=1)
+        return (entropies > threshold).astype(np.float16)
 
 
 class WrongPredictionReason:
@@ -170,7 +186,7 @@ class WrongPredictionReason:
         return self.from_predict(preds, y)
 
     @staticmethod
-    def from_predict(preds, y):
+    def from_predict(pred, y):
         """
         Outputs a reason array from a prediction array, skipping the need for a model.
 
@@ -186,7 +202,7 @@ class WrongPredictionReason:
         assert np.all(predicate == np.array([0.0, 1.0]))
         ```
         """
-        return (preds != y).astype(np.float16)
+        return (pred != y).astype(np.float16)
 
 
 class LongConfidenceReason:
@@ -221,7 +237,7 @@ class LongConfidenceReason:
         self.threshold = threshold
 
     @staticmethod
-    def from_probas(probas, y, classes, threshold):
+    def from_proba(proba, y, classes, threshold):
         """
         Outputs a reason array from a proba array, skipping the need for a model.
 
@@ -231,16 +247,16 @@ class LongConfidenceReason:
         import numpy as np
         from doubtlab.reason import LongConfidenceReason
 
-        probas = np.array([[0.9, 0.1], [0.5, 0.5]])
-        y = np.array([1, 0])
+        probas = np.array([[0.9, 0.1], [0.5, 0.5], [0.2, 0.8]])
+        y = np.array([0, 1, 0])
         classes = np.array([0, 1])
         threshold = 0.4
-        predicate = LongConfidenceReason.from_probas(preds, y, classes, threshold)
-        assert np.all(predicate == np.array([0.0, 1.0]))
+        predicate = LongConfidenceReason.from_proba(probas, y, classes, threshold)
+        assert np.all(predicate == np.array([0.0, 1.0, 1.0]))
         ```
         """
         values = []
-        for i, proba in enumerate(probas):
+        for i, proba in enumerate(proba):
             proba_dict = {classes[j]: v for j, v in enumerate(proba) if j != y[i]}
             values.append(max(proba_dict.values()))
         confidences = np.array(values)
@@ -248,7 +264,7 @@ class LongConfidenceReason:
 
     def __call__(self, X, y):
         probas = self.model.predict_proba(X)
-        return self.from_probas(probas, y, self.model.classes_, self.threshold)
+        return self.from_proba(probas, y, self.model.classes_, self.threshold)
 
 
 class MarginConfidenceReason:
@@ -285,7 +301,7 @@ class MarginConfidenceReason:
         self.threshold = threshold
 
     @staticmethod
-    def from_probas(probas, threshold=0.2):
+    def from_proba(proba, threshold=0.2):
         """
         Outputs a reason array from a proba array, skipping the need for a model.
 
@@ -296,17 +312,17 @@ class MarginConfidenceReason:
         from doubtlab.reason import MarginConfidenceReason
 
         probas = np.array([[0.9, 0.1, 0.0], [0.5, 0.4, 0.1]])
-        predicate = MarginConfidenceReason.from_probas(probas, threshold=0.3)
+        predicate = MarginConfidenceReason.from_proba(probas, threshold=0.3)
         assert np.all(predicate == np.array([0.0, 1.0]))
         ```
         """
-        sorted = np.sort(probas, axis=1)
+        sorted = np.sort(proba, axis=1)
         margin = sorted[:, -1] - sorted[:, -2]
         return (margin < threshold).astype(np.float16)
 
     def __call__(self, X, y):
         probas = self.model.predict_proba(X)
-        return self.from_probas(probas, self.threshold)
+        return self.from_proba(probas, self.threshold)
 
 
 class ShortConfidenceReason:
@@ -341,7 +357,7 @@ class ShortConfidenceReason:
         self.threshold = threshold
 
     @staticmethod
-    def from_probas(probas, y, classes, threshold=0.2):
+    def from_proba(proba, y, classes, threshold=0.2):
         """
         Outputs a reason array from a proba array, skipping the need for a model.
 
@@ -351,15 +367,16 @@ class ShortConfidenceReason:
         import numpy as np
         from doubtlab.reason import ShortConfidenceReason
 
-        probas = np.array([[0.9, 0.1], [0.5, 0.5]])
-        y = np.array([0, 1])
+        probas = np.array([[0.9, 0.1], [0.5, 0.5], [0.3, 0.7]])
+        y = np.array([0, 1, 0])
         classes = np.array([0, 1])
-        threshold = 0.6
-        predicate = ShortConfidenceReason.from_probas(probas, y, classes, threshold)
-        assert np.all(predicate == np.array([0.0, 1.0]))
+        threshold = 0.4
+        predicate = ShortConfidenceReason.from_proba(probas, y, classes, threshold)
+        assert np.all(predicate == np.array([0.0, 0.0, 1.0]))
+        ```
         """
         values = []
-        for i, p in enumerate(probas):
+        for i, p in enumerate(proba):
             proba_dict = {classes[j]: v for j, v in enumerate(p)}
             values.append(proba_dict[y[i]])
         confidences = np.array(values)
@@ -367,7 +384,7 @@ class ShortConfidenceReason:
 
     def __call__(self, X, y):
         probas = self.model.predict_proba(X)
-        return self.from_probas(probas, y, self.model.classes_, self.threshold)
+        return self.from_proba(probas, y, self.model.classes_, self.threshold)
 
 
 class DisagreeReason:
@@ -405,13 +422,14 @@ class DisagreeReason:
         self.model2 = model2
 
     @staticmethod
-    def from_pred(preds1, preds2):
+    def from_pred(pred1, pred2):
         """
         Outputs a reason array from two pred arrays, skipping the need for a model.
 
         Usage:
 
         ```python
+        import numpy as np
         from doubtlab.reason import DisagreeReason
 
         pred1 = [0, 1, 2]
@@ -420,7 +438,7 @@ class DisagreeReason:
         assert np.all(predicate == np.array([0.0, 0.0, 1.0]))
         ```
         """
-        return (np.array(preds1) != np.array(preds2)).astype(np.float16)
+        return (np.array(pred1) != np.array(pred2)).astype(np.float16)
 
     def __call__(self, X, y):
         pred1 = self.model1.predict(X)
@@ -568,7 +586,7 @@ class CleanlabReason:
         self.min_doubt = min_doubt
 
     @staticmethod
-    def from_probas(probas, y, min_doubt=0.5, sorted_index_method="normalized_margin"):
+    def from_proba(proba, y, min_doubt=0.5, sorted_index_method="normalized_margin"):
         """
         Outputs a reason array from a proba array, skipping the need for a model.
 
@@ -580,12 +598,10 @@ class CleanlabReason:
 
         probas = np.array([[0.9, 0.1], [0.5, 0.5]])
         y = np.array([0, 1])
-        classes = np.array([0, 1])
-        threshold = 0.4
-        predicate = CleanlabReason.from_probas(probas, y, classes, threshold)
+        predicate = CleanlabReason.from_proba(probas, y)
         ```
         """
-        ordered_label_errors = get_noise_indices(y, probas, sorted_index_method)
+        ordered_label_errors = get_noise_indices(y, proba, sorted_index_method)
         result = np.zeros_like(y)
         conf_arr = np.linspace(1, min_doubt, result.shape[0])
         for idx, _ in zip(ordered_label_errors, conf_arr):
@@ -594,4 +610,4 @@ class CleanlabReason:
 
     def __call__(self, X, y):
         probas = self.model.predict_proba(X)
-        return self.from_probas(probas, y, self.min_doubt, self.sorted_index_method)
+        return self.from_proba(probas, y, self.min_doubt, self.sorted_index_method)
