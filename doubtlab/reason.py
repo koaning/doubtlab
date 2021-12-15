@@ -321,7 +321,7 @@ class ShortConfidenceReason:
 
     def __call__(self, X, y):
         probas = self.model.predict_proba(X)
-        return self.from_proba(probas, y, self.model.classes_, self.threshold)
+        return self.from_probas(probas, y, self.model.classes_, self.threshold)
 
 
 class DisagreeReason:
@@ -548,4 +548,4 @@ class CleanlabReason:
 
     def __call__(self, X, y):
         probas = self.model.predict_proba(X)
-        return self.from_proba(probas, y, self.min_doubt, self.sorted_index_method)
+        return self.from_probas(probas, y, self.min_doubt, self.sorted_index_method)
