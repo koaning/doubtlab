@@ -1,5 +1,5 @@
 black:
-	black --target-version py37 doubtlab tests setup.py
+	black --target-version py38 doubtlab tests setup.py
 
 flake:
 	flake8 doubtlab tests setup.py

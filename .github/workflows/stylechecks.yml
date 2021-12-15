@@ -26,6 +26,6 @@ jobs:
     - name: Interrogate
       run: make interrogate
     - name: Black
-      run: black --check --target-version py37 doubtlab tests setup.py
+      run: black --check --target-version py38 doubtlab tests setup.py
     - name: Flake8
       run: make flake
