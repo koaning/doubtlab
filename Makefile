@@ -1,5 +1,5 @@
 black:
-	black --target-version py37 doubtlab tests setup.py
+	black --target-version py38 doubtlab tests setup.py
 
 flake:
 	flake8 doubtlab tests setup.py
@@ -25,5 +25,7 @@ pypi:
 
 clean:
 	rm -rf **/.ipynb_checkpoints **/.pytest_cache **/__pycache__ **/**/__pycache__ .ipynb_checkpoints .pytest_cache
+
+style: clean black flake interrogate clean
 
 check: clean black flake interrogate test clean
