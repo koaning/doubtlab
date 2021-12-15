@@ -302,26 +302,21 @@ class ShortConfidenceReason:
         Usage:
 
         ```python
-        from sklearn.datasets import load_iris
-        from sklearn.linear_model import LogisticRegression
-
-        from doubtlab.ensemble import DoubtEnsemble
+        import numpy as np
         from doubtlab.reason import ShortConfidenceReason
 
-        X, y = load_iris(return_X_y=True)
-        model = LogisticRegression(max_iter=1_000)
-        model.fit(X, y)
-
-        doubt = DoubtEnsemble(reason = ShortConfidenceReason(model=model))
-
-        indices = doubt.get_indices(X, y)
+        probas = np.array([[0.9, 0.1], [0.5, 0.5]])
+        y = np.array([0, 1])
+        classes = np.array([0, 1])
+        threshold = 0.6
+        predicate = ShortConfidenceReason.from_probas(probas, y, classes, threshold)
+        assert np.all(predicate == np.array([0.0, 1.0]))
         """
         values = []
         for i, p in enumerate(probas):
             proba_dict = {classes[j]: v for j, v in enumerate(p)}
             values.append(proba_dict[y[i]])
         confidences = np.array(values)
-        print(confidences)
         return np.where(confidences < threshold, 1, 0).astype(np.float16)
 
     def __call__(self, X, y):
@@ -365,8 +360,21 @@ class DisagreeReason:
 
     @staticmethod
     def from_pred(preds1, preds2):
-        """Outputs a reason array from two pred arrays, skipping the need for a model."""
-        return (np.where(preds1 != preds2, 1, 0)).astype(np.float16)
+        """
+        Outputs a reason array from two pred arrays, skipping the need for a model.
+
+        Usage:
+
+        ```python
+        from doubtlab.reason import DisagreeReason
+
+        pred1 = [0, 1, 2]
+        pred2 = [0, 1, 1]
+        predicate = DisagreeReason.from_pred(pred1, pred2)
+        assert np.all(predicate == np.array([0.0, 0.0, 1.0]))
+        ```
+        """
+        return (np.array(preds1) != np.array(preds2)).astype(np.float16)
 
     def __call__(self, X, y):
         pred1 = self.model1.predict(X)
@@ -514,9 +522,24 @@ class CleanlabReason:
         self.min_doubt = min_doubt
 
     @staticmethod
-    def from_proba(proba, y, min_doubt=0.5, sorted_index_method="normalized_margin"):
-        """Outputs a reason array from a proba array, skipping the need for a model."""
-        ordered_label_errors = get_noise_indices(y, proba, sorted_index_method)
+    def from_probas(probas, y, min_doubt=0.5, sorted_index_method="normalized_margin"):
+        """
+        Outputs a reason array from a proba array, skipping the need for a model.
+
+        Usage:
+
+        ```python
+        import numpy as np
+        from doubtlab.reason import CleanlabReason
+
+        probas = np.array([[0.9, 0.1], [0.5, 0.5]])
+        y = np.array([0, 1])
+        classes = np.array([0, 1])
+        threshold = 0.4
+        predicate = CleanlabReason.from_probas(probas, y, classes, threshold)
+        ```
+        """
+        ordered_label_errors = get_noise_indices(y, probas, sorted_index_method)
         result = np.zeros_like(y)
         conf_arr = np.linspace(1, min_doubt, result.shape[0])
         for idx, _ in zip(ordered_label_errors, conf_arr):

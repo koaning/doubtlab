@@ -11,5 +11,4 @@ def test_short_conf_probas():
     classes = np.array([0, 1])
     threshold = 0.6
     predicate = ShortConfidenceReason.from_probas(probas, y, classes, threshold)
-    print(predicate)
     assert np.all(predicate == np.array([0.0, 1.0]))
