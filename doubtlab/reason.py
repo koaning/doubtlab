@@ -240,7 +240,20 @@ class MarginConfidenceReason:
 
     @staticmethod
     def from_probas(probas, threshold=0.2):
-        """Outputs a reason array from a proba array, skipping the need for a model."""
+        """
+        Outputs a reason array from a proba array, skipping the need for a model.
+
+        Usage:
+
+        ```python
+        import numpy as np
+        from doubtlab.reason import MarginConfidenceReason
+
+        probas = np.array([[0.9, 0.1, 0.0], [0.5, 0.4, 0.1]])
+        predicate = MarginConfidenceReason.from_probas(probas, threshold=0.3)
+        assert np.all(predicate == np.array([0.0, 1.0]))
+        ```
+        """
         sorted = np.sort(probas, axis=1)
         margin = sorted[:, -1] - sorted[:, -2]
         return np.where(margin < threshold, 1, 0)
@@ -282,13 +295,33 @@ class ShortConfidenceReason:
         self.threshold = threshold
 
     @staticmethod
-    def from_proba(proba, y, classes, threshold=0.2):
-        """Outputs a reason array from a proba array, skipping the need for a model."""
+    def from_probas(probas, y, classes, threshold=0.2):
+        """
+        Outputs a reason array from a proba array, skipping the need for a model.
+
+        Usage:
+
+        ```python
+        from sklearn.datasets import load_iris
+        from sklearn.linear_model import LogisticRegression
+
+        from doubtlab.ensemble import DoubtEnsemble
+        from doubtlab.reason import ShortConfidenceReason
+
+        X, y = load_iris(return_X_y=True)
+        model = LogisticRegression(max_iter=1_000)
+        model.fit(X, y)
+
+        doubt = DoubtEnsemble(reason = ShortConfidenceReason(model=model))
+
+        indices = doubt.get_indices(X, y)
+        """
         values = []
-        for i, p in enumerate(proba):
+        for i, p in enumerate(probas):
             proba_dict = {classes[j]: v for j, v in enumerate(p)}
             values.append(proba_dict[y[i]])
         confidences = np.array(values)
+        print(confidences)
         return np.where(confidences < threshold, 1, 0).astype(np.float16)
 
     def __call__(self, X, y):
