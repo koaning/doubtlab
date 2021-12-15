@@ -65,7 +65,9 @@ class DoubtEnsemble:
         predicates = doubt.get_predicates(X, y)
         ```
         """
-        df = pd.DataFrame({f"predicate_{name}": func(X, y) for name, func in self.reasons.items()})
+        df = pd.DataFrame(
+            {f"predicate_{name}": func(X, y) for name, func in self.reasons.items()}
+        )
         sorted_index = df.sum(axis=1).sort_values(ascending=False).index
         return df.reindex(sorted_index)
 
