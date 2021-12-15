@@ -87,7 +87,7 @@ class RandomReason:
     def __call__(self, X, y=None):
         np.random.seed(self.random_seed)
         rvals = np.random.random(size=len(X))
-        return np.where(rvals < self.probability, rvals, 0).astype(np.float16)
+        return (rvals < self.probability).astype(np.float16)
 
 
 class WrongPredictionReason:
