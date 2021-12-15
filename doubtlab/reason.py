@@ -357,6 +357,7 @@ class ShortConfidenceReason:
         threshold = 0.6
         predicate = ShortConfidenceReason.from_probas(probas, y, classes, threshold)
         assert np.all(predicate == np.array([0.0, 1.0]))
+        ```
         """
         values = []
         for i, p in enumerate(probas):
