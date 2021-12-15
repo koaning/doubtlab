@@ -13,5 +13,4 @@ def test_from_proba_max_proba():
     """Ensure internal `from_proba` method handles another obvious example"""
     probas = np.array([[0.9, 0.1], [0.5, 0.5]])
     predicate = ProbaReason.from_proba(probas, max_proba=0.3)
-    print(predicate)
     assert np.all(predicate == np.array([0.0, 0.0]))

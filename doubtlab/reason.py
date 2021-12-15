@@ -198,7 +198,7 @@ class LongConfidenceReason:
             proba_dict = {classes[j]: v for j, v in enumerate(proba) if j != y[i]}
             values.append(max(proba_dict.values()))
         confidences = np.array(values)
-        return np.where(confidences > threshold, 1, 0).astype(np.float16)
+        return (confidences > threshold).astype(np.float16)
 
     def __call__(self, X, y):
         probas = self.model.predict_proba(X)
@@ -256,7 +256,7 @@ class MarginConfidenceReason:
         """
         sorted = np.sort(probas, axis=1)
         margin = sorted[:, -1] - sorted[:, -2]
-        return np.where(margin < threshold, 1, 0)
+        return (margin < threshold).astype(np.float16)
 
     def __call__(self, X, y):
         probas = self.model.predict_proba(X)
@@ -317,7 +317,7 @@ class ShortConfidenceReason:
             proba_dict = {classes[j]: v for j, v in enumerate(p)}
             values.append(proba_dict[y[i]])
         confidences = np.array(values)
-        return np.where(confidences < threshold, 1, 0).astype(np.float16)
+        return (confidences < threshold).astype(np.float16)
 
     def __call__(self, X, y):
         probas = self.model.predict_proba(X)
