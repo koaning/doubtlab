@@ -93,7 +93,7 @@ class RandomReason:
 class ShannonEntropyReason:
     """
     Assign doubt when the normalized Shannon entropy is too high, see
-    https://math.stackexchange.com/questions/395121/how-entropy-scales-with-sample-size
+    [here](https://math.stackexchange.com/questions/395121/how-entropy-scales-with-sample-size)
     for a discussion.
 
     Arguments:
