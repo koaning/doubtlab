@@ -21,7 +21,8 @@ test_packages = [
     "pytest>=4.0.2",
     "black>=19.3b0",
     "pre-commit>=2.2.0",
-    "flake8-print>=4.0.0" "whatlies==0.6.4",
+    "flake8-print>=4.0.0",
+    "whatlies==0.6.4",
 ]
 
 all_packages = base_packages
