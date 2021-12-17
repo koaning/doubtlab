@@ -28,10 +28,7 @@ clf_reasons = [
     CleanlabReason,
 ]
 
-regr_reasons = [
-    AbsoluteDifferenceReason,
-    RelativeDifferenceReason,
-]
+regr_reasons = [AbsoluteDifferenceReason, RelativeDifferenceReason]
 
 clf_datasets = [
     load_iris(return_X_y=True),

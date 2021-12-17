@@ -611,3 +611,102 @@ class CleanlabReason:
     def __call__(self, X, y):
         probas = self.model.predict_proba(X)
         return self.from_proba(probas, y, self.min_doubt, self.sorted_index_method)
+
+
+class StandardizedErrorReason:
+    """
+    Assign doubt when the absolute standardized residual too large.
+
+    Arguments:
+        model: scikit-learn outlier model
+        threshold: cutoff for doubt assignment
+
+    Usage:
+
+    ```python
+    from sklearn.datasets import load_diabetes
+    from sklearn.linear_model import LinearRegression
+
+    from doubtlab.ensemble import DoubtEnsemble
+    from doubtlab.reason import StandardizedErrorReason
+
+    X, y = load_diabetes(return_X_y=True)
+    model = LinearRegression()
+    model.fit(X, y)
+
+    doubt = DoubtEnsemble(reason = StandardizedErrorReason(model, threshold=2.5))
+    indices = doubt.get_indices(X, y)
+    ```
+    """
+
+    def __init__(self, model, threshold=3.0):
+
+        if threshold <= 0:
+            raise ValueError("threshold value should be positive")
+
+        self.model = model
+        self.threshold = threshold
+
+    def __call__(self, X, y):
+        res = y - self.model.predict(X)
+        res_std = res / np.std(res, ddof=1)
+        return (np.abs(res_std) >= self.threshold).astype(np.float16)
+
+
+class QuantileDifferenceReason:
+    """
+    Assign doubt when residual is either:
+    - below quantiles[0] - multiplier * iqr
+    - above quantiles[1] + multiplier * iqr
+
+    Arguments:
+        model: scikit-learn outlier model
+        multiplier: multiplier for interquantile range
+        quantiles: list of quantiles to compute
+
+    Usage:
+
+    ```python
+    from sklearn.datasets import load_diabetes
+    from sklearn.linear_model import LinearRegression
+
+    from doubtlab.ensemble import DoubtEnsemble
+    from doubtlab.reason import QuantileDifferenceReason
+
+    X, y = load_diabetes(return_X_y=True)
+    model = LinearRegression()
+    model.fit(X, y)
+
+    doubt = DoubtEnsemble(reason = QuantileDifferenceReason(model, multiplier=1.5, quantiles=[0.25, 0.75]))
+    indices = doubt.get_indices(X, y)
+    ```
+    """
+
+    def __init__(self, model, multiplier=1.5, quantiles=None):
+
+        if quantiles is not None:
+            self._check_quantiles(quantiles)
+
+        self.model = model
+        self.multiplier = multiplier
+        self.quantiles = quantiles if quantiles is not None else [0.25, 0.75]
+
+    def __call__(self, X, y):
+        res = y - self.model.predict(X)
+        q1, q3 = np.quantile(res, self.quantiles)
+        m_iqr = self.multiplier * (q3 - q1)
+        lb, ub = q1 - m_iqr, q3 + m_iqr
+        return (np.logical_or(res < lb, res > ub)).astype(np.float16)
+
+    @staticmethod
+    def _check_quantiles(quantiles):
+        """Check that quantiles respect few conditions"""
+
+        if len(quantiles) != 2:
+            raise ValueError("quantiles should have lenght 2")
+
+        if not all([0 <= q <= 1 for q in quantiles]):
+            raise ValueError("quantile values should be between 0 and 1")
+
+        if quantiles[0] >= quantiles[1]:
+            raise ValueError("quantiles should be sorted")
