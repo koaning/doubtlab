@@ -640,10 +640,8 @@ class StandardizedErrorReason:
     """
 
     def __init__(self, model, threshold=3.0):
-
         if threshold <= 0:
             raise ValueError("threshold value should be positive")
-
         self.model = model
         self.threshold = threshold
 
@@ -653,16 +651,53 @@ class StandardizedErrorReason:
         return (np.abs(res_std) >= self.threshold).astype(np.float16)
 
 
-class QuantileDifferenceReason:
+class BoxplotReason:
     """
     Assign doubt when residual is either:
-    - below quantiles[0] - multiplier * iqr
-    - above quantiles[1] + multiplier * iqr
+    - below first_quartile - multiplier * iqr
+    - above third_quartile + multiplier * iqr
 
     Arguments:
         model: scikit-learn outlier model
         multiplier: multiplier for interquantile range
-        quantiles: list of quantiles to compute
+
+    Usage:
+
+    ```python
+    from sklearn.datasets import load_diabetes
+    from sklearn.linear_model import LinearRegression
+
+    from doubtlab.ensemble import DoubtEnsemble
+    from doubtlab.reason import BoxplotReason
+
+    X, y = load_diabetes(return_X_y=True)
+    model = LinearRegression()
+    model.fit(X, y)
+
+    doubt = DoubtEnsemble(reason = BoxplotReason(model, multiplier=1.5))
+    indices = doubt.get_indices(X, y)
+    ```
+    """
+
+    def __init__(self, model, multiplier=1.5):
+        self.model = model
+        self.multiplier = multiplier
+
+    def __call__(self, X, y):
+        res = y - self.model.predict(X)
+        q1, q3 = np.quantile(res, [0.25, 0.75])
+        m_iqr = self.multiplier * (q3 - q1)
+        lb, ub = q1 - m_iqr, q3 + m_iqr
+        return (np.logical_or(res < lb, res > ub)).astype(np.float16)
+
+
+class QuantileDifferenceReason:
+    """
+    Assign doubt when residual belongs to the largest (1-quantile)% quantile
+
+    Arguments:
+        model: scikit-learn outlier model
+        quantile: quantile of residuals to doubt
 
     Usage:
 
@@ -677,36 +712,18 @@ class QuantileDifferenceReason:
     model = LinearRegression()
     model.fit(X, y)
 
-    doubt = DoubtEnsemble(reason = QuantileDifferenceReason(model, multiplier=1.5, quantiles=[0.25, 0.75]))
+    doubt = DoubtEnsemble(reason = QuantileDifferenceReason(model, quantile=.95))
     indices = doubt.get_indices(X, y)
     ```
     """
 
-    def __init__(self, model, multiplier=1.5, quantiles=None):
-
-        if quantiles is not None:
-            self._check_quantiles(quantiles)
-
+    def __init__(self, model, quantile=0.95):
+        if (quantile < 0.0) or (quantile > 1.0):
+            raise ValueError("quantile value should be between 0 and 1")
         self.model = model
-        self.multiplier = multiplier
-        self.quantiles = quantiles if quantiles is not None else [0.25, 0.75]
+        self.quantile = quantile if quantile is not None else 0.95
 
     def __call__(self, X, y):
         res = y - self.model.predict(X)
-        q1, q3 = np.quantile(res, self.quantiles)
-        m_iqr = self.multiplier * (q3 - q1)
-        lb, ub = q1 - m_iqr, q3 + m_iqr
-        return (np.logical_or(res < lb, res > ub)).astype(np.float16)
-
-    @staticmethod
-    def _check_quantiles(quantiles):
-        """Check that quantiles respect few conditions"""
-
-        if len(quantiles) != 2:
-            raise ValueError("quantiles should have lenght 2")
-
-        if not all([0 <= q <= 1 for q in quantiles]):
-            raise ValueError("quantile values should be between 0 and 1")
-
-        if quantiles[0] >= quantiles[1]:
-            raise ValueError("quantiles should be sorted")
+        q = np.quantile(res, self.quantile)
+        return (res > q).astype(np.float16)
