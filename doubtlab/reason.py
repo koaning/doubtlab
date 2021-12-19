@@ -618,7 +618,7 @@ class StandardizedErrorReason:
     Assign doubt when the absolute standardized residual too large.
 
     Arguments:
-        model: scikit-learn outlier model
+        model: scikit-learn regressor
         threshold: cutoff for doubt assignment
 
     Usage:
@@ -634,12 +634,12 @@ class StandardizedErrorReason:
     model = LinearRegression()
     model.fit(X, y)
 
-    doubt = DoubtEnsemble(reason = StandardizedErrorReason(model, threshold=2.5))
+    doubt = DoubtEnsemble(reason = StandardizedErrorReason(model, threshold=2.))
     indices = doubt.get_indices(X, y)
     ```
     """
 
-    def __init__(self, model, threshold=3.0):
+    def __init__(self, model, threshold=2.0):
         if threshold <= 0:
             raise ValueError("threshold value should be positive")
         self.model = model
@@ -649,81 +649,3 @@ class StandardizedErrorReason:
         res = y - self.model.predict(X)
         res_std = res / np.std(res, ddof=1)
         return (np.abs(res_std) >= self.threshold).astype(np.float16)
-
-
-class BoxplotReason:
-    """
-    Assign doubt when residual is either:
-    - below first_quartile - multiplier * iqr
-    - above third_quartile + multiplier * iqr
-
-    Arguments:
-        model: scikit-learn outlier model
-        multiplier: multiplier for interquantile range
-
-    Usage:
-
-    ```python
-    from sklearn.datasets import load_diabetes
-    from sklearn.linear_model import LinearRegression
-
-    from doubtlab.ensemble import DoubtEnsemble
-    from doubtlab.reason import BoxplotReason
-
-    X, y = load_diabetes(return_X_y=True)
-    model = LinearRegression()
-    model.fit(X, y)
-
-    doubt = DoubtEnsemble(reason = BoxplotReason(model, multiplier=1.5))
-    indices = doubt.get_indices(X, y)
-    ```
-    """
-
-    def __init__(self, model, multiplier=1.5):
-        self.model = model
-        self.multiplier = multiplier
-
-    def __call__(self, X, y):
-        res = y - self.model.predict(X)
-        q1, q3 = np.quantile(res, [0.25, 0.75])
-        m_iqr = self.multiplier * (q3 - q1)
-        lb, ub = q1 - m_iqr, q3 + m_iqr
-        return (np.logical_or(res < lb, res > ub)).astype(np.float16)
-
-
-class QuantileDifferenceReason:
-    """
-    Assign doubt when residual belongs to the largest (1-quantile)% quantile
-
-    Arguments:
-        model: scikit-learn outlier model
-        quantile: quantile of residuals to doubt
-
-    Usage:
-
-    ```python
-    from sklearn.datasets import load_diabetes
-    from sklearn.linear_model import LinearRegression
-
-    from doubtlab.ensemble import DoubtEnsemble
-    from doubtlab.reason import QuantileDifferenceReason
-
-    X, y = load_diabetes(return_X_y=True)
-    model = LinearRegression()
-    model.fit(X, y)
-
-    doubt = DoubtEnsemble(reason = QuantileDifferenceReason(model, quantile=.95))
-    indices = doubt.get_indices(X, y)
-    ```
-    """
-
-    def __init__(self, model, quantile=0.95):
-        if (quantile < 0.0) or (quantile > 1.0):
-            raise ValueError("quantile value should be between 0 and 1")
-        self.model = model
-        self.quantile = quantile if quantile is not None else 0.95
-
-    def __call__(self, X, y):
-        res = y - self.model.predict(X)
-        q = np.quantile(res, self.quantile)
-        return (res > q).astype(np.float16)
