@@ -93,7 +93,7 @@ The library implemented many "reasons" for doubt.
 
 - `AbsoluteDifferenceReason`: assign doubt when the absolute difference is too high
 - `RelativeDifferenceReason`: assign doubt when the relative difference is too high
-- `StandardizedErrorReason`: assign doubt when the absolute standardized residual too high
+- `StandardizedErrorReason`: assign doubt when the absolute standardized residual is too high
 
 ## Feedback
 

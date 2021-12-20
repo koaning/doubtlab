@@ -615,7 +615,7 @@ class CleanlabReason:
 
 class StandardizedErrorReason:
     """
-    Assign doubt when the absolute standardized residual too high.
+    Assign doubt when the absolute standardized residual is too high.
 
     Arguments:
         model: scikit-learn regression model
