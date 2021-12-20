@@ -17,6 +17,7 @@ from doubtlab.reason import (
     AbsoluteDifferenceReason,
     RelativeDifferenceReason,
     CleanlabReason,
+    StandardizedErrorReason,
 )
 
 clf_reasons = [
@@ -28,7 +29,11 @@ clf_reasons = [
     CleanlabReason,
 ]
 
-regr_reasons = [AbsoluteDifferenceReason, RelativeDifferenceReason]
+regr_reasons = [
+    AbsoluteDifferenceReason,
+    RelativeDifferenceReason,
+    StandardizedErrorReason,
+]
 
 clf_datasets = [
     load_iris(return_X_y=True),

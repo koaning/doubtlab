@@ -484,7 +484,7 @@ class AbsoluteDifferenceReason:
     Assign doubt when the absolute difference between label and regression is too large.
 
     Arguments:
-        model: scikit-learn outlier model
+        model: scikit-learn regression model
         threshold: cutoff for doubt assignment
 
     Usage:
@@ -520,7 +520,7 @@ class RelativeDifferenceReason:
     Assign doubt when the relative difference between label and regression is too large.
 
     Arguments:
-        model: scikit-learn outlier model
+        model: scikit-learn regression model
         threshold: cutoff for doubt assignment
 
     Usage:
@@ -615,10 +615,10 @@ class CleanlabReason:
 
 class StandardizedErrorReason:
     """
-    Assign doubt when the absolute standardized residual too large.
+    Assign doubt when the absolute standardized residual too high.
 
     Arguments:
-        model: scikit-learn regressor
+        model: scikit-learn regression model
         threshold: cutoff for doubt assignment
 
     Usage:
@@ -646,6 +646,25 @@ class StandardizedErrorReason:
         self.threshold = threshold
 
     def __call__(self, X, y):
-        res = y - self.model.predict(X)
+        preds = self.model.predict(X)
+        return self.from_predict(preds, y, self.threshold)
+
+    @staticmethod
+    def from_predict(pred, y, threshold):
+        """
+        Outputs a reason array from a prediction array, skipping the need for a model.
+
+        Usage:
+        ```python
+        import numpy as np
+        from doubtlab.reason import StandardizedErrorReason
+
+        y = np.random.randn(100)
+        preds = np.random.randn(100)
+
+        predicate = StandardizedErrorReason.from_predict(preds, y)
+        ```
+        """
+        res = y - pred
         res_std = res / np.std(res, ddof=1)
-        return (np.abs(res_std) >= self.threshold).astype(np.float16)
+        return (np.abs(res_std) >= threshold).astype(np.float16)
