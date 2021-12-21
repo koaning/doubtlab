@@ -601,6 +601,26 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#doubtlab.reason.StandardizedErrorReason" class="md-nav__link">
+    StandardizedErrorReason
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#doubtlab.reason.StandardizedErrorReason.from_predict" class="md-nav__link">
+    from_predict()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#doubtlab.reason.WrongPredictionReason" class="md-nav__link">
     WrongPredictionReason
   </a>
@@ -825,6 +845,26 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#doubtlab.reason.StandardizedErrorReason" class="md-nav__link">
+    StandardizedErrorReason
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#doubtlab.reason.StandardizedErrorReason.from_predict" class="md-nav__link">
+    from_predict()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#doubtlab.reason.WrongPredictionReason" class="md-nav__link">
     WrongPredictionReason
   </a>
@@ -880,7 +920,7 @@
 <tr>
 <td><code>model</code></td>
 <td></td>
-<td>scikit-learn outlier model</td>
+<td>scikit-learn regression model</td>
 <td><em>required</em></td>
 </tr>
 <tr>
@@ -1484,7 +1524,7 @@
 <tr>
 <td><code>model</code></td>
 <td></td>
-<td>scikit-learn outlier model</td>
+<td>scikit-learn regression model</td>
 <td><em>required</em></td>
 </tr>
 <tr>
@@ -1717,6 +1757,98 @@ for a discussion.</p>
 <span class="n">predicate</span> <span class="o">=</span> <span class="n">ShortConfidenceReason</span><span class="o">.</span><span class="n">from_proba</span><span class="p">(</span><span class="n">probas</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">classes</span><span class="p">,</span> <span class="n">threshold</span><span class="p">)</span>
 <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">predicate</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]))</span>
 </code></pre></div>
+<h2 id="doubtlab.reason.StandardizedErrorReason"><code class="highlight"><span class="n">StandardizedErrorReason</span></code><a class="headerlink" href="#doubtlab.reason.StandardizedErrorReason" title="Permanent link">&para;</a></h2>
+<p>Assign doubt when the absolute standardized residual is too high.</p>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>model</code></td>
+<td></td>
+<td>scikit-learn regression model</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>threshold</code></td>
+<td></td>
+<td>cutoff for doubt assignment</td>
+<td><code>2.0</code></td>
+</tr>
+</tbody>
+</table>
+<p>Usage:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_diabetes</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+
+<span class="kn">from</span> <span class="nn">doubtlab.ensemble</span> <span class="kn">import</span> <span class="n">DoubtEnsemble</span>
+<span class="kn">from</span> <span class="nn">doubtlab.reason</span> <span class="kn">import</span> <span class="n">StandardizedErrorReason</span>
+
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">load_diabetes</span><span class="p">(</span><span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="n">doubt</span> <span class="o">=</span> <span class="n">DoubtEnsemble</span><span class="p">(</span><span class="n">reason</span> <span class="o">=</span> <span class="n">StandardizedErrorReason</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">2.</span><span class="p">))</span>
+<span class="n">indices</span> <span class="o">=</span> <span class="n">doubt</span><span class="o">.</span><span class="n">get_indices</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="doubtlab.reason.StandardizedErrorReason.from_predict"><code class="highlight"><span class="n">from_predict</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">threshold</span><span class="p">)</span></code> <em>(staticmethod)</em><a class="headerlink" href="#doubtlab.reason.StandardizedErrorReason.from_predict" title="Permanent link">&para;</a></h3>
+<details class="note"><summary>Show source code in <code>doubtlab/reason.py</code></summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">652</span>
+<span class="normal">653</span>
+<span class="normal">654</span>
+<span class="normal">655</span>
+<span class="normal">656</span>
+<span class="normal">657</span>
+<span class="normal">658</span>
+<span class="normal">659</span>
+<span class="normal">660</span>
+<span class="normal">661</span>
+<span class="normal">662</span>
+<span class="normal">663</span>
+<span class="normal">664</span>
+<span class="normal">665</span>
+<span class="normal">666</span>
+<span class="normal">667</span>
+<span class="normal">668</span>
+<span class="normal">669</span>
+<span class="normal">670</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">from_predict</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Outputs a reason array from a prediction array, skipping the need for a model.</span>
+
+<span class="sd">        Usage:</span>
+<span class="sd">        ```python</span>
+<span class="sd">        import numpy as np</span>
+<span class="sd">        from doubtlab.reason import StandardizedErrorReason</span>
+
+<span class="sd">        y = np.random.randn(100)</span>
+<span class="sd">        preds = np.random.randn(100)</span>
+
+<span class="sd">        predicate = StandardizedErrorReason.from_predict(preds, y)</span>
+<span class="sd">        ```</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">pred</span>
+        <span class="n">res_std</span> <span class="o">=</span> <span class="n">res</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">res_std</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float16</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+</details>
+<p>Outputs a reason array from a prediction array, skipping the need for a model.</p>
+<p>Usage:
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">doubtlab.reason</span> <span class="kn">import</span> <span class="n">StandardizedErrorReason</span>
+
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">preds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="n">predicate</span> <span class="o">=</span> <span class="n">StandardizedErrorReason</span><span class="o">.</span><span class="n">from_predict</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</code></pre></div></p>
 <h2 id="doubtlab.reason.WrongPredictionReason"><code class="highlight"><span class="n">WrongPredictionReason</span></code><a class="headerlink" href="#doubtlab.reason.WrongPredictionReason" title="Permanent link">&para;</a></h2>
 <p>Assign doubt when the model prediction doesn't match the label.</p>
 <p><strong>Parameters</strong></p>
