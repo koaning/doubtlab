@@ -170,5 +170,6 @@ of reasons that this library supports.
 
 - `AbsoluteDifferenceReason`: assign doubt when the absolute difference is too high
 - `RelativeDifferenceReason`: assign doubt when the relative difference is too high
+- `StandardizedErrorReason`: assign doubt when the absolute standardized residual is too high
 
 If you think there's a reason missing, feel free to mention it on [GitHub](https://github.com/koaning/doubtlab/issues/new).
