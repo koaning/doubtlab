@@ -27,7 +27,7 @@ dev_packages = all_packages + docs_packages + test_packages
 
 setup(
     name="doubtlab",
-    version="0.1.4",
+    version="0.1.5",
     author="Vincent D. Warmerdam",
     packages=find_packages(exclude=["notebooks", "docs"]),
     description="Don't Blindly Trust Your Labels",
