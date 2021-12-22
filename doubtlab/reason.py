@@ -585,6 +585,10 @@ class RelativeDifferenceReason:
         predicate = RelativeDifferenceReason.from_predict(preds, y, threshold=0.1)
         ```
         """
+        if np.any(y == 0.0):
+            raise ValueError(
+                "Your `y` values contain 0. Will cause divided by zero error."
+            )
         difference = np.abs(pred - y) / y
         return (difference >= threshold).astype(np.float16)
 
