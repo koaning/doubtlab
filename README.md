@@ -98,7 +98,7 @@ The library implemented many "reasons" for doubt.
 ## Feedback
 
 It is early days for the project. The project should be plenty useful as-is, but we
-prefer to be honest. Feedback and anekdotes are very welcome!
+prefer to be honest. Feedback and anecdotes are very welcome!
 
 ## Related Projects
 
