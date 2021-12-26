@@ -326,6 +326,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quickstart/faq/" title="FAQ" class="md-nav__link">
+      FAQ
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -436,6 +448,19 @@
   <a href="#doubtlab.reason.AbsoluteDifferenceReason" class="md-nav__link">
     AbsoluteDifferenceReason
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#doubtlab.reason.AbsoluteDifferenceReason.from_predict" class="md-nav__link">
+    from_predict()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -557,6 +582,19 @@
   <a href="#doubtlab.reason.RelativeDifferenceReason" class="md-nav__link">
     RelativeDifferenceReason
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#doubtlab.reason.RelativeDifferenceReason.from_predict" class="md-nav__link">
+    from_predict()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -681,6 +719,19 @@
     AbsoluteDifferenceReason
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#doubtlab.reason.AbsoluteDifferenceReason.from_predict" class="md-nav__link">
+    from_predict()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -801,6 +852,19 @@
   <a href="#doubtlab.reason.RelativeDifferenceReason" class="md-nav__link">
     RelativeDifferenceReason
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#doubtlab.reason.RelativeDifferenceReason.from_predict" class="md-nav__link">
+    from_predict()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -946,6 +1010,55 @@
 
 <span class="n">indices</span> <span class="o">=</span> <span class="n">doubt</span><span class="o">.</span><span class="n">get_indices</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 </code></pre></div>
+<h3 id="doubtlab.reason.AbsoluteDifferenceReason.from_predict"><code class="highlight"><span class="n">from_predict</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">threshold</span><span class="p">)</span></code> <em>(staticmethod)</em><a class="headerlink" href="#doubtlab.reason.AbsoluteDifferenceReason.from_predict" title="Permanent link">&para;</a></h3>
+<details class="note"><summary>Show source code in <code>doubtlab/reason.py</code></summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">517</span>
+<span class="normal">518</span>
+<span class="normal">519</span>
+<span class="normal">520</span>
+<span class="normal">521</span>
+<span class="normal">522</span>
+<span class="normal">523</span>
+<span class="normal">524</span>
+<span class="normal">525</span>
+<span class="normal">526</span>
+<span class="normal">527</span>
+<span class="normal">528</span>
+<span class="normal">529</span>
+<span class="normal">530</span>
+<span class="normal">531</span>
+<span class="normal">532</span>
+<span class="normal">533</span>
+<span class="normal">534</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">from_predict</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Outputs a reason array from a prediction array, skipping the need for a model.</span>
+
+<span class="sd">        Usage:</span>
+<span class="sd">        ```python</span>
+<span class="sd">        import numpy as np</span>
+<span class="sd">        from doubtlab.reason import AbsoluteDifferenceReason</span>
+
+<span class="sd">        y = np.random.randn(100)</span>
+<span class="sd">        preds = np.random.randn(100)</span>
+
+<span class="sd">        predicate = AbsoluteDifferenceReason.from_predict(preds, y, threshold=0.1)</span>
+<span class="sd">        ```</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">difference</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">pred</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">difference</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float16</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+</details>
+<p>Outputs a reason array from a prediction array, skipping the need for a model.</p>
+<p>Usage:
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">doubtlab.reason</span> <span class="kn">import</span> <span class="n">AbsoluteDifferenceReason</span>
+
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">preds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="n">predicate</span> <span class="o">=</span> <span class="n">AbsoluteDifferenceReason</span><span class="o">.</span><span class="n">from_predict</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+</code></pre></div></p>
 <h2 id="doubtlab.reason.CleanlabReason"><code class="highlight"><span class="n">CleanlabReason</span></code><a class="headerlink" href="#doubtlab.reason.CleanlabReason" title="Permanent link">&para;</a></h2>
 <p>Assign doubt when using the cleanlab heuristic.</p>
 <p><strong>Parameters</strong></p>
@@ -996,28 +1109,28 @@
 <span class="n">indices</span> <span class="o">=</span> <span class="n">doubt</span><span class="o">.</span><span class="n">get_indices</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 </code></pre></div>
 <h3 id="doubtlab.reason.CleanlabReason.from_proba"><code class="highlight"><span class="n">from_proba</span><span class="p">(</span><span class="n">proba</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">min_doubt</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">sorted_index_method</span><span class="o">=</span><span class="s1">&#39;normalized_margin&#39;</span><span class="p">)</span></code> <em>(staticmethod)</em><a class="headerlink" href="#doubtlab.reason.CleanlabReason.from_proba" title="Permanent link">&para;</a></h3>
-<details class="note"><summary>Show source code in <code>doubtlab/reason.py</code></summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">588</span>
-<span class="normal">589</span>
-<span class="normal">590</span>
-<span class="normal">591</span>
-<span class="normal">592</span>
-<span class="normal">593</span>
-<span class="normal">594</span>
-<span class="normal">595</span>
-<span class="normal">596</span>
-<span class="normal">597</span>
-<span class="normal">598</span>
-<span class="normal">599</span>
-<span class="normal">600</span>
-<span class="normal">601</span>
-<span class="normal">602</span>
-<span class="normal">603</span>
-<span class="normal">604</span>
-<span class="normal">605</span>
-<span class="normal">606</span>
-<span class="normal">607</span>
-<span class="normal">608</span>
-<span class="normal">609</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="nd">@staticmethod</span>
+<details class="note"><summary>Show source code in <code>doubtlab/reason.py</code></summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">630</span>
+<span class="normal">631</span>
+<span class="normal">632</span>
+<span class="normal">633</span>
+<span class="normal">634</span>
+<span class="normal">635</span>
+<span class="normal">636</span>
+<span class="normal">637</span>
+<span class="normal">638</span>
+<span class="normal">639</span>
+<span class="normal">640</span>
+<span class="normal">641</span>
+<span class="normal">642</span>
+<span class="normal">643</span>
+<span class="normal">644</span>
+<span class="normal">645</span>
+<span class="normal">646</span>
+<span class="normal">647</span>
+<span class="normal">648</span>
+<span class="normal">649</span>
+<span class="normal">650</span>
+<span class="normal">651</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">from_proba</span><span class="p">(</span><span class="n">proba</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">min_doubt</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">sorted_index_method</span><span class="o">=</span><span class="s2">&quot;normalized_margin&quot;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Outputs a reason array from a proba array, skipping the need for a model.</span>
@@ -1550,6 +1663,63 @@
 
 <span class="n">indices</span> <span class="o">=</span> <span class="n">doubt</span><span class="o">.</span><span class="n">get_indices</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 </code></pre></div>
+<h3 id="doubtlab.reason.RelativeDifferenceReason.from_predict"><code class="highlight"><span class="n">from_predict</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">threshold</span><span class="p">)</span></code> <em>(staticmethod)</em><a class="headerlink" href="#doubtlab.reason.RelativeDifferenceReason.from_predict" title="Permanent link">&para;</a></h3>
+<details class="note"><summary>Show source code in <code>doubtlab/reason.py</code></summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">572</span>
+<span class="normal">573</span>
+<span class="normal">574</span>
+<span class="normal">575</span>
+<span class="normal">576</span>
+<span class="normal">577</span>
+<span class="normal">578</span>
+<span class="normal">579</span>
+<span class="normal">580</span>
+<span class="normal">581</span>
+<span class="normal">582</span>
+<span class="normal">583</span>
+<span class="normal">584</span>
+<span class="normal">585</span>
+<span class="normal">586</span>
+<span class="normal">587</span>
+<span class="normal">588</span>
+<span class="normal">589</span>
+<span class="normal">590</span>
+<span class="normal">591</span>
+<span class="normal">592</span>
+<span class="normal">593</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">from_predict</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Outputs a reason array from a prediction array, skipping the need for a model.</span>
+
+<span class="sd">        Usage:</span>
+<span class="sd">        ```python</span>
+<span class="sd">        import numpy as np</span>
+<span class="sd">        from doubtlab.reason import RelativeDifferenceReason</span>
+
+<span class="sd">        y = np.random.randn(100)</span>
+<span class="sd">        preds = np.random.randn(100)</span>
+
+<span class="sd">        predicate = RelativeDifferenceReason.from_predict(preds, y, threshold=0.1)</span>
+<span class="sd">        ```</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Your `y` values contain 0. Will cause divided by zero error.&quot;</span>
+            <span class="p">)</span>
+        <span class="n">difference</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">pred</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">/</span> <span class="n">y</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">difference</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float16</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+</details>
+<p>Outputs a reason array from a prediction array, skipping the need for a model.</p>
+<p>Usage:
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">doubtlab.reason</span> <span class="kn">import</span> <span class="n">RelativeDifferenceReason</span>
+
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">preds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="n">predicate</span> <span class="o">=</span> <span class="n">RelativeDifferenceReason</span><span class="o">.</span><span class="n">from_predict</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+</code></pre></div></p>
 <h2 id="doubtlab.reason.ShannonEntropyReason"><code class="highlight"><span class="n">ShannonEntropyReason</span></code><a class="headerlink" href="#doubtlab.reason.ShannonEntropyReason" title="Permanent link">&para;</a></h2>
 <p>Assign doubt when the normalized Shannon entropy is too high, see
 <a href="https://math.stackexchange.com/questions/395121/how-entropy-scales-with-sample-size">here</a>
@@ -1799,25 +1969,25 @@ for a discussion.</p>
 <span class="n">indices</span> <span class="o">=</span> <span class="n">doubt</span><span class="o">.</span><span class="n">get_indices</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 </code></pre></div>
 <h3 id="doubtlab.reason.StandardizedErrorReason.from_predict"><code class="highlight"><span class="n">from_predict</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">threshold</span><span class="p">)</span></code> <em>(staticmethod)</em><a class="headerlink" href="#doubtlab.reason.StandardizedErrorReason.from_predict" title="Permanent link">&para;</a></h3>
-<details class="note"><summary>Show source code in <code>doubtlab/reason.py</code></summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">652</span>
-<span class="normal">653</span>
-<span class="normal">654</span>
-<span class="normal">655</span>
-<span class="normal">656</span>
-<span class="normal">657</span>
-<span class="normal">658</span>
-<span class="normal">659</span>
-<span class="normal">660</span>
-<span class="normal">661</span>
-<span class="normal">662</span>
-<span class="normal">663</span>
-<span class="normal">664</span>
-<span class="normal">665</span>
-<span class="normal">666</span>
-<span class="normal">667</span>
-<span class="normal">668</span>
-<span class="normal">669</span>
-<span class="normal">670</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="nd">@staticmethod</span>
+<details class="note"><summary>Show source code in <code>doubtlab/reason.py</code></summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">694</span>
+<span class="normal">695</span>
+<span class="normal">696</span>
+<span class="normal">697</span>
+<span class="normal">698</span>
+<span class="normal">699</span>
+<span class="normal">700</span>
+<span class="normal">701</span>
+<span class="normal">702</span>
+<span class="normal">703</span>
+<span class="normal">704</span>
+<span class="normal">705</span>
+<span class="normal">706</span>
+<span class="normal">707</span>
+<span class="normal">708</span>
+<span class="normal">709</span>
+<span class="normal">710</span>
+<span class="normal">711</span>
+<span class="normal">712</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">from_predict</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Outputs a reason array from a prediction array, skipping the need for a model.</span>
@@ -1830,7 +2000,7 @@ for a discussion.</p>
 <span class="sd">        y = np.random.randn(100)</span>
 <span class="sd">        preds = np.random.randn(100)</span>
 
-<span class="sd">        predicate = StandardizedErrorReason.from_predict(preds, y)</span>
+<span class="sd">        predicate = StandardizedErrorReason.from_predict(preds, y, threshold=0.1)</span>
 <span class="sd">        ```</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">res</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">pred</span>
@@ -1847,7 +2017,7 @@ for a discussion.</p>
 <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
 <span class="n">preds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
 
-<span class="n">predicate</span> <span class="o">=</span> <span class="n">StandardizedErrorReason</span><span class="o">.</span><span class="n">from_predict</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">predicate</span> <span class="o">=</span> <span class="n">StandardizedErrorReason</span><span class="o">.</span><span class="n">from_predict</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
 </code></pre></div></p>
 <h2 id="doubtlab.reason.WrongPredictionReason"><code class="highlight"><span class="n">WrongPredictionReason</span></code><a class="headerlink" href="#doubtlab.reason.WrongPredictionReason" title="Permanent link">&para;</a></h2>
 <p>Assign doubt when the model prediction doesn't match the label.</p>
