@@ -13,6 +13,7 @@ nav:
   - API:
     - ensemble: api/doubtlab.md
     - reasons: api/reasons.md
+    - benchmark: api/benchmark.md
 plugins:
   - mkdocstrings
   - search
