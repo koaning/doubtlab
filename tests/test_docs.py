@@ -16,6 +16,8 @@ from doubtlab.reason import (
     ShannonEntropyReason,
 )
 from doubtlab.ensemble import DoubtEnsemble
+from doubtlab.benchmark import flip_labels, shuffle_labels
+
 
 all_objects = [
     ProbaReason,
@@ -41,7 +43,10 @@ def flatten(items):
 
 # This way we ensure that each item in `all_members` points to a method
 # that could have a docstring.
-all_members = flatten([get_codeblock_members(o) for o in all_objects])
+all_members = flatten([get_codeblock_members(o) for o in all_objects]) + [
+    flip_labels,
+    shuffle_labels,
+]
 
 
 @pytest.mark.parametrize("func", all_members, ids=lambda d: d.__qualname__)
