@@ -1,7 +1,26 @@
 import pytest
 
 import numpy as np
-from doubtlab.benchmark import shuffle_labels
+from doubtlab.benchmark import shuffle_labels, flip_labels
+
+
+@pytest.mark.parametrize("n", [100, 200, 500, 1000])
+def test_flip_labels_n(n):
+    """Test some basic properties."""
+    y = ["pos", "neg", "neu"] * 1000
+    y_out, indicator = flip_labels(y, n=n)
+    assert indicator.sum() == n
+    flipped = (y != y_out).astype(np.int8)
+    assert np.all(flipped == indicator)
+
+
+@pytest.mark.parametrize("p", [0.1, 0.2, 0.3, 0.5])
+def test_flip_labels_p(p):
+    """Test some basic properties."""
+    y = ["pos", "neg", "neu"] * 1000
+    y_out, indicator = flip_labels(y, p=p)
+    flipped = (y != y_out).astype(np.int8)
+    assert np.all(flipped == indicator)
 
 
 @pytest.mark.parametrize("n", [100, 200, 500, 1000])
@@ -11,7 +30,6 @@ def test_shuffle_labels_n(n):
     y_out, indicator = shuffle_labels(y, n=n)
     assert indicator.sum() == n
     flipped = (y != y_out).astype(np.int8)
-    print(flipped.sum())
     assert np.all(flipped == indicator)
 
 
@@ -21,7 +39,6 @@ def test_shuffle_labels_p(p):
     y = np.random.normal(0, 1, 10000)
     y_out, indicator = shuffle_labels(y, p=p)
     flipped = (y != y_out).astype(np.int8)
-    print(flipped.sum())
     assert np.all(flipped == indicator)
 
 
