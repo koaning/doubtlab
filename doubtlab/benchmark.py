@@ -31,6 +31,7 @@ def shuffle_labels(y, random_seed=42, n=None, p=None):
     Usage:
 
     ```python
+    import numpy as np
     from doubtlab.benchmark import shuffle_labels
 
     # Let's pretend these are the actual labels
@@ -68,6 +69,7 @@ def flip_labels(y, random_seed=42, n=None, p=None):
     Usage:
 
     ```python
+    import numpy as np
     from doubtlab.benchmark import flip_labels
 
     # Let's pretend these are the actual labels
