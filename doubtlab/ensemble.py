@@ -106,6 +106,10 @@ class DoubtEnsemble:
         predicates = [
             c for c in df.columns if isinstance(c, str) and ("predicate" in c)
         ]
-        return np.array(
-            [int(i) for i in df.loc[lambda d: d[predicates].sum(axis=1) > 0].index]
+        df = (
+            df[predicates]
+            .assign(s=lambda d: d[predicates].sum(axis=1))
+            .sort_values(columns=["s"], ascending=False)
+            .loc[lambda d: d["s"] > 0]
         )
+        return np.array(df.index)
