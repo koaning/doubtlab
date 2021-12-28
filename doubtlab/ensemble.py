@@ -109,7 +109,7 @@ class DoubtEnsemble:
         df = (
             df[predicates]
             .assign(s=lambda d: d[predicates].sum(axis=1))
-            .sort_values(columns=["s"], ascending=False)
+            .sort_values(["s"], ascending=False)
             .loc[lambda d: d["s"] > 0]
         )
         return np.array(df.index)

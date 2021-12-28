@@ -104,11 +104,11 @@ def calculate_precision_recall_at_k(
     Returns an interactive altair visualisation. Make sure it is installed beforehand.
 
     Arguments:
-        - origin_df: the original dataframe that you start with
-        - predicate_df: the dataframe with predicates from `ensemble.get_predicates`
-        - max_k: the maximum value for `k` to consider
-        - give_random: plot the "at k" statistics for the randomly selected lower bound
-        - give_ensemble: plot the "at k" statistics from the reason ensemble
+        predicate_df: the dataframe with predicates from `ensemble.get_predicates`
+        idx_flip: array that indicates if labels are wrong
+        max_k: the maximum value for `k` to consider
+        give_random: plot the "at k" statistics for the randomly selected lower bound
+        give_ensemble: plot the "at k" statistics from the reason ensemble
     """
     # First we need to ensure that the original dataframe with X values is
     # is combined with our reasons dataframe and sorted appropriately.
@@ -160,11 +160,11 @@ def plot_precision_recall_at_k(
     Returns an interactive altair visualisation. Make sure it is installed beforehand.
 
     Arguments:
-        - origin_df: the original dataframe that you start with
-        - predicate_df: the dataframe with predicates from `ensemble.get_predicates`
-        - max_k: the maximum value for `k` to consider
-        - give_random: plot the "at k" statistics for the randomly selected lower bound
-        - give_ensemble: plot the "at k" statistics from the reason ensemble
+        predicate_df: the dataframe with predicates from `ensemble.get_predicates`
+        idx_flip: array that indicates if labels are wrong
+        max_k: the maximum value for `k` to consider
+        give_random: plot the "at k" statistics for the randomly selected lower bound
+        give_ensemble: plot the "at k" statistics from the reason ensemble
     """
     import altair as alt
 
