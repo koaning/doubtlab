@@ -8,7 +8,8 @@ nav:
   - Home: index.md
   - Getting Started:
     - Quickstart: quickstart/index.md
-    - Running Benchmarks: quickstart/benchmarks.md
+    - Benchmarks: quickstart/benchmarks.md
+    - FAQ: quickstart/faq.md
   - Examples:
     - Google Emotions: examples/google-emotions.md
   - API:

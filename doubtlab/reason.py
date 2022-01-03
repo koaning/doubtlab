@@ -511,8 +511,27 @@ class AbsoluteDifferenceReason:
         self.threshold = threshold
 
     def __call__(self, X, y):
-        difference = np.abs(self.model.predict(X) - y)
-        return (difference >= self.threshold).astype(np.float16)
+        pred = self.model.predict(X)
+        return self.from_predict(pred, y, self.threshold)
+
+    @staticmethod
+    def from_predict(pred, y, threshold):
+        """
+        Outputs a reason array from a prediction array, skipping the need for a model.
+
+        Usage:
+        ```python
+        import numpy as np
+        from doubtlab.reason import AbsoluteDifferenceReason
+
+        y = np.random.randn(100)
+        preds = np.random.randn(100)
+
+        predicate = AbsoluteDifferenceReason.from_predict(preds, y, threshold=0.1)
+        ```
+        """
+        difference = np.abs(pred - y)
+        return (difference >= threshold).astype(np.float16)
 
 
 class RelativeDifferenceReason:
@@ -547,8 +566,31 @@ class RelativeDifferenceReason:
         self.threshold = threshold
 
     def __call__(self, X, y):
-        difference = np.abs(self.model.predict(X) - y) / y
-        return (difference >= self.threshold).astype(np.float16)
+        pred = self.model.predict(X)
+        return self.from_predict(pred, y, threshold=self.threshold)
+
+    @staticmethod
+    def from_predict(pred, y, threshold):
+        """
+        Outputs a reason array from a prediction array, skipping the need for a model.
+
+        Usage:
+        ```python
+        import numpy as np
+        from doubtlab.reason import RelativeDifferenceReason
+
+        y = np.random.randn(100)
+        preds = np.random.randn(100)
+
+        predicate = RelativeDifferenceReason.from_predict(preds, y, threshold=0.1)
+        ```
+        """
+        if np.any(y == 0.0):
+            raise ValueError(
+                "Your `y` values contain 0. Will cause divided by zero error."
+            )
+        difference = np.abs(pred - y) / y
+        return (difference >= threshold).astype(np.float16)
 
 
 class CleanlabReason:
@@ -662,7 +704,7 @@ class StandardizedErrorReason:
         y = np.random.randn(100)
         preds = np.random.randn(100)
 
-        predicate = StandardizedErrorReason.from_predict(preds, y)
+        predicate = StandardizedErrorReason.from_predict(preds, y, threshold=0.1)
         ```
         """
         res = y - pred
