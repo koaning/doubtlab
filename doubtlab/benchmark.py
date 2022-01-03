@@ -168,6 +168,8 @@ def plot_precision_recall_at_k(
     """
     import altair as alt
 
+    alt.data_transformers.disable_max_rows()
+
     # We combine the results in dataframes
     plot_df = calculate_precision_recall_at_k(
         predicate_df=predicate_df,
