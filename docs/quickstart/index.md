@@ -46,28 +46,26 @@ doubt = DoubtEnsemble(**reasons)
 
 This ensemble represents a pipeline of reasons to doubt the validity of a label.
 
-### Internal Details
+!!! Note "Internal Details"
 
-A `DoubtEnsemble`, technically, is just an ensemble of callables. You could
-also choose to use lambda functions to define a reason for doubt. The example
-below shows an example of a lambda function that's equivalent to what `WrongPredictionReason`
-would do.
+    A `DoubtEnsemble`, technically, is just an ensemble of callables. You could
+    also choose to use lambda functions to define a reason for doubt. The example
+    below shows an example of a lambda function that's equivalent to what `WrongPredictionReason`
+    would do.
 
-```python
-DoubtEnsemble(
-    wrong_pred=lambda X, y: (model.predict(X) != y).astype(float16)
-)
-```
+    ```python
+    DoubtEnsemble(
+        wrong_pred=lambda X, y: (model.predict(X) != y).astype(float16)
+    )
+    ```
 
-When it's time to infer doubt, the `DoubtEnsemble` will call each callable reason in order,
-passing `X`, `y` and listening for an array that contains "doubt-scores". These scores are just
-numbers, but they follow a few rules.
+    When it's time to infer doubt, the `DoubtEnsemble` will call each callable reason in order,
+    passing `X`, `y` and listening for an array that contains "doubt-scores". These scores are just
+    numbers, but they follow a few rules.
 
-- when there is no doubt, the score should be zero
-- the maximum doubt that a reason can emit is one
-- the higher the doubt-score, the more likely doubt should be
-
-
+    - When there is no doubt, the score should be zero
+    - The maximum doubt that a reason can emit is one
+    - The higher the doubt-score, the more likely doubt should be. For now the library emits 0/1 scores, but this may change in the future.
 
 ## Retreiving Examples to Check
 
@@ -84,7 +82,7 @@ the original data that are in doubt.
 indices = doubt.get_indices(X, y)
 ```
 
-In this case, you'd get an array with 6 elements.
+In this case, you'd get an array with 7 elements.
 
 ```
 array([ 77, 106, 126, 133,  83, 119,  70])
