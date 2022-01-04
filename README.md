@@ -13,13 +13,11 @@
 [#docs-package]: https://koaning.github.io/doubtlab/
 <!--- BADGES: END --->
 
-<img src="https://github.com/koaning/doubtlab/raw/main/docs/doubt.png" width=125 height=125 align="right">
+<img src="https://github.com/koaning/doubtlab/raw/main/docs/doubt.png" width=140 height=140 align="right">
 
 # doubtlab
 
 > A lab for bad labels.
-
-<br>
 
 This repository contains general tricks that may help you find bad, or noisy, labels in your dataset. The hope is that this repository makes it easier for folks to quickly check their own datasets before they invest too much time and compute on gridsearch.
 
