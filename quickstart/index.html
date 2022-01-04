@@ -356,19 +356,6 @@
     Pipeline of Doubt Reasons
   </a>
   
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#internal-details" class="md-nav__link">
-    Internal Details
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -447,6 +434,18 @@
   
 </nav>
     
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="benchmarks/" title="Benchmarks" class="md-nav__link">
+      Benchmarks
+    </a>
   </li>
 
         
@@ -546,6 +545,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../api/benchmark/" title="benchmark" class="md-nav__link">
+      benchmark
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -580,19 +591,6 @@
   <a href="#pipeline-of-doubt-reasons" class="md-nav__link">
     Pipeline of Doubt Reasons
   </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#internal-details" class="md-nav__link">
-    Internal Details
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -720,7 +718,8 @@ The code below shows you how to build an ensemble of the two aforementioned reas
 <span class="n">doubt</span> <span class="o">=</span> <span class="n">DoubtEnsemble</span><span class="p">(</span><span class="o">**</span><span class="n">reasons</span><span class="p">)</span>
 </code></pre></div>
 <p>This ensemble represents a pipeline of reasons to doubt the validity of a label.</p>
-<h3 id="internal-details">Internal Details<a class="headerlink" href="#internal-details" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Internal Details</p>
 <p>A <code>DoubtEnsemble</code>, technically, is just an ensemble of callables. You could
 also choose to use lambda functions to define a reason for doubt. The example
 below shows an example of a lambda function that's equivalent to what <code>WrongPredictionReason</code>
@@ -733,10 +732,11 @@ would do.</p>
 passing <code>X</code>, <code>y</code> and listening for an array that contains "doubt-scores". These scores are just
 numbers, but they follow a few rules.</p>
 <ul>
-<li>when there is no doubt, the score should be zero</li>
-<li>the maximum doubt that a reason can emit is one</li>
-<li>the higher the doubt-score, the more likely doubt should be</li>
+<li>When there is no doubt, the score should be zero</li>
+<li>The maximum doubt that a reason can emit is one</li>
+<li>The higher the doubt-score, the more likely doubt should be. For now the library emits 0/1 scores, but this may change in the future.</li>
 </ul>
+</div>
 <h2 id="retreiving-examples-to-check">Retreiving Examples to Check<a class="headerlink" href="#retreiving-examples-to-check" title="Permanent link">&para;</a></h2>
 <p>There are multiple ways of retreiving the examples to check
 from the doubt pipeline.</p>
@@ -746,7 +746,7 @@ the original data that are in doubt.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Get the ordered indices of examples worth checking again</span>
 <span class="n">indices</span> <span class="o">=</span> <span class="n">doubt</span><span class="o">.</span><span class="n">get_indices</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 </code></pre></div>
-<p>In this case, you'd get an array with 6 elements.</p>
+<p>In this case, you'd get an array with 7 elements.</p>
 <div class="highlight"><pre><span></span><code>array([ 77, 106, 126, 133,  83, 119,  70])
 </code></pre></div>
 <p>You can inspect the associated rows/labels of the examples via:</p>
@@ -900,13 +900,13 @@ of reasons that this library supports.</p>
           </a>
         
         
-          <a href="faq/" title="FAQ" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="benchmarks/" title="Benchmarks" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                FAQ
+                Benchmarks
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

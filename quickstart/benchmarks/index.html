@@ -1,0 +1,969 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="DoubtLab - Find Bad Labels">
+      
+      
+        <link rel="canonical" href="https://koaning.github.io/doubtlab/quickstart/benchmarks/">
+      
+      
+        <meta name="author" content="Vincent D. Warmerdam">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../icon.png">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-4.6.3">
+    
+    
+      
+        <title>Benchmarks - doubtlab</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.adb8469c.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.86422ebf.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="white" data-md-color-accent="blue">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#how-to-measure" tabindex="0" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://koaning.github.io/doubtlab/" title="doubtlab" aria-label="doubtlab" class="md-header-nav__button md-logo">
+          
+            <img alt="logo" src="../../icon.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              doubtlab
+            </span>
+            <span class="md-header-nav__topic">
+              
+                Benchmarks
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" aria-label="search" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/koaning/doubtlab/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+        
+
+  
+
+<nav class="md-tabs md-tabs--active" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href="../.." class="md-tabs__link">
+        Home
+      </a>
+    
+  </li>
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../" class="md-tabs__link md-tabs__link--active">
+          Getting Started
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../examples/google-emotions/" class="md-tabs__link">
+          Examples
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../api/doubtlab/" class="md-tabs__link">
+          API
+        </a>
+      
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://koaning.github.io/doubtlab/" title="doubtlab" class="md-nav__button md-logo">
+      
+        <img alt="logo" src="../../icon.png" width="48" height="48">
+      
+    </a>
+    doubtlab
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/koaning/doubtlab/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      Getting Started
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Getting Started
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../" title="Quickstart" class="md-nav__link">
+      Quickstart
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Benchmarks
+      </label>
+    
+    <a href="./" title="Benchmarks" class="md-nav__link md-nav__link--active">
+      Benchmarks
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-measure" class="md-nav__link">
+    How to Measure
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simulation" class="md-nav__link">
+    Simulation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#demonstration" class="md-nav__link">
+    Demonstration
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dataset" class="md-nav__link">
+    Dataset
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flipping-labels" class="md-nav__link">
+    Flipping Labels
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ensemble" class="md-nav__link">
+    Ensemble
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#precision-and-recall-at-k" class="md-nav__link">
+    Precision and Recall at k
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#plotting" class="md-nav__link">
+    Plotting
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-causes-uplift" class="md-nav__link">
+    What Causes Uplift?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#understanding" class="md-nav__link">
+    Understanding
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../faq/" title="FAQ" class="md-nav__link">
+      FAQ
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Examples
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Examples
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../examples/google-emotions/" title="Google Emotions" class="md-nav__link">
+      Google Emotions
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      API
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        API
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../api/doubtlab/" title="ensemble" class="md-nav__link">
+      ensemble
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../api/reasons/" title="reasons" class="md-nav__link">
+      reasons
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../api/benchmark/" title="benchmark" class="md-nav__link">
+      benchmark
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-measure" class="md-nav__link">
+    How to Measure
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simulation" class="md-nav__link">
+    Simulation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#demonstration" class="md-nav__link">
+    Demonstration
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dataset" class="md-nav__link">
+    Dataset
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flipping-labels" class="md-nav__link">
+    Flipping Labels
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ensemble" class="md-nav__link">
+    Ensemble
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#precision-and-recall-at-k" class="md-nav__link">
+    Precision and Recall at k
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#plotting" class="md-nav__link">
+    Plotting
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-causes-uplift" class="md-nav__link">
+    What Causes Uplift?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#understanding" class="md-nav__link">
+    Understanding
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/koaning/doubtlab/edit/master/docs/quickstart/benchmarks.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                  <h1>Benchmarks</h1>
+                
+                <p>The goal of this document is to explain how we might be able to measure
+the effectiveness of finding bad labels.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>This document shows a way to run benchmarks with this library. It deserves
+to be said that this part of the library is the most experimental and may
+change in the future as we receive community feedback.</p>
+</div>
+<h2 id="how-to-measure">How to Measure<a class="headerlink" href="#how-to-measure" title="Permanent link">&para;</a></h2>
+<p>There are a lot of reasons that you might doubt a sample of data. We prefer
+to limit ourselves to the generally effective methods out there. But how can
+we measure effectiveness? In reality we could only do that if we know which
+labels are bad and which are good. But if we knew that, we wouldn't need this
+library.</p>
+<h3 id="simulation">Simulation<a class="headerlink" href="#simulation" title="Permanent link">&para;</a></h3>
+<p>That's why, as a proxy, we allow you to run benchmarks using simulations. While
+this certainly is not a perfect approach, it is also not wholly unreasonable.</p>
+<p>Here's how we add labels. Suppose that we have a dataset <code>X</code> with some
+labels <code>y</code> that we'd like to predict. If we assume that the labels <code>y</code>
+are correct we can simulate bad labels by designating a few labels
+to be shuffled.</p>
+<p><img alt="" src="../images/benchmarks-shuffle-1.png" /></p>
+<p>For the rows designated to be shuffled, we can now select the <code>y</code> values
+and change them. For classification problems we can flip the labels such
+that another label than the original <code>y</code>-label is chosen. For regression
+we can instead shuffle all the values.</p>
+<p><img alt="" src="../images/benchmarks-shuffle-2.png" /></p>
+<p>We can now pass this data to an ensemble and in hindsight see if we're
+able to uncover which values were flipped. At the very least, we should
+be able to confirm that if we sort based on our "reasons" that we select
+bad labels at a rate that's better than random.</p>
+<h2 id="demonstration">Demonstration<a class="headerlink" href="#demonstration" title="Permanent link">&para;</a></h2>
+<p>Let's proceed by running a small demonstration.</p>
+<h3 id="dataset">Dataset<a class="headerlink" href="#dataset" title="Permanent link">&para;</a></h3>
+<p>We'll use a subset of the <a href="https://github.com/clinc/oos-eval">clinc dataset</a> for this demonstration.
+It's a dataset that contains text that might be used in a chatbot-like setting and the goal
+is to predict what the original intent behind the text might be.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://raw.githubusercontent.com/koaning/optimal-on-paper/main/data/outofscope-intent-classification-dataset.csv&quot;</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5000</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</code></pre></div>
+<p>Here's what the sample of the data might look like:</p>
+<table>
+<thead>
+<tr>
+<th align="left">text</th>
+<th align="left">label</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">what is my visa credit limit</td>
+<td align="left">credit_limit</td>
+</tr>
+<tr>
+<td align="left">i want to eat something from turkey</td>
+<td align="left">meal_suggestion</td>
+</tr>
+<tr>
+<td align="left">what is life's meaning</td>
+<td align="left">meaning_of_life</td>
+</tr>
+</tbody>
+</table>
+<p>The goal of this dataset is to classify the text into predefined
+categories. We're only looking at the top 5000 rows to keep the
+computation of this example lightweight. Let's start by formally
+making a <code>X</code>, <code>y</code> pair.</p>
+<div class="highlight"><pre><span></span><code><span class="n">X</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span>
+</code></pre></div>
+<h3 id="flipping-labels">Flipping Labels<a class="headerlink" href="#flipping-labels" title="Permanent link">&para;</a></h3>
+<p>We can now use some utilities from the benchmarking submodule to
+flip the labels.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">doubtlab.benchmark</span> <span class="kn">import</span> <span class="n">flip_labels</span>
+
+<span class="n">y_flip</span><span class="p">,</span> <span class="n">flip_indicator</span> <span class="o">=</span> <span class="n">flip_labels</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+</code></pre></div>
+<p>You'll now have;</p>
+<ul>
+<li><code>y_flip</code>: which contains the original labels with 200 labels that are flipped.</li>
+<li><code>flip_indicator</code>: which is a numpy array that indicates if a label did (with value 1.0) or did not (with value 0.0) got flipped.</li>
+</ul>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>We're using <code>flip_labels</code> here because we're working on a classification
+task. If you were working on a regression task we recommend using <code>shuffle_labels</code>
+instead.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">doubtlab.benchmark</span> <span class="kn">import</span> <span class="n">shuffle_labels</span>
+
+<span class="n">y_flip</span><span class="p">,</span> <span class="n">flip_indicator</span> <span class="o">=</span> <span class="n">shuffle_labels</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<h3 id="ensemble">Ensemble<a class="headerlink" href="#ensemble" title="Permanent link">&para;</a></h3>
+<p>Given that we now have data to compare against, let's make a <code>DoubtEnsemble</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span><span class="p">,</span> <span class="n">make_union</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span>
+
+<span class="kn">from</span> <span class="nn">doubtlab.ensemble</span> <span class="kn">import</span> <span class="n">DoubtEnsemble</span>
+<span class="kn">from</span> <span class="nn">doubtlab.reason</span> <span class="kn">import</span> <span class="n">ProbaReason</span><span class="p">,</span> <span class="n">ShortConfidenceReason</span><span class="p">,</span> <span class="n">LongConfidenceReason</span>
+
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
+    <span class="n">CountVectorizer</span><span class="p">(),</span>
+    <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">class_weight</span><span class="o">=</span><span class="s2">&quot;balanced&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y_flip</span><span class="p">)</span>
+
+<span class="n">ensemble</span> <span class="o">=</span> <span class="n">DoubtEnsemble</span><span class="p">(</span>
+    <span class="n">proba</span> <span class="o">=</span> <span class="n">ProbaReason</span><span class="p">(</span><span class="n">model</span><span class="p">),</span>
+    <span class="n">short</span> <span class="o">=</span> <span class="n">ShortConfidenceReason</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.2</span><span class="p">),</span>
+    <span class="n">long</span> <span class="o">=</span> <span class="n">LongConfidenceReason</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.9</span><span class="p">),</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>With an ensemble defined, we can now proceed by generating a dataframe with predicates.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># First, get our dataframe with predicates</span>
+<span class="n">predicate_df</span> <span class="o">=</span> <span class="n">ensemble</span><span class="o">.</span><span class="n">get_predicates</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y_flip</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="precision-and-recall-at-k">Precision and Recall at <code>k</code><a class="headerlink" href="#precision-and-recall-at-k" title="Permanent link">&para;</a></h2>
+<p>Given our sorted dataframe with predicates we can now wonder how well we did in finding bad
+labels. A common proxy for this is to consider the recall and precision "at k" metric.</p>
+<ul>
+<li><em>Precision at k</em>: suppose that we look at the top 10 rows of data to check, how many
+of these turn out to be bad labels? What if we look at the top 20? That's what precision
+at k tells you.</li>
+<li><em>Recall at k</em>: suppose that we look at the top 10 rows of data to check, what percentage
+of all the bad labels will we have found? What if we look at the top 20? That's what recall
+at k tells you.</li>
+</ul>
+<p>The idea here is that precision and recall are a bit at odds with eachother. The higher the
+value for <code>k</code> the larger your recall is bound to be but the harder it will be to guarantee
+a high precision. For lower <code>k</code> values you're only looking at the most likely candidates so
+you're more sure that you've got bad labels but you're also more sure that you don't have
+all of them.</p>
+<h3 id="plotting">Plotting<a class="headerlink" href="#plotting" title="Permanent link">&para;</a></h3>
+<p>Let's now use the predicate dataframe with our <code>idx_flip</code> array from before to
+determine if our approach gives us a better than random statistics.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">doubtlab.benchmark</span> <span class="kn">import</span> <span class="n">plot_precision_recall_at_k</span>
+
+<span class="c1"># Let&#39;s plot some `precision/recall at k` statistics!</span>
+<span class="n">plot_precision_recall_at_k</span><span class="p">(</span><span class="n">predicate_df</span><span class="p">,</span> <span class="n">flip_indicator</span><span class="p">,</span> <span class="n">max_k</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span>
+</code></pre></div>
+<script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+<script src="https://cdn.jsdelivr.net/gh/koaning/justcharts/justcharts.js"></script>
+
+<p><vegachart schema-url="../benchmark-1.json"></vegachart></p>
+<p>In this interactive chart (you can pan/zoom) you can see dashed lines for precision/recall
+if we were going to be pulling bad label candidates at random. The straight lines represent
+the values the precision/recall values that we would achieve with our ensemble. As you can
+see we do seem to achieve an uplift over picking items randomly.</p>
+<p>That said, we shouldn't pretend that this library guarantees that you'll only get bad examples!
+The highest precision we ever measure is around 12%, which means that you may only get
+an example that reserves relabelling every 10 items or so.</p>
+<h2 id="what-causes-uplift">What Causes Uplift?<a class="headerlink" href="#what-causes-uplift" title="Permanent link">&para;</a></h2>
+<p>You might ask the question; what can we do to cause the biggest uplift here?</p>
+<p>It depends a bit on what you want, but we can cause a shift in behavior by
+using a different ensemble. Let's create one that only uses the <code>ProbaReason</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="n">ensemble</span> <span class="o">=</span> <span class="n">DoubtEnsemble</span><span class="p">(</span>
+    <span class="n">proba</span> <span class="o">=</span> <span class="n">ProbaReason</span><span class="p">(</span><span class="n">model</span><span class="p">),</span>
+    <span class="c1"># short = ShortConfidenceReason(model, threshold=0.2),</span>
+    <span class="c1"># long = LongConfidenceReason(model, threshold=0.9),</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>If we re-run everything, here's what the new chart looks like.</p>
+<p><vegachart schema-url="../benchmark-2.json"></vegachart></p>
+<p>The recall performance is much worse, but notice how the first few examples
+have a very high precision! That said, we should remember that we're basing
+everything on a simulation here, so feel free to take everything with a grain of salt.</p>
+<h2 id="understanding">Understanding<a class="headerlink" href="#understanding" title="Permanent link">&para;</a></h2>
+<p>The effectiveness of a <code>DoubtEnsemble</code> is something we'd like to study
+further. After all, there's a lot of variables to consider!</p>
+<ul>
+<li>A classification task with few classes might need to be treated differently than one with many classes.</li>
+<li>It's possible that text classification tasks might benefit from having multiple models, some of which are based on embeddings.</li>
+<li>Given another process of flipping labels we may also benefit from other components.</li>
+<li>We may want to consider different ways of sorting/weighting the different reasons in our ensemble. Maybe our reasons should emit a confidence value instead of just a 0/1 indicator. That way we may be able to use a confidence-like proxy.</li>
+<li>The current simulation may not reflect real life. Maybe there are better ways of simulating bad labels that we can consider for our benchmarks here.</li>
+</ul>
+<p>It's still a bit of an open problem. If you ever manage to run an
+interesting benchmark with some learnings, please let us know via an issue
+on <a href="https://github.com/koaning/doubtlab/issues/new">GitHub</a>.</p>
+                
+                  
+                
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../" title="Quickstart" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Quickstart
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../faq/" title="FAQ" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                FAQ
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Maintained by <a href="https://twitter.com/fishnets88">Vincent</a>.
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org" target="_blank" rel="noopener">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs</a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.c33a9706.js"></script>
+      
+      <script>app.initialize({version:"1.1",url:{base:"../.."}})</script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
