@@ -113,7 +113,7 @@ from sklearn.pipeline import make_pipeline, make_union
 from sklearn.feature_extraction.text import CountVectorizer
 
 from doubtlab.ensemble import DoubtEnsemble
-from doubtlab.reason import (ProbaReason, ShortConfidenceReason, LongConfidenceReason
+from doubtlab.reason import ProbaReason, ShortConfidenceReason, LongConfidenceReason
 
 
 model = make_pipeline(
@@ -160,8 +160,10 @@ Let's now use the predicate dataframe with our `idx_flip` array from before to
 determine if our approach gives us a better than random statistics.
 
 ```python
+from doubtlab.benchmark import plot_precision_recall_at_k
+
 # Let's plot some `precision/recall at k` statistics!
-plot_precision_recall_at_k(predicate_df, idx_flip, max_k=2000)
+plot_precision_recall_at_k(predicate_df, flip_indicator, max_k=2000)
 ```
 
 <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
