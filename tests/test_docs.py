@@ -57,7 +57,12 @@ def test_function_docstrings(func):
 
 @pytest.mark.parametrize(
     "fpath",
-    ["README.md", "docs/quickstart/index.md", "docs/examples/google-emotions.md"],
+    [
+        "README.md",
+        "docs/quickstart/index.md",
+        "docs/quickstart/benchmarks.md",
+        "docs/examples/google-emotions.md",
+    ],
 )
 def test_quickstart_docs_file(fpath):
     """Test the quickstart files."""

@@ -13,7 +13,7 @@
 [#docs-package]: https://koaning.github.io/doubtlab/
 <!--- BADGES: END --->
 
-<img src="docs/doubt.png" width=125 height=125 align="right">
+<img src="https://github.com/koaning/doubtlab/raw/main/docs/doubt.png" width=125 height=125 align="right">
 
 # doubtlab
 
