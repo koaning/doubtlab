@@ -836,6 +836,16 @@ all of them.</p>
 <h3 id="plotting">Plotting<a class="headerlink" href="#plotting" title="Permanent link">&para;</a></h3>
 <p>Let's now use the predicate dataframe with our <code>idx_flip</code> array from before to
 determine if our approach gives us a better than random statistics.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The plot you're about to see below is an <a href="https://altair-viz.github.io/gallery/index.html">altair chart</a>.
+In an attempt to keep the library lightweight we're not including altair as 
+a dependency. That means that you may need to install it first in order to
+get the charts to render. </p>
+<div class="highlight"><pre><span></span><code>pip install altair
+</code></pre></div>
+<p>If you're unfamiliar with altair, you may appreciate the <a href="https://calmcode.io/altair/introduction.html">calmcode course</a>.</p>
+</div>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">doubtlab.benchmark</span> <span class="kn">import</span> <span class="n">plot_precision_recall_at_k</span>
 
 <span class="c1"># Let&#39;s plot some `precision/recall at k` statistics!</span>
