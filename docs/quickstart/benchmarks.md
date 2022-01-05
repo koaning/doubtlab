@@ -159,6 +159,19 @@ all of them.
 Let's now use the predicate dataframe with our `idx_flip` array from before to
 determine if our approach gives us a better than random statistics.
 
+!!! Warning
+    The plot you're about to see below is an [altair chart](https://altair-viz.github.io/gallery/index.html).
+    In an attempt to keep the library lightweight we're not including altair as
+    a dependency. That means that you may need to install it first in order to
+    get the charts to render.
+
+    ```
+    pip install altair
+    ```
+
+    If you're unfamiliar with altair, you may appreciate the [calmcode course](https://calmcode.io/altair/introduction.html).
+
+
 ```python
 from doubtlab.benchmark import plot_precision_recall_at_k
 
