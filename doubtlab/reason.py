@@ -257,7 +257,9 @@ class LongConfidenceReason:
         """
         values = []
         for i, proba in enumerate(proba):
-            proba_dict = {classes[j]: v for j, v in enumerate(proba) if j != y[i]}
+            proba_dict = {
+                classes[j]: v for j, v in enumerate(proba) if classes[j] != y[i]
+            }
             values.append(max(proba_dict.values()))
         confidences = np.array(values)
         return (confidences > threshold).astype(np.float16)
