@@ -12,3 +12,15 @@ def test_longconf_proba():
         proba=probas, y=y, classes=classes, threshold=threshold
     )
     assert np.all(predicate == np.array([0.0, 1.0]))
+
+
+def test_longconf_proba_nonnumeric():
+    """Test from_probas on a obvious example."""
+    probas = np.array([[0.9, 0.1], [0.5, 0.5]])
+    y = np.array(["a", "b"])
+    classes = np.array(["a", "b"])
+    threshold = 0.4
+    predicate = LongConfidenceReason.from_proba(
+        proba=probas, y=y, classes=classes, threshold=threshold
+    )
+    assert np.all(predicate == np.array([0.0, 1.0]))
