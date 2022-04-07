@@ -14,3 +14,17 @@ def test_short_conf_probas():
         proba=probas, y=y, classes=classes, threshold=threshold
     )
     assert np.all(predicate == np.array([0.0, 1.0]))
+
+
+def test_short_conf_non_numeric():
+    """
+    Test `from_probas` on an obvious example.
+    """
+    probas = np.array([[0.9, 0.1], [0.5, 0.5]])
+    y = np.array(["a", "b"])
+    classes = np.array(["a", "b"])
+    threshold = 0.6
+    predicate = ShortConfidenceReason.from_proba(
+        proba=probas, y=y, classes=classes, threshold=threshold
+    )
+    assert np.all(predicate == np.array([0.0, 1.0]))

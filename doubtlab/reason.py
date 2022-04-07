@@ -379,8 +379,11 @@ class ShortConfidenceReason:
         """
         values = []
         for i, p in enumerate(proba):
-            proba_dict = {classes[j]: v for j, v in enumerate(p)}
-            values.append(proba_dict[y[i]])
+            true_label = y[i]
+            proba_dict = {
+                classes[j]: v for j, v in enumerate(p) if true_label == classes[j]
+            }
+            values.append(proba_dict[true_label])
         confidences = np.array(values)
         return (confidences < threshold).astype(np.float16)
 
