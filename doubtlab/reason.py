@@ -255,14 +255,13 @@ class LongConfidenceReason:
         assert np.all(predicate == np.array([0.0, 1.0, 1.0]))
         ```
         """
-        values = []
-        for i, proba in enumerate(proba):
-            proba_dict = {
-                classes[j]: v for j, v in enumerate(proba) if classes[j] != y[i]
-            }
-            values.append(max(proba_dict.values()))
-        confidences = np.array(values)
-        return (confidences > threshold).astype(np.float16)
+        mapper = {k: i for i, k in enumerate(classes)}
+        y_int = np.array([mapper[k] for k in y])
+        confidences = proba.copy()
+        # Advanced indexing trick:
+        # https://numpy.org/doc/stable/user/basics.indexing.html#integer-array-indexing
+        confidences[np.arange(proba.shape[0]), y_int] = 0
+        return (confidences.max(axis=1) > threshold).astype(np.float16)
 
     def __call__(self, X, y):
         probas = self.model.predict_proba(X)
@@ -377,14 +376,11 @@ class ShortConfidenceReason:
         assert np.all(predicate == np.array([0.0, 0.0, 1.0]))
         ```
         """
-        values = []
-        for i, p in enumerate(proba):
-            true_label = y[i]
-            proba_dict = {
-                classes[j]: v for j, v in enumerate(p) if true_label == classes[j]
-            }
-            values.append(proba_dict[true_label])
-        confidences = np.array(values)
+        mapper = {k: i for i, k in enumerate(classes)}
+        y_int = np.array([mapper[k] for k in y])
+        # Advanced indexing trick:
+        # https://numpy.org/doc/stable/user/basics.indexing.html#integer-array-indexing
+        confidences = proba[np.arange(proba.shape[0]), y_int]
         return (confidences < threshold).astype(np.float16)
 
     def __call__(self, X, y):

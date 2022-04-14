@@ -142,6 +142,58 @@ it may be a problem for your dataset as well.
 The hope is that this library makes it just a bit easier for folks do to check their datasets for bad labels.
 It's an exercise worth doing and the author of this library would love to hear anekdotes.
 
+## Does this scale?
+
+You might be dealing with a large dataset, in which case you may want to
+be concious of compute time. Suppose you have a setup that looks something like:
+
+```python
+from doubtlab.ensemble import DoubtEnsemble
+from doubtlab.reason import ProbaReason, ShortConfidenceReason, LongConfidenceReason
+
+# Suppose this dataset is very big and that this computation is heavy.
+X, y = load_big_dataset()
+model = LogisticRegression(max_iter=1_000)
+model.fit(X, y)
+
+# This step might be expensive because internally we will be calling
+# `model.predict_proba(X)` a lot!
+ensemble = DoubtEnsemble(
+    proba=ProbaReason(model)
+    short=ShortConfidenceReason(model),
+    long=LongConfidenceReason(model)
+)
+```
+
+Then you might wonder if we're able to speed things up by precomputing our
+`.predict_proba()`-values. You could use `lambda`s, but you can also use
+common utility methods that have been added to the reason classes. Most of
+our reasons implement a `from_pred` or `from_proba` method that you can use.
+See the [API](https://koaning.github.io/doubtlab/api/reasons/) for more details.
+
+That way, we can rewrite the code for a speedup.
+
+```python
+from doubtlab.ensemble import DoubtEnsemble
+from doubtlab.reason import ProbaReason, ShortConfidenceReason, LongConfidenceReason
+
+# Suppose this dataset is very big and that this computation is heavy.
+X, y = load_big_dataset()
+model = LogisticRegression(max_iter=1_000)
+model.fit(X, y)
+
+# Let's precalculate the proba values.
+probas = model.predict_proba(X)
+
+# We can re-use the probas below. Note that some reasons require extra information.
+ensemble = DoubtEnsemble(
+    proba=ProbaReason.from_proba(probas)
+    short=ShortConfidenceReason.from_proba(probas, y, classes=["pos", "neg"], threshold=0.2),
+    long=LongConfidenceReason.from_proba(probas, y, classes=["pos", "neg"], threshold=0.4)
+)
+```
+
+
 ## Next Steps
 
 You may get some more inspiration by checking some of the examples of this library.

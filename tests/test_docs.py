@@ -59,7 +59,6 @@ def test_function_docstrings(func):
     "fpath",
     [
         "README.md",
-        "docs/quickstart/index.md",
         "docs/quickstart/benchmarks.md",
         "docs/examples/google-emotions.md",
     ],
