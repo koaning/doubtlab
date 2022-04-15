@@ -375,13 +375,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#how-do-i-prevent-models-from-re-computing" class="md-nav__link">
-    How do I prevent models from re-computing?
-  </a>
-  
-</li>
-      
       
       
       
@@ -519,13 +512,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#how-do-i-prevent-models-from-re-computing" class="md-nav__link">
-    How do I prevent models from re-computing?
-  </a>
-  
-</li>
-      
       
       
       
@@ -561,48 +547,6 @@ can totally use <code>lambda</code> functions!</p>
 </code></pre></div>
 <p>Note that you can also add another reason for <code>nan</code> values that appear
 in <code>X</code>.</p>
-<h2 id="how-do-i-prevent-models-from-re-computing">How do I prevent models from re-computing?<a class="headerlink" href="#how-do-i-prevent-models-from-re-computing" title="Permanent link">&para;</a></h2>
-<p>Suppose you have a setup that looks something like:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">doubtlab.ensemble</span> <span class="kn">import</span> <span class="n">DoubtEnsemble</span>
-<span class="kn">from</span> <span class="nn">doubtlab.reason</span> <span class="kn">import</span> <span class="n">ProbaReason</span><span class="p">,</span> <span class="n">ShortConfidenceReason</span><span class="p">,</span> <span class="n">LongConfidenceReason</span>
-
-<span class="c1"># Suppose this dataset is very big and that this computation is heavy.</span>
-<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">load_big_dataset</span><span class="p">()</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">1_000</span><span class="p">)</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-
-<span class="c1"># This step might be expensive because internally we will be calling</span>
-<span class="c1"># `model.predict_proba(X)` a lot!</span>
-<span class="n">ensemble</span> <span class="o">=</span> <span class="n">DoubtEnsemble</span><span class="p">(</span>
-    <span class="n">proba</span><span class="o">=</span><span class="n">ProbaReason</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-    <span class="n">short</span><span class="o">=</span><span class="n">ShortConfidenceReason</span><span class="p">(</span><span class="n">model</span><span class="p">),</span>
-    <span class="n">long</span><span class="o">=</span><span class="n">LongConfidenceReason</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-<span class="p">)</span>
-</code></pre></div>
-<p>Then you might wonder if we're able to speed things up by precomputing our
-<code>.predict_proba()</code>-values. You could use <code>lambda</code>s, but you can also use
-common utility methods that have been added to the reason classes. Most of
-our reasons implement a <code>from_pred</code> or <code>from_proba</code> method that you can use.
-See the <a href="https://koaning.github.io/doubtlab/api/reasons/">API</a> for more details.</p>
-<p>That way, we can rewrite the code for a speedup.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">doubtlab.ensemble</span> <span class="kn">import</span> <span class="n">DoubtEnsemble</span>
-<span class="kn">from</span> <span class="nn">doubtlab.reason</span> <span class="kn">import</span> <span class="n">ProbaReason</span><span class="p">,</span> <span class="n">ShortConfidenceReason</span><span class="p">,</span> <span class="n">LongConfidenceReason</span>
-
-<span class="c1"># Suppose this dataset is very big and that this computation is heavy.</span>
-<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">load_big_dataset</span><span class="p">()</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">1_000</span><span class="p">)</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-
-<span class="c1"># Let&#39;s precalculate the proba values.</span>
-<span class="n">probas</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-
-<span class="c1"># We can re-use the probas below. Note that some reasons require extra information.</span>
-<span class="n">ensemble</span> <span class="o">=</span> <span class="n">DoubtEnsemble</span><span class="p">(</span>
-    <span class="n">proba</span><span class="o">=</span><span class="n">ProbaReason</span><span class="o">.</span><span class="n">from_proba</span><span class="p">(</span><span class="n">probas</span><span class="p">)</span>
-    <span class="n">short</span><span class="o">=</span><span class="n">ShortConfidenceReason</span><span class="o">.</span><span class="n">from_proba</span><span class="p">(</span><span class="n">probas</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;pos&quot;</span><span class="p">,</span> <span class="s2">&quot;neg&quot;</span><span class="p">],</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.2</span><span class="p">),</span>
-    <span class="n">long</span><span class="o">=</span><span class="n">LongConfidenceReason</span><span class="o">.</span><span class="n">from_proba</span><span class="p">(</span><span class="n">probas</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;pos&quot;</span><span class="p">,</span> <span class="s2">&quot;neg&quot;</span><span class="p">],</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
-<span class="p">)</span>
-</code></pre></div>
                 
                   
                 
