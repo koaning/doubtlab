@@ -5,10 +5,11 @@ from setuptools import setup, find_packages
 base_packages = ["scikit-learn>=1.0.0", "cleanlab>=2.0", "pandas>=1.3.3"]
 
 docs_packages = [
-    "mkdocs==1.1",
+    "mkdocs==1.3.0",
     "mkdocs-material==4.6.3",
-    "mkdocstrings==0.8.0",
+    "mkdocstrings==0.18.1",
     "mktestdocs==0.1.2",
+    "mkdocstrings-python==0.6.6",
 ]
 
 test_packages = [
