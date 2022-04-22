@@ -190,8 +190,8 @@ probas = model.predict_proba(X)
 # Also beware that `y` and `probas` are globals now! 
 predicate_dict = dict(
     proba=ProbaReason.from_proba(probas)
-    short=lambda a, b: ShortConfidenceReason.from_proba(probas, y, classes=len(set(y)), threshold=0.2),
-    long=lambda a, b: LongConfidenceReason.from_proba(probas, y, classes=len(set(y)), threshold=0.4)
+    short=ShortConfidenceReason.from_proba(probas, y, classes=len(set(y)), threshold=0.2),
+    long=LongConfidenceReason.from_proba(probas, y, classes=len(set(y)), threshold=0.4)
 )
 
 # This dataframe now contains the predicates
