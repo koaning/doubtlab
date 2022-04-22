@@ -1,5 +1,5 @@
 import numpy as np
-from cleanlab.pruning import get_noise_indices
+from cleanlab.filter import find_label_issues
 
 
 class ProbaReason:
@@ -644,7 +644,9 @@ class CleanlabReason:
         predicate = CleanlabReason.from_proba(probas, y)
         ```
         """
-        ordered_label_errors = get_noise_indices(y, proba, sorted_index_method)
+        ordered_label_errors = find_label_issues(
+            y, proba, return_indices_ranked_by=sorted_index_method
+        )
         result = np.zeros_like(y)
         conf_arr = np.linspace(1, min_doubt, result.shape[0])
         for idx, _ in zip(ordered_label_errors, conf_arr):

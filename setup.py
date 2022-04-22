@@ -2,7 +2,7 @@ import pathlib
 from setuptools import setup, find_packages
 
 
-base_packages = ["scikit-learn>=1.0.0", "cleanlab>=1.0", "pandas>=1.3.3"]
+base_packages = ["scikit-learn>=1.0.0", "cleanlab>=2.0", "pandas>=1.3.3"]
 
 docs_packages = [
     "mkdocs==1.1",
@@ -27,7 +27,7 @@ dev_packages = all_packages + docs_packages + test_packages
 
 setup(
     name="doubtlab",
-    version="0.2.2",
+    version="0.2.3",
     author="Vincent D. Warmerdam",
     packages=find_packages(exclude=["notebooks", "docs"]),
     description="Don't Blindly Trust Your Labels",
