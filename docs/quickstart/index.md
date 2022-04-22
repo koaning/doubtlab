@@ -174,6 +174,7 @@ See the [API](https://koaning.github.io/doubtlab/api/reasons/) for more details.
 That way, we can rewrite the code for a speedup.
 
 ```python
+import pandas as pd
 from doubtlab.ensemble import DoubtEnsemble
 from doubtlab.reason import ProbaReason, ShortConfidenceReason, LongConfidenceReason
 
@@ -187,14 +188,14 @@ probas = model.predict_proba(X)
 
 # We can re-use the probas below. Note that some reasons require extra information.
 # Also beware that `y` and `probas` are globals now! 
-ensemble = DoubtEnsemble(
+predicate_dict = dict(
     proba=ProbaReason.from_proba(probas)
-    short=lambda a, b: ShortConfidenceReason.from_proba(probas, y, classes=["pos", "neg"], threshold=0.2),
-    long=lambda a, b: LongConfidenceReason.from_proba(probas, y, classes=["pos", "neg"], threshold=0.4)
+    short=lambda a, b: ShortConfidenceReason.from_proba(probas, y, classes=len(set(y)), threshold=0.2),
+    long=lambda a, b: LongConfidenceReason.from_proba(probas, y, classes=len(set(y)), threshold=0.4)
 )
 
-# This is the final step. 
-ensemble.get_indices(X, y)
+# This dataframe now contains the predicates
+pd.DataFrame(predicate_dict)
 ```
 
 
