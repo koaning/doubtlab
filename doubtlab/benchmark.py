@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 
 
-def _parse_check_p_n_y(p, n, y):
+def __parse_check_p_n_y(p, n, y):
     """Parses and checks `n`, `y` and `p`, returns (inferred) `n`."""
     if p:
         if p < 0:
@@ -44,7 +44,7 @@ def shuffle_labels(y, random_seed=42, n=None, p=None):
     """
     np.random.seed(random_seed)
     y = np.array(y)
-    n = _parse_check_p_n_y(p=p, n=n, y=y)
+    n = __parse_check_p_n_y(p=p, n=n, y=y)
 
     y_out = y.copy()
     sample = np.random.choice(np.arange(y.shape[0]), size=n, replace=False)
@@ -82,7 +82,7 @@ def flip_labels(y, random_seed=42, n=None, p=None):
     """
     np.random.seed(random_seed)
     y = np.array(y)
-    n = _parse_check_p_n_y(p=p, n=n, y=y)
+    n = __parse_check_p_n_y(p=p, n=n, y=y)
 
     y_out = y.copy()
     classes = np.unique(y)
