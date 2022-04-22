@@ -186,11 +186,15 @@ model.fit(X, y)
 probas = model.predict_proba(X)
 
 # We can re-use the probas below. Note that some reasons require extra information.
+# Also beware that `y` and `probas` are globals now! 
 ensemble = DoubtEnsemble(
     proba=ProbaReason.from_proba(probas)
-    short=ShortConfidenceReason.from_proba(probas, y, classes=["pos", "neg"], threshold=0.2),
-    long=LongConfidenceReason.from_proba(probas, y, classes=["pos", "neg"], threshold=0.4)
+    short=lambda a, b: ShortConfidenceReason.from_proba(probas, y, classes=["pos", "neg"], threshold=0.2),
+    long=lambda a, b: LongConfidenceReason.from_proba(probas, y, classes=["pos", "neg"], threshold=0.4)
 )
+
+# This is the final step. 
+ensemble.get_indices(X, y)
 ```
 
 
