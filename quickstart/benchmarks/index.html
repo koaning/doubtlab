@@ -38,7 +38,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../icon.png">
-      <meta name="generator" content="mkdocs-1.1, mkdocs-material-4.6.3">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-4.6.3">
     
     
       
@@ -68,6 +68,8 @@
     
     <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
     
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
     
     
       
@@ -159,7 +161,7 @@
 
   
 
-<a href="https://github.com/koaning/doubtlab/" title="Go to repository" class="md-source" data-md-source="github">
+<a href="https://github.com/koaning/doubtlab" title="Go to repository" class="md-source" data-md-source="github">
   
     <div class="md-source__icon">
       <svg viewBox="0 0 24 24" width="24" height="24">
@@ -267,7 +269,7 @@
 
   
 
-<a href="https://github.com/koaning/doubtlab/" title="Go to repository" class="md-source" data-md-source="github">
+<a href="https://github.com/koaning/doubtlab" title="Go to repository" class="md-source" data-md-source="github">
   
     <div class="md-source__icon">
       <svg viewBox="0 0 24 24" width="24" height="24">
@@ -697,12 +699,10 @@
                 
                 <p>The goal of this document is to explain how we might be able to measure
 the effectiveness of finding bad labels.</p>
-<div class="admonition info">
-<p class="admonition-title">Info</p>
-<p>This document shows a way to run benchmarks with this library. It deserves
-to be said that this part of the library is the most experimental and may
-change in the future as we receive community feedback.</p>
-</div>
+<p>!!! Info
+    This document shows a way to run benchmarks with this library. It deserves
+    to be said that this part of the library is the most experimental and may
+    change in the future as we receive community feedback.</p>
 <h2 id="how-to-measure">How to Measure<a class="headerlink" href="#how-to-measure" title="Permanent link">&para;</a></h2>
 <p>There are a lot of reasons that you might doubt a sample of data. We prefer
 to limit ourselves to the generally effective methods out there. But how can
@@ -781,16 +781,17 @@ flip the labels.</p>
 <li><code>y_flip</code>: which contains the original labels with 200 labels that are flipped.</li>
 <li><code>flip_indicator</code>: which is a numpy array that indicates if a label did (with value 1.0) or did not (with value 0.0) got flipped.</li>
 </ul>
-<div class="admonition info">
-<p class="admonition-title">Info</p>
-<p>We're using <code>flip_labels</code> here because we're working on a classification
-task. If you were working on a regression task we recommend using <code>shuffle_labels</code>
-instead.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">doubtlab.benchmark</span> <span class="kn">import</span> <span class="n">shuffle_labels</span>
+<p>!!! Info</p>
+<pre><code>We're using `flip_labels` here because we're working on a classification
+task. If you were working on a regression task we recommend using `shuffle_labels`
+instead.
 
-<span class="n">y_flip</span><span class="p">,</span> <span class="n">flip_indicator</span> <span class="o">=</span> <span class="n">shuffle_labels</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
-</code></pre></div>
-</div>
+```python
+from doubtlab.benchmark import shuffle_labels
+
+y_flip, flip_indicator = shuffle_labels(y, n=200)
+```
+</code></pre>
 <h3 id="ensemble">Ensemble<a class="headerlink" href="#ensemble" title="Permanent link">&para;</a></h3>
 <p>Given that we now have data to compare against, let's make a <code>DoubtEnsemble</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
@@ -836,16 +837,17 @@ all of them.</p>
 <h3 id="plotting">Plotting<a class="headerlink" href="#plotting" title="Permanent link">&para;</a></h3>
 <p>Let's now use the predicate dataframe with our <code>idx_flip</code> array from before to
 determine if our approach gives us a better than random statistics.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>The plot you're about to see below is an <a href="https://altair-viz.github.io/gallery/index.html">altair chart</a>.
-In an attempt to keep the library lightweight we're not including altair as
-a dependency. That means that you may need to install it first in order to
-get the charts to render.</p>
-<div class="highlight"><pre><span></span><code>pip install altair
-</code></pre></div>
-<p>If you're unfamiliar with altair, you may appreciate the <a href="https://calmcode.io/altair/introduction.html">calmcode course</a>.</p>
-</div>
+<p>!!! Warning
+    The plot you're about to see below is an <a href="https://altair-viz.github.io/gallery/index.html">altair chart</a>.
+    In an attempt to keep the library lightweight we're not including altair as
+    a dependency. That means that you may need to install it first in order to
+    get the charts to render.</p>
+<pre><code>```
+pip install altair
+```
+
+If you're unfamiliar with altair, you may appreciate the [calmcode course](https://calmcode.io/altair/introduction.html).
+</code></pre>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">doubtlab.benchmark</span> <span class="kn">import</span> <span class="n">plot_precision_recall_at_k</span>
 
 <span class="c1"># Let&#39;s plot some `precision/recall at k` statistics!</span>
@@ -968,7 +970,7 @@ on <a href="https://github.com/koaning/doubtlab/issues/new">GitHub</a>.</p>
     
       <script src="../../assets/javascripts/application.c33a9706.js"></script>
       
-      <script>app.initialize({version:"1.1",url:{base:"../.."}})</script>
+      <script>app.initialize({version:"1.3.0",url:{base:"../.."}})</script>
       
         <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
       

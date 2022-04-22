@@ -38,7 +38,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../icon.png">
-      <meta name="generator" content="mkdocs-1.1, mkdocs-material-4.6.3">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-4.6.3">
     
     
       
@@ -69,6 +69,8 @@
     <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
     
     
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
     
       
     
@@ -91,7 +93,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#doubtlab.benchmark.calculate_precision_recall_at_k" tabindex="0" class="md-skip">
+      <a href="#doubtlab.benchmark" tabindex="0" class="md-skip">
         Skip to content
       </a>
     
@@ -159,7 +161,7 @@
 
   
 
-<a href="https://github.com/koaning/doubtlab/" title="Go to repository" class="md-source" data-md-source="github">
+<a href="https://github.com/koaning/doubtlab" title="Go to repository" class="md-source" data-md-source="github">
   
     <div class="md-source__icon">
       <svg viewBox="0 0 24 24" width="24" height="24">
@@ -267,7 +269,7 @@
 
   
 
-<a href="https://github.com/koaning/doubtlab/" title="Go to repository" class="md-source" data-md-source="github">
+<a href="https://github.com/koaning/doubtlab" title="Go to repository" class="md-source" data-md-source="github">
   
     <div class="md-source__icon">
       <svg viewBox="0 0 24 24" width="24" height="24">
@@ -465,6 +467,20 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#doubtlab.benchmark" class="md-nav__link">
+    doubtlab.benchmark
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#doubtlab.benchmark.__parse_check_p_n_y" class="md-nav__link">
+    __parse_check_p_n_y()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#doubtlab.benchmark.calculate_precision_recall_at_k" class="md-nav__link">
     calculate_precision_recall_at_k()
   </a>
@@ -527,6 +543,20 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#doubtlab.benchmark" class="md-nav__link">
+    doubtlab.benchmark
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#doubtlab.benchmark.__parse_check_p_n_y" class="md-nav__link">
+    __parse_check_p_n_y()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#doubtlab.benchmark.calculate_precision_recall_at_k" class="md-nav__link">
     calculate_precision_recall_at_k()
   </a>
@@ -575,8 +605,152 @@
                 
                   <h1>benchmark</h1>
                 
-                <h2 id="doubtlab.benchmark.calculate_precision_recall_at_k"><code class="highlight"><span class="n">calculate_precision_recall_at_k</span><span class="p">(</span><span class="n">predicate_df</span><span class="p">,</span> <span class="n">idx_flip</span><span class="p">,</span> <span class="n">max_k</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">give_random</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">give_ensemble</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></code><a class="headerlink" href="#doubtlab.benchmark.calculate_precision_recall_at_k" title="Permanent link">&para;</a></h2>
-<details class="note"><summary>Show source code in <code>doubtlab/benchmark.py</code></summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 98</span>
+                <div class="doc doc-object doc-module">
+
+<a id="doubtlab.benchmark"></a>
+    <div class="doc doc-contents first">
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 class="doc doc-heading" id="doubtlab.benchmark.__parse_check_p_n_y">
+<code class="highlight language-python"><span class="n">__parse_check_p_n_y</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span></code>
+
+
+<a class="headerlink" href="#doubtlab.benchmark.__parse_check_p_n_y" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Parses and checks <code>n</code>, <code>y</code> and <code>p</code>, returns (inferred) <code>n</code>.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>doubtlab/benchmark.py</code></summary>
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">__parse_check_p_n_y</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Parses and checks `n`, `y` and `p`, returns (inferred) `n`.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">p</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Probability value `p` must be larger than 0.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">p</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Probability value `p` must be less than 1.&quot;</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">*</span> <span class="n">p</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">n</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Either `n` or `p` must be given to `shuffle_labels`.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Must shuffle at least 2 values. Increase `n` or `p`.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">n</span>
+</code></pre></div>
+</td></tr></table>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 class="doc doc-heading" id="doubtlab.benchmark.calculate_precision_recall_at_k">
+<code class="highlight language-python"><span class="n">calculate_precision_recall_at_k</span><span class="p">(</span><span class="n">predicate_df</span><span class="p">,</span> <span class="n">idx_flip</span><span class="p">,</span> <span class="n">max_k</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">give_random</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">give_ensemble</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></code>
+
+
+<a class="headerlink" href="#doubtlab.benchmark.calculate_precision_recall_at_k" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Plots precision/recall at <code>k</code> values for flipped label experiments.</p>
+<p>Returns an interactive altair visualisation. Make sure it is installed beforehand.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>predicate_df</code></td>
+          <td>
+          </td>
+          <td><p>the dataframe with predicates from <code>ensemble.get_predicates</code></p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>idx_flip</code></td>
+          <td>
+          </td>
+          <td><p>array that indicates if labels are wrong</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>max_k</code></td>
+          <td>
+          </td>
+          <td><p>the maximum value for <code>k</code> to consider</p></td>
+          <td>
+                <code>100</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>give_random</code></td>
+          <td>
+          </td>
+          <td><p>plot the "at k" statistics for the randomly selected lower bound</p></td>
+          <td>
+                <code>False</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>give_ensemble</code></td>
+          <td>
+          </td>
+          <td><p>plot the "at k" statistics from the reason ensemble</p></td>
+          <td>
+                <code>True</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+        <details class="quote">
+          <summary>Source code in <code>doubtlab/benchmark.py</code></summary>
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 98</span>
 <span class="normal"> 99</span>
 <span class="normal">100</span>
 <span class="normal">101</span>
@@ -685,54 +859,92 @@
     <span class="k">return</span> <span class="n">result</span>
 </code></pre></div>
 </td></tr></table>
-</details>
-<p>Plots precision/recall at <code>k</code> values for flipped label experiments.</p>
-<p>Returns an interactive altair visualisation. Make sure it is installed beforehand.</p>
-<p><strong>Parameters</strong></p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>predicate_df</code></td>
-<td></td>
-<td>the dataframe with predicates from <code>ensemble.get_predicates</code></td>
-<td><em>required</em></td>
-</tr>
-<tr>
-<td><code>idx_flip</code></td>
-<td></td>
-<td>array that indicates if labels are wrong</td>
-<td><em>required</em></td>
-</tr>
-<tr>
-<td><code>max_k</code></td>
-<td></td>
-<td>the maximum value for <code>k</code> to consider</td>
-<td><code>100</code></td>
-</tr>
-<tr>
-<td><code>give_random</code></td>
-<td></td>
-<td>plot the "at k" statistics for the randomly selected lower bound</td>
-<td><code>False</code></td>
-</tr>
-<tr>
-<td><code>give_ensemble</code></td>
-<td></td>
-<td>plot the "at k" statistics from the reason ensemble</td>
-<td><code>True</code></td>
-</tr>
-</tbody>
-</table>
-<h2 id="doubtlab.benchmark.flip_labels"><code class="highlight"><span class="n">flip_labels</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code><a class="headerlink" href="#doubtlab.benchmark.flip_labels" title="Permanent link">&para;</a></h2>
-<details class="note"><summary>Show source code in <code>doubtlab/benchmark.py</code></summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">58</span>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 class="doc doc-heading" id="doubtlab.benchmark.flip_labels">
+<code class="highlight language-python"><span class="n">flip_labels</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+<a class="headerlink" href="#doubtlab.benchmark.flip_labels" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Flips subset of labels for benchmarking. Recommended for classification.</p>
+<p>Either <code>p</code> or <code>n</code> should be given. Returns a tuple <code>(y_out, indicator)</code>-tuple.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>y</code></td>
+          <td>
+          </td>
+          <td><p>array of labels</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>random_seed</code></td>
+          <td>
+          </td>
+          <td><p>random seed</p></td>
+          <td>
+                <code>42</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>n</code></td>
+          <td>
+          </td>
+          <td><p>number of labels to flip</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>p</code></td>
+          <td>
+          </td>
+          <td><p>percentage of labels to flip</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+      <p>Usage:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">doubtlab.benchmark</span> <span class="kn">import</span> <span class="n">flip_labels</span>
+
+<span class="c1"># Let&#39;s pretend these are the actual labels</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
+
+<span class="c1"># You now have some shuffled labels and an indicator</span>
+<span class="n">y_out</span><span class="p">,</span> <span class="n">indicator</span> <span class="o">=</span> <span class="n">flip_labels</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</code></pre></div>
+
+        <details class="quote">
+          <summary>Source code in <code>doubtlab/benchmark.py</code></summary>
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">58</span>
 <span class="normal">59</span>
 <span class="normal">60</span>
 <span class="normal">61</span>
@@ -796,7 +1008,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">random_seed</span><span class="p">)</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-    <span class="n">n</span> <span class="o">=</span> <span class="n">_parse_check_p_n_y</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">__parse_check_p_n_y</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
 
     <span class="n">y_out</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">classes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
@@ -809,58 +1021,91 @@
     <span class="k">return</span> <span class="n">y_out</span><span class="p">,</span> <span class="p">(</span><span class="n">y</span> <span class="o">!=</span> <span class="n">y_out</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-</details>
-<p>Flips subset of labels for benchmarking. Recommended for classification.</p>
-<p>Either <code>p</code> or <code>n</code> should be given. Returns a tuple <code>(y_out, indicator)</code>-tuple.</p>
-<p><strong>Parameters</strong></p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>y</code></td>
-<td></td>
-<td>array of labels</td>
-<td><em>required</em></td>
-</tr>
-<tr>
-<td><code>random_seed</code></td>
-<td></td>
-<td>random seed</td>
-<td><code>42</code></td>
-</tr>
-<tr>
-<td><code>n</code></td>
-<td></td>
-<td>number of labels to flip</td>
-<td><code>None</code></td>
-</tr>
-<tr>
-<td><code>p</code></td>
-<td></td>
-<td>percentage of labels to flip</td>
-<td><code>None</code></td>
-</tr>
-</tbody>
-</table>
-<p>Usage:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">doubtlab.benchmark</span> <span class="kn">import</span> <span class="n">flip_labels</span>
+        </details>
+    </div>
 
-<span class="c1"># Let&#39;s pretend these are the actual labels</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
+  </div>
 
-<span class="c1"># You now have some shuffled labels and an indicator</span>
-<span class="n">y_out</span><span class="p">,</span> <span class="n">indicator</span> <span class="o">=</span> <span class="n">flip_labels</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
-</code></pre></div>
-<h2 id="doubtlab.benchmark.plot_precision_recall_at_k"><code class="highlight"><span class="n">plot_precision_recall_at_k</span><span class="p">(</span><span class="n">predicate_df</span><span class="p">,</span> <span class="n">idx_flip</span><span class="p">,</span> <span class="n">max_k</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">give_random</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">give_ensemble</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></code><a class="headerlink" href="#doubtlab.benchmark.plot_precision_recall_at_k" title="Permanent link">&para;</a></h2>
-<details class="note"><summary>Show source code in <code>doubtlab/benchmark.py</code></summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">154</span>
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 class="doc doc-heading" id="doubtlab.benchmark.plot_precision_recall_at_k">
+<code class="highlight language-python"><span class="n">plot_precision_recall_at_k</span><span class="p">(</span><span class="n">predicate_df</span><span class="p">,</span> <span class="n">idx_flip</span><span class="p">,</span> <span class="n">max_k</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">give_random</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">give_ensemble</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></code>
+
+
+<a class="headerlink" href="#doubtlab.benchmark.plot_precision_recall_at_k" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Plots precision/recall at <code>k</code> values for flipped label experiments.</p>
+<p>Returns an interactive altair visualisation. Make sure it is installed beforehand.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>predicate_df</code></td>
+          <td>
+          </td>
+          <td><p>the dataframe with predicates from <code>ensemble.get_predicates</code></p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>idx_flip</code></td>
+          <td>
+          </td>
+          <td><p>array that indicates if labels are wrong</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>max_k</code></td>
+          <td>
+          </td>
+          <td><p>the maximum value for <code>k</code> to consider</p></td>
+          <td>
+                <code>100</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>give_random</code></td>
+          <td>
+          </td>
+          <td><p>plot the "at k" statistics for the randomly selected lower bound</p></td>
+          <td>
+                <code>True</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>give_ensemble</code></td>
+          <td>
+          </td>
+          <td><p>plot the "at k" statistics from the reason ensemble</p></td>
+          <td>
+                <code>True</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+        <details class="quote">
+          <summary>Source code in <code>doubtlab/benchmark.py</code></summary>
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">154</span>
 <span class="normal">155</span>
 <span class="normal">156</span>
 <span class="normal">157</span>
@@ -931,54 +1176,92 @@
     <span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-</details>
-<p>Plots precision/recall at <code>k</code> values for flipped label experiments.</p>
-<p>Returns an interactive altair visualisation. Make sure it is installed beforehand.</p>
-<p><strong>Parameters</strong></p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>predicate_df</code></td>
-<td></td>
-<td>the dataframe with predicates from <code>ensemble.get_predicates</code></td>
-<td><em>required</em></td>
-</tr>
-<tr>
-<td><code>idx_flip</code></td>
-<td></td>
-<td>array that indicates if labels are wrong</td>
-<td><em>required</em></td>
-</tr>
-<tr>
-<td><code>max_k</code></td>
-<td></td>
-<td>the maximum value for <code>k</code> to consider</td>
-<td><code>100</code></td>
-</tr>
-<tr>
-<td><code>give_random</code></td>
-<td></td>
-<td>plot the "at k" statistics for the randomly selected lower bound</td>
-<td><code>True</code></td>
-</tr>
-<tr>
-<td><code>give_ensemble</code></td>
-<td></td>
-<td>plot the "at k" statistics from the reason ensemble</td>
-<td><code>True</code></td>
-</tr>
-</tbody>
-</table>
-<h2 id="doubtlab.benchmark.shuffle_labels"><code class="highlight"><span class="n">shuffle_labels</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code><a class="headerlink" href="#doubtlab.benchmark.shuffle_labels" title="Permanent link">&para;</a></h2>
-<details class="note"><summary>Show source code in <code>doubtlab/benchmark.py</code></summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">20</span>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 class="doc doc-heading" id="doubtlab.benchmark.shuffle_labels">
+<code class="highlight language-python"><span class="n">shuffle_labels</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+<a class="headerlink" href="#doubtlab.benchmark.shuffle_labels" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Shuffles subset of labels for benchmarking. Recommended for regression.</p>
+<p>Either <code>p</code> or <code>n</code> should be given. Returns a tuple <code>(y_out, indicator)</code>-tuple.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>y</code></td>
+          <td>
+          </td>
+          <td><p>array of labels</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>random_seed</code></td>
+          <td>
+          </td>
+          <td><p>random seed</p></td>
+          <td>
+                <code>42</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>n</code></td>
+          <td>
+          </td>
+          <td><p>number of labels to flip</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>p</code></td>
+          <td>
+          </td>
+          <td><p>percentage of labels to flip</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+      <p>Usage:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">doubtlab.benchmark</span> <span class="kn">import</span> <span class="n">shuffle_labels</span>
+
+<span class="c1"># Let&#39;s pretend these are the actual labels</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
+
+<span class="c1"># You now have some shuffled labels and an indicator</span>
+<span class="n">y_out</span><span class="p">,</span> <span class="n">indicator</span> <span class="o">=</span> <span class="n">shuffle_labels</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</code></pre></div>
+
+        <details class="quote">
+          <summary>Source code in <code>doubtlab/benchmark.py</code></summary>
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">20</span>
 <span class="normal">21</span>
 <span class="normal">22</span>
 <span class="normal">23</span>
@@ -1040,7 +1323,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">random_seed</span><span class="p">)</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-    <span class="n">n</span> <span class="o">=</span> <span class="n">_parse_check_p_n_y</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">__parse_check_p_n_y</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
 
     <span class="n">y_out</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">sample</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -1051,56 +1334,20 @@
     <span class="k">return</span> <span class="n">y_out</span><span class="p">,</span> <span class="p">(</span><span class="n">y</span> <span class="o">!=</span> <span class="n">y_out</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-</details>
-<p>Shuffles subset of labels for benchmarking. Recommended for regression.</p>
-<p>Either <code>p</code> or <code>n</code> should be given. Returns a tuple <code>(y_out, indicator)</code>-tuple.</p>
-<p><strong>Parameters</strong></p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>y</code></td>
-<td></td>
-<td>array of labels</td>
-<td><em>required</em></td>
-</tr>
-<tr>
-<td><code>random_seed</code></td>
-<td></td>
-<td>random seed</td>
-<td><code>42</code></td>
-</tr>
-<tr>
-<td><code>n</code></td>
-<td></td>
-<td>number of labels to flip</td>
-<td><code>None</code></td>
-</tr>
-<tr>
-<td><code>p</code></td>
-<td></td>
-<td>percentage of labels to flip</td>
-<td><code>None</code></td>
-</tr>
-</tbody>
-</table>
-<p>Usage:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">doubtlab.benchmark</span> <span class="kn">import</span> <span class="n">shuffle_labels</span>
+        </details>
+    </div>
 
-<span class="c1"># Let&#39;s pretend these are the actual labels</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
+  </div>
 
-<span class="c1"># You now have some shuffled labels and an indicator</span>
-<span class="n">y_out</span><span class="p">,</span> <span class="n">indicator</span> <span class="o">=</span> <span class="n">shuffle_labels</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
-</code></pre></div>
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
                 
                   
                 
@@ -1163,7 +1410,7 @@
     
       <script src="../../assets/javascripts/application.c33a9706.js"></script>
       
-      <script>app.initialize({version:"1.1",url:{base:"../.."}})</script>
+      <script>app.initialize({version:"1.3.0",url:{base:"../.."}})</script>
       
         <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
       

@@ -38,7 +38,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../icon.png">
-      <meta name="generator" content="mkdocs-1.1, mkdocs-material-4.6.3">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-4.6.3">
     
     
       
@@ -68,6 +68,8 @@
     
     <link rel="stylesheet" href="../assets/fonts/material-icons.css">
     
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
     
     
       
@@ -159,7 +161,7 @@
 
   
 
-<a href="https://github.com/koaning/doubtlab/" title="Go to repository" class="md-source" data-md-source="github">
+<a href="https://github.com/koaning/doubtlab" title="Go to repository" class="md-source" data-md-source="github">
   
     <div class="md-source__icon">
       <svg viewBox="0 0 24 24" width="24" height="24">
@@ -267,7 +269,7 @@
 
   
 
-<a href="https://github.com/koaning/doubtlab/" title="Go to repository" class="md-source" data-md-source="github">
+<a href="https://github.com/koaning/doubtlab" title="Go to repository" class="md-source" data-md-source="github">
   
     <div class="md-source__icon">
       <svg viewBox="0 0 24 24" width="24" height="24">
@@ -732,25 +734,26 @@ The code below shows you how to build an ensemble of the two aforementioned reas
 <span class="n">doubt</span> <span class="o">=</span> <span class="n">DoubtEnsemble</span><span class="p">(</span><span class="o">**</span><span class="n">reasons</span><span class="p">)</span>
 </code></pre></div>
 <p>This ensemble represents a pipeline of reasons to doubt the validity of a label.</p>
-<div class="admonition note">
-<p class="admonition-title">Internal Details</p>
-<p>A <code>DoubtEnsemble</code>, technically, is just an ensemble of callables. You could
+<p>!!! Note "Internal Details"</p>
+<pre><code>A `DoubtEnsemble`, technically, is just an ensemble of callables. You could
 also choose to use lambda functions to define a reason for doubt. The example
-below shows an example of a lambda function that's equivalent to what <code>WrongPredictionReason</code>
-would do.</p>
-<div class="highlight"><pre><span></span><code><span class="n">DoubtEnsemble</span><span class="p">(</span>
-    <span class="n">wrong_pred</span><span class="o">=</span><span class="k">lambda</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">!=</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">float16</span><span class="p">)</span>
-<span class="p">)</span>
-</code></pre></div>
-<p>When it's time to infer doubt, the <code>DoubtEnsemble</code> will call each callable reason in order,
-passing <code>X</code>, <code>y</code> and listening for an array that contains "doubt-scores". These scores are just
-numbers, but they follow a few rules.</p>
-<ul>
-<li>When there is no doubt, the score should be zero</li>
-<li>The maximum doubt that a reason can emit is one</li>
-<li>The higher the doubt-score, the more likely doubt should be. For now the library emits 0/1 scores, but this may change in the future.</li>
-</ul>
-</div>
+below shows an example of a lambda function that's equivalent to what `WrongPredictionReason`
+would do.
+
+```python
+DoubtEnsemble(
+    wrong_pred=lambda X, y: (model.predict(X) != y).astype(float16)
+)
+```
+
+When it's time to infer doubt, the `DoubtEnsemble` will call each callable reason in order,
+passing `X`, `y` and listening for an array that contains "doubt-scores". These scores are just
+numbers, but they follow a few rules.
+
+- When there is no doubt, the score should be zero
+- The maximum doubt that a reason can emit is one
+- The higher the doubt-score, the more likely doubt should be. For now the library emits 0/1 scores, but this may change in the future.
+</code></pre>
 <h2 id="retreiving-examples-to-check">Retreiving Examples to Check<a class="headerlink" href="#retreiving-examples-to-check" title="Permanent link">&para;</a></h2>
 <p>There are multiple ways of retreiving the examples to check
 from the doubt pipeline.</p>
@@ -877,7 +880,8 @@ common utility methods that have been added to the reason classes. Most of
 our reasons implement a <code>from_pred</code> or <code>from_proba</code> method that you can use.
 See the <a href="https://koaning.github.io/doubtlab/api/reasons/">API</a> for more details.</p>
 <p>That way, we can rewrite the code for a speedup.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">doubtlab.ensemble</span> <span class="kn">import</span> <span class="n">DoubtEnsemble</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">doubtlab.ensemble</span> <span class="kn">import</span> <span class="n">DoubtEnsemble</span>
 <span class="kn">from</span> <span class="nn">doubtlab.reason</span> <span class="kn">import</span> <span class="n">ProbaReason</span><span class="p">,</span> <span class="n">ShortConfidenceReason</span><span class="p">,</span> <span class="n">LongConfidenceReason</span>
 
 <span class="c1"># Suppose this dataset is very big and that this computation is heavy.</span>
@@ -889,11 +893,15 @@ See the <a href="https://koaning.github.io/doubtlab/api/reasons/">API</a> for mo
 <span class="n">probas</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 
 <span class="c1"># We can re-use the probas below. Note that some reasons require extra information.</span>
-<span class="n">ensemble</span> <span class="o">=</span> <span class="n">DoubtEnsemble</span><span class="p">(</span>
+<span class="c1"># Also beware that `y` and `probas` are globals now! </span>
+<span class="n">predicate_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
     <span class="n">proba</span><span class="o">=</span><span class="n">ProbaReason</span><span class="o">.</span><span class="n">from_proba</span><span class="p">(</span><span class="n">probas</span><span class="p">)</span>
-    <span class="n">short</span><span class="o">=</span><span class="n">ShortConfidenceReason</span><span class="o">.</span><span class="n">from_proba</span><span class="p">(</span><span class="n">probas</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;pos&quot;</span><span class="p">,</span> <span class="s2">&quot;neg&quot;</span><span class="p">],</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.2</span><span class="p">),</span>
-    <span class="n">long</span><span class="o">=</span><span class="n">LongConfidenceReason</span><span class="o">.</span><span class="n">from_proba</span><span class="p">(</span><span class="n">probas</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;pos&quot;</span><span class="p">,</span> <span class="s2">&quot;neg&quot;</span><span class="p">],</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+    <span class="n">short</span><span class="o">=</span><span class="n">ShortConfidenceReason</span><span class="o">.</span><span class="n">from_proba</span><span class="p">(</span><span class="n">probas</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">y</span><span class="p">)),</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.2</span><span class="p">),</span>
+    <span class="n">long</span><span class="o">=</span><span class="n">LongConfidenceReason</span><span class="o">.</span><span class="n">from_proba</span><span class="p">(</span><span class="n">probas</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">y</span><span class="p">)),</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
 <span class="p">)</span>
+
+<span class="c1"># This dataframe now contains the predicates</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">predicate_dict</span><span class="p">)</span>
 </code></pre></div>
 <h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
 <p>You may get some more inspiration by checking some of the examples of this library.</p>
@@ -997,7 +1005,7 @@ of reasons that this library supports.</p>
     
       <script src="../assets/javascripts/application.c33a9706.js"></script>
       
-      <script>app.initialize({version:"1.1",url:{base:".."}})</script>
+      <script>app.initialize({version:"1.3.0",url:{base:".."}})</script>
       
         <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
       
