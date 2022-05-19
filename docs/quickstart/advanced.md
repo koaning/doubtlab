@@ -8,6 +8,8 @@ Bootstrapping can be used as a technique to train many similar, but different,
 models on the same dataset. The predictive difference between these models can
 be used as a proxy for confidence as well as bad labels.
 
+<br>
+
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
@@ -82,7 +84,9 @@ be used as a proxy for confidence as well as bad labels.
     }
 </script>
 
-You can use scikit-learn to construct a bootstrapped model which can also be used
+### Classification 
+
+You can use scikit-learn to construct a bootstrapped model for classification which can also be used
 in this library. You'll want to use the [bagging ensemble models](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.BaggingClassifier.html) for this. 
 
 ```python
