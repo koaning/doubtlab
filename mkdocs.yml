@@ -9,6 +9,7 @@ nav:
   - Getting Started:
     - Quickstart: quickstart/index.md
     - Benchmarks: quickstart/benchmarks.md
+    - Advanced: quickstart/advanced.md
     - FAQ: quickstart/faq.md
   - Examples:
     - Google Emotions: examples/google-emotions.md
