@@ -12,14 +12,14 @@
         <meta name="author" content="Vincent D. Warmerdam">
       
       
-        <link rel="canonical" href="https://koaning.github.io/doubtlab/quickstart/faq/">
+        <link rel="canonical" href="https://koaning.github.io/doubtlab/quickstart/advanced/">
       
       <link rel="icon" href="../../icon.png">
       <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.15">
     
     
       
-        <title>FAQ - doubtlab</title>
+        <title>Advanced - doubtlab</title>
       
     
     
@@ -71,7 +71,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#how-do-i-add-a-reason-for-nan-values" class="md-skip">
+        <a href="#bootstrapping" class="md-skip">
           Skip to content
         </a>
       
@@ -103,7 +103,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              FAQ
+              Advanced
             
           </span>
         </div>
@@ -281,20 +281,6 @@
               
   
   
-  
-    <li class="md-nav__item">
-      <a href="../advanced/" class="md-nav__link">
-        Advanced
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
     
   
   
@@ -305,12 +291,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          FAQ
+          Advanced
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        FAQ
+        Advanced
       </a>
       
         
@@ -327,9 +313,29 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#how-do-i-add-a-reason-for-nan-values" class="md-nav__link">
-    How do I add a reason for nan values?
+  <a href="#bootstrapping" class="md-nav__link">
+    Bootstrapping
   </a>
+  
+    <nav class="md-nav" aria-label="Bootstrapping">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#classification" class="md-nav__link">
+    Classification
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regression" class="md-nav__link">
+    Regression
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -337,6 +343,20 @@
   
 </nav>
       
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../faq/" class="md-nav__link">
+        FAQ
+      </a>
     </li>
   
 
@@ -497,9 +517,29 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#how-do-i-add-a-reason-for-nan-values" class="md-nav__link">
-    How do I add a reason for nan values?
+  <a href="#bootstrapping" class="md-nav__link">
+    Bootstrapping
   </a>
+  
+    <nav class="md-nav" aria-label="Bootstrapping">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#classification" class="md-nav__link">
+    Classification
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regression" class="md-nav__link">
+    Regression
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -515,28 +555,157 @@
             <article class="md-content__inner md-typeset">
               
                 
-  <a href="https://github.com/koaning/doubtlab/edit/master/docs/quickstart/faq.md" title="Edit this page" class="md-content__button md-icon">
+  <a href="https://github.com/koaning/doubtlab/edit/master/docs/quickstart/advanced.md" title="Edit this page" class="md-content__button md-icon">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
   </a>
 
 
 
-  <h1>FAQ</h1>
+  <h1>Advanced</h1>
 
-<h2 id="how-do-i-add-a-reason-for-nan-values">How do I add a reason for <code>nan</code> values?<a class="headerlink" href="#how-do-i-add-a-reason-for-nan-values" title="Permanent link">&para;</a></h2>
-<p>A reason in doubtlab is little more than a function that can attach a 0/1
-doubt-label to a row of data. As explained <a href="">here</a>, that means that you
-can totally use <code>lambda</code> functions!</p>
-<p>To implement this, you'll likely need to write something like:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">doubtlab.ensemble</span> <span class="kn">import</span> <span class="n">DoubtEnsemble</span>
+<p>The library implements a few general tricks to find bad labels, but you
+can also re-use the components for more elaborate approaches. In this section
+we hope to demonstrate some more techniques.</p>
+<h2 id="bootstrapping">Bootstrapping<a class="headerlink" href="#bootstrapping" title="Permanent link">&para;</a></h2>
+<p>Bootstrapping can be used as a technique to train many similar, but different,
+models on the same dataset. The predictive difference between these models can
+be used as a proxy for confidence as well as bad labels.</p>
+<p><br></p>
+<script src="https://cdn.tailwindcss.com"></script>
 
-<span class="n">ensemble</span> <span class="o">=</span> <span class="n">DoubtEnsemble</span><span class="p">(</span>
-    <span class="n">wrong_pred</span><span class="o">=</span><span class="k">lambda</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">!=</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">float16</span><span class="p">),</span>
-    <span class="n">nan_label</span><span class="o">=</span><span class="k">lambda</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">y</span><span class="o">.</span><span class="n">isnan</span><span class="p">(),</span>
+<style>
+    .tooltip {
+    background-color: white;
+    color: black;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 13px;
+    }
+</style>
+
+<div style="position: relative; width: 100%; min-width: 400px;">
+    <img class="h-auto w-full" src="../images/diagram.png">
+    <tooltip style="top:60%; left:15%;" class="font-bold text-sm px-1 py-0 absolute rounded-full bg-blue-500 text-white" id="button1" aria-describedby="tooltip">A</tooltip>
+    <tooltip style="top:60%; left:50%;" class="font-bold text-sm px-1 py-0 absolute rounded-full bg-blue-500 text-white" id="button2" aria-describedby="tooltip">B</tooltip>
+    <tooltip style="top:60%; left:76%;" class="font-bold text-sm px-1 py-0 absolute rounded-full bg-blue-500 text-white" id="button3" aria-describedby="tooltip">C</tooltip>
+</div>
+
+<div class="tooltip text-lg w-64" id="tooltip1" role="tooltip" style="line-height: 150%; position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(159.333px, 112.667px, 0px);" data-popper-placement="bottom">
+    Suppose that we start with an original dataset and that we resample it a bunch, using bootstrap samples.
+</div>
+<div class="tooltip text-lg w-64" id="tooltip2" role="tooltip" style="line-height: 150%; position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(-15.333px, -146px, 0px);" data-popper-placement="bottom">
+    Then we can train a model on each of these subsets. Each of these models would be different, but given enough samples they should all be reasonable.
+</div>
+<div class="tooltip text-lg w-64" id="tooltip3" role="tooltip" style="line-height: 150%; position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(441.333px, 132.667px, 0px);" data-popper-placement="bottom">
+    Because these models are different, the predictions that come out will also differ. If the predictions vary, that's an indication of less confidence, which in turn could indicate bad labels.
+</div>
+
+<script src="https://unpkg.com/@popperjs/core@2"></script>
+<style>
+    .tooltip {
+        display: none;
+    }
+
+    .tooltip[data-show] {
+        display: block;
+    }
+</style>
+<script>
+    let array = ["#button1", "#button2", "#button3"];
+    for (let index = 0; index < array.length; index++) {
+        let btn = array[index];
+        let button = document.querySelector(btn);
+        let tooltip = document.querySelector(btn.replace("button", "tooltip"));
+        popperInstance = Popper.createPopper(button, tooltip, {
+            placement: "bottom"
+        });
+
+        function show() {
+            tooltip.setAttribute('data-show', '');
+
+            // We need to tell Popper to update the tooltip position
+            // after we show the tooltip, otherwise it will be incorrect
+            popperInstance.update();
+        }
+
+        function hide() {
+            tooltip.removeAttribute('data-show'); 
+        }
+
+        const showEvents = ['mouseenter', 'focus'];
+        const hideEvents = ['mouseleave', 'blur'];
+
+        showEvents.forEach((event) => {
+            button.addEventListener(event, show);
+        });
+
+        hideEvents.forEach((event) => {
+            button.addEventListener(event, hide);
+        });   
+    }
+</script>
+
+<h3 id="classification">Classification<a class="headerlink" href="#classification" title="Permanent link">&para;</a></h3>
+<p>You can use scikit-learn to construct a bootstrapped model for classification which can also be used
+in this library. You'll want to use the <a href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.BaggingClassifier.html">bagging ensemble models</a> for this. </p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">BaggingClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_classification</span>
+
+<span class="c1"># Load in a demo dataset</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_classification</span><span class="p">()</span>
+
+<span class="c1"># Train a classifier based on bootstrap samples</span>
+<span class="n">bc</span> <span class="o">=</span> <span class="n">BaggingClassifier</span><span class="p">(</span>
+    <span class="n">base_estimator</span><span class="o">=</span><span class="n">LogisticRegression</span><span class="p">(),</span>
+    <span class="n">max_samples</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">n_estimators</span><span class="o">=</span><span class="mi">20</span>
+<span class="p">)</span>
+<span class="n">bc</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># You can inspect the trained estimators manually</span>
+<span class="n">bc</span><span class="o">.</span><span class="n">estimators_</span>
+
+<span class="c1"># But you can also predict the probabilities. </span>
+<span class="n">bc</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</code></pre></div>
+<p>These probability values indicate how many internal models predicted a class.
+To turn these predicted proba values into a reason for label doubt we can use
+the <code>ProbaReason</code>, <code>LongConfidenceReason</code> or the <code>ShortConfidenceReason</code>. </p>
+<h3 id="regression">Regression<a class="headerlink" href="#regression" title="Permanent link">&para;</a></h3>
+<p>There's a similar trick we might be able to do for regression too!</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">BaggingRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_regression</span>
+
+<span class="c1"># Load in a demo dataset</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_regression</span><span class="p">()</span>
+
+<span class="c1"># Train a classifier based on bootstrap samples</span>
+<span class="n">bc</span> <span class="o">=</span> <span class="n">BaggingRegressor</span><span class="p">(</span>
+    <span class="n">base_estimator</span><span class="o">=</span><span class="n">LinearRegression</span><span class="p">(),</span>
+    <span class="n">max_samples</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">n_estimators</span><span class="o">=</span><span class="mi">20</span>
+<span class="p">)</span>
+<span class="n">bc</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># You can inspect the trained estimators manually</span>
+<span class="n">bc</span><span class="o">.</span><span class="n">estimators_</span>
+
+<span class="c1"># So you could check the variance between predictions</span>
+<span class="n">dev</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">e</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">bc</span><span class="o">.</span><span class="n">estimators</span><span class="p">])</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+<p>The deviations in <code>dev</code> could again be interpreted as a proxy for doubt. Because
+a doubt ensemble is just an ensemble of callables you can implemented a reason
+via:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">doubtlab.ensemble</span> <span class="kn">import</span> <span class="n">DoubtEnsemble</span> 
+
+<span class="n">threshold</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="n">DoubtEnsemble</span><span class="p">(</span>
+    <span class="n">wrong_pred</span><span class="o">=</span><span class="k">lambda</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">e</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">bc</span><span class="o">.</span><span class="n">estimators</span><span class="p">])</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">threshold</span>
 <span class="p">)</span>
 </code></pre></div>
-<p>Note that you can also add another reason for <code>nan</code> values that appear
-in <code>X</code>.</p>
 
               
             </article>
@@ -550,7 +719,7 @@ in <code>X</code>.</p>
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../advanced/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Advanced" rel="prev">
+        <a href="../benchmarks/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Benchmarks" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
@@ -559,20 +728,20 @@ in <code>X</code>.</p>
               <span class="md-footer__direction">
                 Previous
               </span>
-              Advanced
+              Benchmarks
             </div>
           </div>
         </a>
       
       
         
-        <a href="../../examples/google-emotions/" class="md-footer__link md-footer__link--next" aria-label="Next: Google Emotions" rel="next">
+        <a href="../faq/" class="md-footer__link md-footer__link--next" aria-label="Next: FAQ" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Google Emotions
+              FAQ
             </div>
           </div>
           <div class="md-footer__button md-icon">
