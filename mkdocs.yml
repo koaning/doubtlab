@@ -9,6 +9,7 @@ nav:
   - Getting Started:
     - Quickstart: quickstart/index.md
     - Benchmarks: quickstart/benchmarks.md
+    - Advanced: quickstart/advanced.md
     - FAQ: quickstart/faq.md
   - Examples:
     - Google Emotions: examples/google-emotions.md
@@ -37,6 +38,7 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences
+  - admonition
 extra_javascript:
   - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
