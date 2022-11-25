@@ -1,6 +1,6 @@
 import pytest
 import numpy as np
-from doubtlab.reason import WrongPredictionReason
+from doubtlab.reason import WrongPredictionReason, _is_binary
 
 
 def test_from_predict():
@@ -42,3 +42,11 @@ def test_value_error():
         WrongPredictionReason.from_predict(pred=preds, y=y, method="fn")
     with pytest.raises(ValueError):
         WrongPredictionReason.from_predict(pred=preds, y=y, method="fp")
+
+
+def test_is_binary():
+    """A few checks on a helper function."""
+    assert _is_binary([0, 1, 1, 0, 1])
+    assert _is_binary([1, 1, 1])
+    assert _is_binary([0, 0])
+    assert not _is_binary([0, 0, 2])

@@ -168,7 +168,10 @@ class WrongPredictionReason:
 
     Arguments:
         model: scikit-learn classifier
-        method: can be "all" (considers all wrong predictions) or "fp"/"fn" to consider false positives/negatives only
+        method: can be "all", which considers all wrong predictions or "fp"/"fn", which considers false positives/negatives only
+
+    Note that using the false positive, false negative method requires you the
+    predictions and the true values to be strictly binary.
 
     Usage:
 
