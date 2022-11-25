@@ -199,15 +199,6 @@ class WrongPredictionReason:
 
     def __call__(self, X, y):
         preds = self.model.predict(X)
-        if self.method in ["fn", "fp"]:
-            if not _is_binary(preds):
-                raise ValueError(
-                    f"Cannot use method={self.method} when predictions aren't binary."
-                )
-            if not _is_binary(y):
-                raise ValueError(
-                    f"Cannot use method={self.method} when y_true values aren't binary."
-                )
         return self.from_predict(preds, y, method=self.method)
 
     @staticmethod
@@ -228,6 +219,15 @@ class WrongPredictionReason:
         ```
         """
         _check_method(method=method)
+        if method in ["fn", "fp"]:
+            if not _is_binary(pred):
+                raise ValueError(
+                    f"Cannot use method={method} when predictions aren't binary."
+                )
+            if not _is_binary(y):
+                raise ValueError(
+                    f"Cannot use method={method} when y_true values aren't binary."
+                )
         if method == "all":
             return (pred != y).astype(np.float16)
         if method == "fp":

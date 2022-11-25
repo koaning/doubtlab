@@ -13,16 +13,16 @@ def test_from_predict():
 
 def test_from_predict_fp():
     """Test `from_predict` on an obvious fp example"""
-    preds = np.array([0, 0, 1, 0])
-    y = np.array([0, 0, 1, 1])
+    preds = np.array([0, 0, 1, 1])
+    y = np.array([0, 0, 1, 0])
     predicate = WrongPredictionReason.from_predict(pred=preds, y=y, method="fp")
     assert np.all(predicate == np.array([0.0, 0.0, 0.0, 1.0]))
 
 
 def test_from_predict_fn():
     """Test `from_predict` on an obvious fn example"""
-    preds = np.array([0, 0, 1, 1])
-    y = np.array([0, 0, 1, 0])
+    preds = np.array([0, 0, 1, 0])
+    y = np.array([0, 0, 1, 1])
     predicate = WrongPredictionReason.from_predict(pred=preds, y=y, method="fn")
     assert np.all(predicate == np.array([0.0, 0.0, 0.0, 1.0]))
 
@@ -46,7 +46,7 @@ def test_value_error():
 
 def test_is_binary():
     """A few checks on a helper function."""
-    assert _is_binary([0, 1, 1, 0, 1])
-    assert _is_binary([1, 1, 1])
-    assert _is_binary([0, 0])
-    assert not _is_binary([0, 0, 2])
+    assert _is_binary(np.array([0, 1, 1, 0, 1]))
+    assert _is_binary(np.array([0, 0, 0]))
+    assert _is_binary(np.array([1, 1, 1]))
+    assert not _is_binary(np.array([0, 1, 1, 0, 1, 2]))
