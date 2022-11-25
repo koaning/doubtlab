@@ -152,12 +152,26 @@ class ShannonEntropyReason:
         return (entropies > threshold).astype(np.float16)
 
 
+def _is_binary(arr):
+    return ((arr == 0) | (arr == 1)).sum() == len(arr)
+
+
+def _check_method(method):
+    allowed = ["all", "fn", "fp"]
+    if method not in allowed:
+        raise ValueError(f"Method must be either {','.join(allowed)}")
+
+
 class WrongPredictionReason:
     """
     Assign doubt when the model prediction doesn't match the label.
 
     Arguments:
         model: scikit-learn classifier
+        method: can be "all", which considers all wrong predictions or "fp"/"fn", which considers false positives/negatives only
+
+    Note that using the false positive, false negative method requires you the
+    predictions and the true values to be strictly binary.
 
     Usage:
 
@@ -178,15 +192,17 @@ class WrongPredictionReason:
     ```
     """
 
-    def __init__(self, model):
+    def __init__(self, model, method="all"):
         self.model = model
+        _check_method(method)
+        self.method = method
 
     def __call__(self, X, y):
         preds = self.model.predict(X)
-        return self.from_predict(preds, y)
+        return self.from_predict(preds, y, method=self.method)
 
     @staticmethod
-    def from_predict(pred, y):
+    def from_predict(pred, y, method="all"):
         """
         Outputs a reason array from a prediction array, skipping the need for a model.
 
@@ -202,7 +218,22 @@ class WrongPredictionReason:
         assert np.all(predicate == np.array([0.0, 1.0]))
         ```
         """
-        return (pred != y).astype(np.float16)
+        _check_method(method=method)
+        if method in ["fn", "fp"]:
+            if not _is_binary(pred):
+                raise ValueError(
+                    f"Cannot use method={method} when predictions aren't binary."
+                )
+            if not _is_binary(y):
+                raise ValueError(
+                    f"Cannot use method={method} when y_true values aren't binary."
+                )
+        if method == "all":
+            return (pred != y).astype(np.float16)
+        if method == "fp":
+            return ((y == 0) & (pred == 1)).astype(np.float16)
+        if method == "fn":
+            return ((y == 1) & (pred == 0)).astype(np.float16)
 
 
 class LongConfidenceReason:
