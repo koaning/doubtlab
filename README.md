@@ -15,7 +15,7 @@
 
 <img src="https://github.com/koaning/doubtlab/raw/main/docs/doubt.png" width=140 height=140 align="right">
 
-# doubtlab
+### doubtlab
 
 > A lab for bad labels. Learn more [here](https://calmcode.io/bad-labels/introduction.html).
 
